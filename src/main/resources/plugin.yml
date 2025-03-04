@@ -1,0 +1,4 @@
+name: Bow Game
+version: '${project.version}'
+main: game.bow.bowgame.BowGame
+api-version: '1.21'
