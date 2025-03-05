@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="BowGame:jar">
+    <output-path>$PROJECT_DIR$/../../ServerPurpur/plugins</output-path>
+    <root id="archive" name="BowGame.jar">
+      <element id="module-output" name="BowGame" />
+    </root>
+  </artifact>
+</component>

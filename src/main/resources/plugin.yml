@@ -1,4 +1,8 @@
-name: Bow Game
+name: BowGame
 version: '${project.version}'
 main: game.bow.bowgame.BowGame
 api-version: '1.21'
+commands:
+    bowgame:
+        description: Controls the Bow Game plugin
+        usage: /bowgame <testgui|start|stop>
