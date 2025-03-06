@@ -51,6 +51,11 @@ public class Boilerplate implements Listener {
 
     @EventHandler
     public void onHealthRegen(EntityRegainHealthEvent Event) {
+        // Ignore non-player entities
+        if (!(Event.getEntity() instanceof Player)) {
+            return;
+        }
+
         if (Players.contains((Player) Event.getEntity()) && Event.getRegainReason() == EntityRegainHealthEvent.RegainReason.SATIATED) {
             Event.setCancelled(true);
         }

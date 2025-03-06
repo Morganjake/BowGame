@@ -13,7 +13,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -114,36 +113,5 @@ public class PlayerHandler implements Listener {
             Bukkit.broadcastMessage("Red team lost");
             NextRound(0);
         }
-    }
-
-    public static void OpenExampleGUI(Player player) {
-        // Create a custom inventory with 9 slots (1 row)
-        Inventory gui = Bukkit.createInventory(player, 9, "Example GUI");
-
-        // Create an example item
-        ItemStack exampleItem = new ItemStack(Material.DIAMOND);
-        ItemMeta exampleMeta = exampleItem.getItemMeta();
-        if (exampleMeta != null) {
-            exampleMeta.setDisplayName("§bShiny Diamond");
-            exampleMeta.setLore(Collections.singletonList(("§7This is a lore line.")));
-            exampleItem.setItemMeta(exampleMeta);
-        }
-
-        // Create a filler item
-        ItemStack fillerItem = new ItemStack(Material.GRAY_STAINED_GLASS_PANE);
-        ItemMeta fillerMeta = fillerItem.getItemMeta();
-        if (fillerMeta != null) {
-            fillerMeta.setDisplayName("§8Placeholder");
-            fillerItem.setItemMeta(fillerMeta);
-        }
-
-        // Set items in the GUI
-        gui.setItem(0, exampleItem); // First slot
-        for (int i = 1; i < 9; i++) {
-            gui.setItem(i, fillerItem); // Fill remaining slots
-        }
-
-        // Open the GUI for the player
-        player.openInventory(gui);
     }
 }
