@@ -1,8 +1,11 @@
 package game.bow.bowgame;
 
+import game.bow.bowgame.Upgrades.GUIHandler;
+import game.bow.bowgame.Upgrades.UpgradesGUI;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import java.util.Objects;
 
@@ -37,6 +40,13 @@ public class Commands implements CommandExecutor {
 
         if (Objects.equals(Args[0].toLowerCase(), "next")) {
             NextRound(0);
+        }
+        if (Objects.equals(Args[0].toLowerCase(), "testgui")) {
+            GUIHandler.OpenExampleGUI((Player) CommandSender);
+        }
+
+        if (Objects.equals(Args[0].toLowerCase(), "upgradesgui")) {
+            UpgradesGUI.OpenUpgradesGUI((Player) CommandSender);
         }
 
         return false;
