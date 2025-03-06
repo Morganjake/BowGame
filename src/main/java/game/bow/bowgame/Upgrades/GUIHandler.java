@@ -9,6 +9,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import net.md_5.bungee.api.ChatColor;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class GUIHandler {
@@ -20,51 +21,50 @@ public class GUIHandler {
         // Create Icon
         ItemStack icon1 = SetIcon(
                 Material.DIAMOND,
-                "this is a really long sentence to check if the linear interpolation is working",
-                Arrays.asList("#000000", "#FFFFFF", "#FFFFFF", "#000000"));
+                TextColorGradient(
+                        "this is a really long sentence to check if the linear interpolation is working",
+                        Arrays.asList("#000000", "#FFFFFF", "#FFFFFF", "#000000"),
+                        false)
+                );
         gui.setItem(12, icon1); // Place the item in the GUI
 
         // Open the GUI
         player.openInventory(gui);
     }
 
-    // Creates a new icon to be used in a GUI (w/ text & colors)
-    static ItemStack SetIcon(Material mat, String text, List<String> colors, Boolean bold) {
+    // Creates a new icon to be used in a GUI (w/ text & multiple line of lore)
+    static ItemStack SetIcon(Material mat, String text, List<String> loreList) {
         // Create item and extract metadata (if blank then return barrier icon)
         ItemStack icon = new ItemStack(mat);
         ItemMeta meta = icon.getItemMeta();
         if (meta == null) return (new ItemStack(Material.BARRIER));
 
-        // Set the custom name with a hex color (example: #FF00FF for purple)
-        String coloredName = TextColorGradient(text, colors, bold);
-
         // Set the display name of the item
-        meta.setDisplayName(coloredName);
+        meta.setDisplayName(text);
+        meta.setLore(loreList);
 
         // Apply the modified meta to the item & return
         icon.setItemMeta(meta);
         return icon;
     }
 
-    // Creates a new icon to be used in a GUI (w/ text & colors)
-    static ItemStack SetIcon(Material mat, String text, List<String> colors) {
+    // Creates a new icon to be used in a GUI (w/ text & 1 line of lore)
+    static ItemStack SetIcon(Material mat, String text, String lore) {
         // Create item and extract metadata (if blank then return barrier icon)
         ItemStack icon = new ItemStack(mat);
         ItemMeta meta = icon.getItemMeta();
         if (meta == null) return (new ItemStack(Material.BARRIER));
 
-        // Set the custom name with a hex color (example: #FF00FF for purple)
-        String coloredName = TextColorGradient(text, colors, false);
-
         // Set the display name of the item
-        meta.setDisplayName(coloredName);
+        meta.setDisplayName(text);
+        meta.setLore(Collections.singletonList(lore));
 
         // Apply the modified meta to the item & return
         icon.setItemMeta(meta);
         return icon;
     }
 
-    // Creates a new icon to be used in a GUI (w/ text)
+    // Creates a new icon to be used in a GUI (w/ text & no lore)
     static ItemStack SetIcon(Material mat, String text) {
         // Create item and extract metadata (if blank then return barrier icon)
         ItemStack icon = new ItemStack(mat);
@@ -102,7 +102,7 @@ public class GUIHandler {
     }
 
     // Creates a specified text colour gradient
-    private static String TextColorGradient(String text, List<String> colors, Boolean bold) {
+    static String TextColorGradient(String text, List<String> colors, Boolean bold) {
         StringBuilder gradientText = new StringBuilder();
 
         // Split text into segments to be interpolated through
@@ -143,4 +143,6 @@ public class GUIHandler {
 
         return gradientText.toString();
     }
+
+
 }

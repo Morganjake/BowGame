@@ -28,21 +28,27 @@ public class UpgradesGUI extends GUIHandler {
         // Upgrade icons
         ItemStack bowUpgrades = SetIcon(
                 Material.BOW,
-                "Bow Upgrades",
-                Arrays.asList("#AB0707", "#CC0808", "#AC0707"),
-                true
+                TextColorGradient(
+                        "Bow Upgrades",
+                        Arrays.asList("#AB0707", "#CC0808", "#AC0707"),
+                        true),
+                "§fBuy bow upgrades here!"
         );
         ItemStack defUpgrades = SetIcon(
                 Material.DIAMOND_CHESTPLATE,
-                "Defence Upgrades",
-                Arrays.asList("#0093FF", "#2EA6FF", "#0093FF"),
-                true
+                TextColorGradient(
+                        "Defence Upgrades",
+                        Arrays.asList("#0093FF", "#2EA6FF", "#0093FF"),
+                        true),
+                "§fBuy defence upgrades here!"
         );
         ItemStack items = SetIcon(
                 Material.TNT,
-                "Items",
-                Arrays.asList("#00A821", "#00C226", "#00A821"),
-                true
+                TextColorGradient(
+                        "Items",
+                        Arrays.asList("#00A821", "#00C226", "#00A821"),
+                        true),
+                "§fBuy items here!"
         );
         gui.setItem(10, bowUpgrades);
         gui.setItem(13, defUpgrades);
@@ -52,13 +58,13 @@ public class UpgradesGUI extends GUIHandler {
         player.openInventory(gui);
     }
 
-    private static String CreateUpgradeLore(String tooltip, String toIncrease, String prevValue, String postValue, String cost) {
+    private static List<String> CreateUpgradeLore(String tooltip, String toIncrease, String prevValue, String postValue, String cost) {
 
         String tooltipLine = "§7" + tooltip;
         String upgradeLine = "§7" + toIncrease + ": §f" + prevValue + " §f» §3§l" + postValue;
         String costLine = "§6Cost: §6§l✶ " + cost;
 
-        return tooltipLine + "\n" + upgradeLine + "\n" + costLine;
+        return Arrays.asList(tooltipLine, upgradeLine, costLine);
     }
 
 }
