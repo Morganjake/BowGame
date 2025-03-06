@@ -3,6 +3,7 @@ package game.bow.bowgame.Upgrades;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -12,7 +13,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class GUIHandler {
+public class GUIHandler implements Listener {
 
     // Example of a GUI
     public static void OpenExampleGUI(Player player) {
@@ -143,6 +144,4 @@ public class GUIHandler {
 
         return gradientText.toString();
     }
-
-
 }
