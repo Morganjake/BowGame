@@ -1,6 +1,7 @@
 package game.bow.bowgame;
 
 import game.bow.bowgame.Game.PlayerHandler;
+import game.bow.bowgame.Upgrades.GUIListener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -21,6 +22,7 @@ public final class BowGame extends JavaPlugin {
 
         getServer().getPluginManager().registerEvents(new Boilerplate() ,this);
         getServer().getPluginManager().registerEvents(new PlayerHandler() ,this);
+        getServer().getPluginManager().registerEvents(new GUIListener(), this);
 
     }
 

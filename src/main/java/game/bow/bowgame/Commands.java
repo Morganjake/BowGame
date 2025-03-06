@@ -1,7 +1,7 @@
 package game.bow.bowgame;
 
 import game.bow.bowgame.Upgrades.GUIHandler;
-import game.bow.bowgame.Upgrades.UpgradesGUI;
+import game.bow.bowgame.Upgrades.MainUpgradesGUI;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -46,7 +46,7 @@ public class Commands implements CommandExecutor {
         }
 
         if (Objects.equals(Args[0].toLowerCase(), "upgradesgui")) {
-            UpgradesGUI.OpenUpgradesGUI((Player) CommandSender);
+            MainUpgradesGUI.OpenUpgradesGUI((Player) CommandSender);
         }
 
         return false;
