@@ -15,11 +15,14 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 import static game.bow.bowgame.Game.PlayerHandler.*;
+import static game.bow.bowgame.Upgrades.UpgradeHandler.ResetStats;
 
 public class GameHandler {
 
     public static int BlueScore = 0;
     public static int RedScore = 0;
+
+    public static BukkitRunnable ArrowGenerator = null;
 
     public static Location[][] Maps = {
             {
@@ -74,6 +77,8 @@ public class GameHandler {
 
     public static void NextRound(int Winner) {
 
+        if (ArrowGenerator != null) { ArrowGenerator.cancel(); }
+
         if (Winner == 0) {
             BlueScore += 1;
         }
@@ -96,36 +101,12 @@ public class GameHandler {
             ResetPlayer(Player);
         }
 
-        new BukkitRunnable() {
+        ResetStats();
+
+        ArrowGenerator = new BukkitRunnable() {
 
             @Override
             public void run() {
-
-                // Checks if all the players of a team is dead
-                boolean BlueTeamDead = true;
-                boolean RedTeamDead = true;
-
-                for (Player BluePlayer : BlueTeam) {
-                    if (BluePlayer.getGameMode() == GameMode.ADVENTURE) {
-                        BlueTeamDead = false;
-                        break;
-                    }
-                }
-
-                for (Player RedPlayer : RedTeam) {
-                    if (RedPlayer.getGameMode() == GameMode.ADVENTURE) {
-                        RedTeamDead = false;
-                        break;
-                    }
-                }
-
-                if (BlueTeamDead) {
-                    cancel();
-                }
-
-                else if (RedTeamDead) {
-                    cancel();
-                }
 
                 for (Player Player : Players) {
 
@@ -133,11 +114,13 @@ public class GameHandler {
 
                     Inventory Inventory = Player.getInventory();
 
-                    if (Inventory.getItem(1) == null || Objects.requireNonNull(Inventory.getItem(1)).getAmount() <= 64) {
+                    if (Inventory.getItem(1) == null || Objects.requireNonNull(Inventory.getItem(1)).getAmount() < 64) {
                         Inventory.addItem(new ItemStack(Material.ARROW));
                     }
                 }
             }
-        }.runTaskTimer(BowGame.GetPlugin(), 40L, 20L);
+        };
+
+        ArrowGenerator.runTaskTimer(BowGame.GetPlugin(), 40L, 20L);
     }
 }

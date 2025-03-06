@@ -1,0 +1,8 @@
+name: BowGame
+version: '1.0-SNAPSHOT'
+main: game.bow.bowgame.BowGame
+api-version: '1.21'
+commands:
+    bowgame:
+        description: Controls the Bow Game plugin
+        usage: /bowgame <testgui|start|stop>

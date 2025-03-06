@@ -1,15 +1,12 @@
 package game.bow.bowgame;
 
-import game.bow.bowgame.Game.PlayerHandler;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 import java.util.Objects;
 
-import static game.bow.bowgame.Game.GameHandler.StartGame;
-import static game.bow.bowgame.Game.GameHandler.StopGame;
+import static game.bow.bowgame.Game.GameHandler.*;
 
 public class Commands implements CommandExecutor {
 
@@ -38,9 +35,8 @@ public class Commands implements CommandExecutor {
             StopGame();
         }
 
-        if (Objects.equals(Args[0].toLowerCase(), "testgui")) {
-            CommandSender.sendMessage("§6Opening test gui!");
-            PlayerHandler.OpenExampleGUI((Player) CommandSender);
+        if (Objects.equals(Args[0].toLowerCase(), "next")) {
+            NextRound(0);
         }
 
         return false;

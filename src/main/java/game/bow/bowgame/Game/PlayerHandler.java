@@ -3,6 +3,7 @@ package game.bow.bowgame.Game;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -46,6 +47,11 @@ public class PlayerHandler implements Listener {
         Player.setGameMode(GameMode.ADVENTURE);
         Player.setHealth(20);
         Player.setFoodLevel(20);
+
+        double PlayerMaxHealth = Objects.requireNonNull(Player.getAttribute(Attribute.GENERIC_MAX_HEALTH)).getBaseValue();
+        Objects.requireNonNull(Player.getAttribute(Attribute.GENERIC_MAX_HEALTH)).setBaseValue(PlayerMaxHealth);
+        double PlayerSpeed = Objects.requireNonNull(Player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED)).getBaseValue();
+        Objects.requireNonNull(Player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED)).setBaseValue(PlayerSpeed);
 
         for (PotionEffect Potion : Player.getActivePotionEffects()) {
             Player.removePotionEffect(Potion.getType());
@@ -116,34 +122,4 @@ public class PlayerHandler implements Listener {
         }
     }
 
-    public static void OpenExampleGUI(Player player) {
-        // Create a custom inventory with 9 slots (1 row)
-        Inventory gui = Bukkit.createInventory(player, 9, "Example GUI");
-
-        // Create an example item
-        ItemStack exampleItem = new ItemStack(Material.DIAMOND);
-        ItemMeta exampleMeta = exampleItem.getItemMeta();
-        if (exampleMeta != null) {
-            exampleMeta.setDisplayName("§bShiny Diamond");
-            exampleMeta.setLore(Collections.singletonList(("§7This is a lore line.")));
-            exampleItem.setItemMeta(exampleMeta);
-        }
-
-        // Create a filler item
-        ItemStack fillerItem = new ItemStack(Material.GRAY_STAINED_GLASS_PANE);
-        ItemMeta fillerMeta = fillerItem.getItemMeta();
-        if (fillerMeta != null) {
-            fillerMeta.setDisplayName("§8Placeholder");
-            fillerItem.setItemMeta(fillerMeta);
-        }
-
-        // Set items in the GUI
-        gui.setItem(0, exampleItem); // First slot
-        for (int i = 1; i < 9; i++) {
-            gui.setItem(i, fillerItem); // Fill remaining slots
-        }
-
-        // Open the GUI for the player
-        player.openInventory(gui);
-    }
 }
