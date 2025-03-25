@@ -136,15 +136,12 @@ public class ClassHandler implements Listener {
         // For some reason isSneaking() is true when the player is standing up
         if (!Player.isSneaking() && Player.getWorld().getBlockAt(Player.getLocation().add(new Vector(0, -1, 0))).getType() == Material.DIAMOND_BLOCK) {
 
-            Player.sendMessage("DO THING!!!!!!");
-
             new BukkitRunnable() {
 
                 @Override
                 public void run() {
                     if (!Player.isSneaking() || Player.getWorld().getBlockAt(Player.getLocation().add(new Vector(0, -1, 0))).getType() != Material.DIAMOND_BLOCK) {
                         // Adds 0 ult points to the player to reset their exp bar to their ult point count
-                        Player.sendMessage("WHAT");
                         AddUltPoints(Player, 0);
                         cancel();
                         return;
@@ -160,7 +157,6 @@ public class ClassHandler implements Listener {
                     else {
                         Player.setExp((float) SneakingDuration[0] / 60);
                         Player.playSound(Player, Sound.BLOCK_NOTE_BLOCK_BASS, 1, 1 + (float) SneakingDuration[0] / 60);
-                        Player.sendMessage("DOING");
                     }
                 }
             }.runTaskTimer(BowGame.GetPlugin(), 0L, 1L);
