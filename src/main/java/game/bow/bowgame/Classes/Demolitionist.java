@@ -51,7 +51,7 @@ public class Demolitionist implements Listener {
             Objects.requireNonNull(Player.getInventory().getItem(0)).setItemMeta(BowMeta);
         }
 
-        else if ((Event.getAction() == Action.RIGHT_CLICK_AIR || Event.getAction() == Action.RIGHT_CLICK_BLOCK) && UltPoints.get(Player) == 5) {
+        else if ((Event.getAction() == Action.RIGHT_CLICK_AIR || Event.getAction() == Action.RIGHT_CLICK_BLOCK) && UltPoints.get(Player) == 6) {
             AddUltPoints(Player, -5);
             AirStrike(Player);
         }

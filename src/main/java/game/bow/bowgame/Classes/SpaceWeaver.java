@@ -48,7 +48,7 @@ public class SpaceWeaver implements Listener {
             SpaceWarp(Player, Event.getClickedBlock());
         }
 
-        else if ((Event.getAction() == Action.RIGHT_CLICK_AIR || Event.getAction() == Action.RIGHT_CLICK_BLOCK) && UltPoints.get(Player) == 5) {
+        else if ((Event.getAction() == Action.RIGHT_CLICK_AIR || Event.getAction() == Action.RIGHT_CLICK_BLOCK) && UltPoints.get(Player) == 6) {
             if (!Player.getWorld().getName().equals("world_the_end")) {
                 SpatialTear(Player);
             }
