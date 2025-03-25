@@ -172,7 +172,7 @@ public class SpaceWeaver implements Listener {
             SpatialTearLocations.put(Player, Player.getLocation().clone());
             SpatialTearLocations.put(WarpedEnemy, WarpedEnemy.getLocation().clone());
 
-            AddUltPoints(Player, -5);
+            AddUltPoints(Player, -6);
 
             Player.getWorld().spawnParticle(Particle.DUST, Player.getEyeLocation(), 30, 0.2, 0.5, 0.2, 0.01,
                     new Particle.DustOptions(Color.fromRGB(92, 7, 107), 1));

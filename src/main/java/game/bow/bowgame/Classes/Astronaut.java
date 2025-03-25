@@ -52,7 +52,7 @@ public class Astronaut implements Listener {
         }
 
         else if ((Event.getAction() == Action.RIGHT_CLICK_AIR || Event.getAction() == Action.RIGHT_CLICK_BLOCK) && UltPoints.get(Player) == 6) {
-            AddUltPoints(Player, -5);
+            AddUltPoints(Player, -6);
             Untouchable(Player);
         }
     }

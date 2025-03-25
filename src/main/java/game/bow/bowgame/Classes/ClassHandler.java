@@ -4,6 +4,7 @@ import game.bow.bowgame.BowGame;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -22,7 +23,15 @@ public class ClassHandler {
 
 
     public static void AddUltPoints(Player Player, int Amount) {
-        UltPoints.replace(Player, Math.max(0, Math.min(UltPoints.get(Player) + Amount, 5)));
+        UltPoints.replace(Player, Math.max(0, Math.min(UltPoints.get(Player) + Amount, 6)));
+        Player.setExp((float) UltPoints.get(Player) * 17 / 6 / 17);
+        Player.setLevel(UltPoints.get(Player));
+
+        // Ultimate is ready
+        if (UltPoints.get(Player) == 6) {
+            Player.playSound(Player, Sound.ITEM_FIRECHARGE_USE, 1, 1);
+            Player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText("§b§lYour ultimate is ready!"));
+        }
         UpdateScoreBoard();
     }
 
