@@ -103,7 +103,7 @@ public class GUIHandler implements Listener {
     }
 
     // Creates a specified text colour gradient
-    static String TextColorGradient(String text, List<String> colors, Boolean bold) {
+    public static String TextColorGradient(String text, List<String> colors, Boolean bold) {
         StringBuilder gradientText = new StringBuilder();
 
         // Split text into segments to be interpolated through

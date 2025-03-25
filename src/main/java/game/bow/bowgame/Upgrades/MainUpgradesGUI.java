@@ -9,10 +9,12 @@ import org.bukkit.inventory.ItemStack;
 import java.util.Arrays;
 import java.util.List;
 
+import static game.bow.bowgame.Upgrades.UpgradeHandler.Money;
+
 public class MainUpgradesGUI extends GUIHandler {
 
-    public static void OpenUpgradesGUI(Player player) {
-        Inventory gui = Bukkit.createInventory(null, 27, "§6§l✶ §e§l100");
+    public static void OpenUpgradesGUI(Player Player) {
+        Inventory gui = Bukkit.createInventory(null, 27, "§6§l✶ §e§l" + Money.get(Player));
 
         // Create glass pane BG
         List<Integer> redGlassIndexes = Arrays.asList(0, 1, 2, 9, 11, 18, 19, 20);
@@ -31,31 +33,27 @@ public class MainUpgradesGUI extends GUIHandler {
                 TextColorGradient(
                         "Bow Upgrades",
                         Arrays.asList("#AB0707", "#CC0808", "#AC0707"),
-                        true),
-                "§fBuy bow upgrades here!"
+                        true)
         );
         ItemStack defUpgrades = SetIcon(
                 Material.DIAMOND_CHESTPLATE,
                 TextColorGradient(
                         "Defence Upgrades",
                         Arrays.asList("#0093FF", "#2EA6FF", "#0093FF"),
-                        true),
-                "§fBuy defence upgrades here!"
+                        true)
         );
         ItemStack items = SetIcon(
                 Material.TNT,
                 TextColorGradient(
                         "Items",
                         Arrays.asList("#00A821", "#00C226", "#00A821"),
-                        true),
-                "§fBuy items here!"
+                        true)
         );
         gui.setItem(10, bowUpgrades);
         gui.setItem(13, defUpgrades);
         gui.setItem(16, items);
 
-        // Open the GUI
-        player.openInventory(gui);
+        Player.openInventory(gui);
     }
 
     static List<String> CreateUpgradeLore(String tooltip, String toIncrease, String prevValue, String postValue, String cost) {

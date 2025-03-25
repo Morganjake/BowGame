@@ -3,6 +3,9 @@ package game.bow.bowgame.Upgrades;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -10,10 +13,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ItemsGUI extends MainUpgradesGUI {
+import static game.bow.bowgame.Classes.ClassHandler.Classes;
+import static game.bow.bowgame.Upgrades.UpgradeHandler.*;
+import static game.bow.bowgame.Upgrades.UpgradeHandler.BuyUpgrade;
 
-    public static void OpenItemsGUI(Player player) {
-        Inventory gui = Bukkit.createInventory(null, 27, "§6§l✶ §e§l420");
+public class ItemsGUI extends MainUpgradesGUI implements Listener {
+
+    public static void OpenItemsGUI(Player Player) {
+        Inventory gui = Bukkit.createInventory(null, 27, "§6§l✶ §e§l" + Money.get(Player));
 
         // Create glass pane BG
         List<Integer> grayGlassIndexes = new ArrayList<>();
@@ -32,41 +39,31 @@ public class ItemsGUI extends MainUpgradesGUI {
                         upgradeGradient,
                         true),
                 CreateItemLore(
-                        "Throws a bomb that freezes enemies for 5 seconds",
-                        "60"
+                        "Throws a bomb that freezes enemies for 3 seconds",
+                        String.valueOf(60 + 40 * PlayerUpgrades.get(Player).get("Freeze Grenade"))
                 )
         );
         ItemStack fragGrenade = MainUpgradesGUI.SetIcon(
                 Material.GUNPOWDER,
                 TextColorGradient(
-                        "Frag Grendade",
+                        "Explosive",
                         upgradeGradient,
                         true),
                 CreateItemLore(
                         "Throws a bomb that deals 8 damage",
-                        "40"
+                        String.valueOf(40 + (Classes.get(Player).equals("Demolitionist")  ? 15 : 30) * PlayerUpgrades.get(Player).get("Explosive"))
                 )
         );
-        ItemStack explosiveArrow = MainUpgradesGUI.SetIcon(
-                Material.TNT,
-                TextColorGradient(
-                        "Explosive Arrow",
-                        upgradeGradient,
-                        true),
-                CreateItemLore(
-                        "The next arrow you shoot will explode upon impact",
-                        "150"
-                )
-        );
+
         ItemStack smokeGrenade = MainUpgradesGUI.SetIcon(
                 Material.INK_SAC,
                 TextColorGradient(
-                        "Smoke Grenade",
+                        "Smoke Bomb",
                         upgradeGradient,
                         true),
                 CreateItemLore(
                         "Throws a bomb that creates a cloud of smoke",
-                        "40"
+                        String.valueOf(30 + 40 * PlayerUpgrades.get(Player).get("Smoke Bomb"))
                 )
         );
         ItemStack apd = MainUpgradesGUI.SetIcon(
@@ -77,7 +74,7 @@ public class ItemsGUI extends MainUpgradesGUI {
                         true),
                 CreateItemLore(
                         "Aerial People Deleter",
-                        "500"
+                        String.valueOf(500 + 250 * PlayerUpgrades.get(Player).get("APD"))
                 )
         );
         ItemStack medkit = MainUpgradesGUI.SetIcon(
@@ -88,12 +85,12 @@ public class ItemsGUI extends MainUpgradesGUI {
                         true),
                 CreateItemLore(
                         "Heals 40% of your health over time",
-                        "70"
+                        String.valueOf(70 + 50 * PlayerUpgrades.get(Player).get("Medkit"))
                 )
         );
+
         gui.setItem(4, freezeGrenade);
         gui.setItem(10, fragGrenade);
-        gui.setItem(13, explosiveArrow);
         gui.setItem(16, smokeGrenade);
         gui.setItem(21, apd);
         gui.setItem(23, medkit);
@@ -103,12 +100,50 @@ public class ItemsGUI extends MainUpgradesGUI {
                 TextColorGradient(
                         "Return to Main Menu",
                         Arrays.asList("#FF0000", "#CC0000", "#990000"),
-                        true),
-                "§fClick to go back to the main menu!"
+                        true)
         );
+
         gui.setItem(26, returnToMain);
 
         // Open the GUI
-        player.openInventory(gui);
+        Player.openInventory(gui);
+    }
+
+    @EventHandler
+    public void OnInventoryClick(InventoryClickEvent Event) {
+
+        Player Player = (Player) Event.getWhoClicked();
+
+        if (Event.getCurrentItem() == null || !Event.getView().getTitle().contains("✶")) {
+            return;
+        }
+
+        Material ClickedItem = Event.getCurrentItem().getType();
+
+        if (ClickedItem == Material.GUNPOWDER) {
+            if (BuyUpgrade(Player, "Explosive", 40 + (Classes.get(Player).equals("Demolitionist")  ? 15 : 30) * PlayerUpgrades.get(Player).get("Explosive"), "Items")) {
+
+            }
+        }
+        else if (ClickedItem == Material.PRISMARINE_SHARD) {
+            if (BuyUpgrade(Player, "Freeze Grenade", 60 + 40 * PlayerUpgrades.get(Player).get("Freeze Grenade"), "Items")) {
+
+            }
+        }
+        else if (ClickedItem == Material.INK_SAC) {
+            if (BuyUpgrade(Player, "Smoke Bomb", 30 + 40 * PlayerUpgrades.get(Player).get("Smoke Bomb"), "Items")) {
+
+            }
+        }
+        else if (ClickedItem == Material.BLAZE_ROD) {
+            if (BuyUpgrade(Player, "APD", 500 + 250 * PlayerUpgrades.get(Player).get("APD"), "Items")) {
+
+            }
+        }
+        else if (ClickedItem == Material.RED_DYE) {
+            if (BuyUpgrade(Player, "Medkit", 70 + 50 * PlayerUpgrades.get(Player).get("Medkit"), "Items")) {
+
+            }
+        }
     }
 }

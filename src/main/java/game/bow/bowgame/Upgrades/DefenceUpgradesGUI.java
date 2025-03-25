@@ -3,6 +3,9 @@ package game.bow.bowgame.Upgrades;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -10,10 +13,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class DefenceUpgradesGUI extends MainUpgradesGUI {
+import static game.bow.bowgame.Upgrades.UpgradeHandler.*;
+import static game.bow.bowgame.Upgrades.UpgradeHandler.BuyUpgrade;
 
-    public static void OpenDefenceUpgradesGUI(Player player) {
-        Inventory gui = Bukkit.createInventory(null, 27, "§6§l✶ §e§l999");
+public class DefenceUpgradesGUI extends MainUpgradesGUI implements Listener {
+
+    public static void OpenDefenceUpgradesGUI(Player Player) {
+        Inventory gui = Bukkit.createInventory(null, 27, "§6§l✶ §e§l" + Money.get(Player));
 
         // Create glass pane BG
         List<Integer> grayGlassIndexes = new ArrayList<>();
@@ -33,10 +39,10 @@ public class DefenceUpgradesGUI extends MainUpgradesGUI {
                         true),
                 CreateUpgradeLore(
                         "Increases Health",
-                        "Current Health",
-                        "100",
-                        "110",
-                        "5"
+                        "Health",
+                        String.valueOf(PlayerUpgrades.get(Player).get("Health") + 10),
+                        String.valueOf(PlayerUpgrades.get(Player).get("Health") + 11),
+                        String.valueOf(5 + 5 * PlayerUpgrades.get(Player).get("Health"))
                 )
         );
         ItemStack defence = MainUpgradesGUI.SetIcon(
@@ -47,10 +53,10 @@ public class DefenceUpgradesGUI extends MainUpgradesGUI {
                         true),
                 CreateUpgradeLore(
                         "Decreases damage taken",
-                        "Current Defence",
-                        "0",
-                        "10",
-                        "25"
+                        "Damage taken",
+                        String.valueOf(Math.pow(0.9, PlayerUpgrades.get(Player).get("Defense"))),
+                        String.valueOf(Math.pow(0.9, PlayerUpgrades.get(Player).get("Defense") + 1)),
+                        String.valueOf(75 + 50 * PlayerUpgrades.get(Player).get("Defense"))
                 )
         );
         ItemStack speed = MainUpgradesGUI.SetIcon(
@@ -62,9 +68,9 @@ public class DefenceUpgradesGUI extends MainUpgradesGUI {
                 CreateUpgradeLore(
                         "Increases speed",
                         "Current Speed",
-                        "10",
-                        "12",
-                        "75"
+                        String.valueOf(PlayerUpgrades.get(Player).get("Speed") * 0.1 + 1),
+                        String.valueOf(PlayerUpgrades.get(Player).get("Speed") * 0.1 + 1.1),
+                        String.valueOf(25 + 10 * PlayerUpgrades.get(Player).get("Speed"))
                 )
         );
         ItemStack regeneration = MainUpgradesGUI.SetIcon(
@@ -75,10 +81,10 @@ public class DefenceUpgradesGUI extends MainUpgradesGUI {
                         true),
                 CreateUpgradeLore(
                         "Increases health regeneration",
-                        "Current Regeneration",
-                        "0",
-                        "2",
-                        "125"
+                        "Current Regeneration every 5 seconds",
+                        String.valueOf(PlayerUpgrades.get(Player).get("Regeneration") * 0.5 + 0.5),
+                        String.valueOf(PlayerUpgrades.get(Player).get("Regeneration") * 0.5 + 1),
+                        String.valueOf(30 + 30 * PlayerUpgrades.get(Player).get("Regeneration"))
                 )
         );
         gui.setItem(10, health);
@@ -91,12 +97,40 @@ public class DefenceUpgradesGUI extends MainUpgradesGUI {
                 TextColorGradient(
                         "Return to Main Menu",
                         Arrays.asList("#FF0000", "#CC0000", "#990000"),
-                        true),
-                "§fClick to go back to the main menu!"
+                        true)
         );
         gui.setItem(26, returnToMain);
 
-        // Open the GUI
-        player.openInventory(gui);
+        Player.openInventory(gui);
+    }
+
+    @EventHandler
+    public void OnInventoryClick(InventoryClickEvent Event) {
+
+        Player Player = (Player) Event.getWhoClicked();
+        if (Event.getCurrentItem() == null || !Event.getView().getTitle().contains("✶")) {
+            return;
+        }
+
+        Material ClickedItem = Event.getCurrentItem().getType();
+
+        if (ClickedItem == Material.APPLE) {
+            if (BuyUpgrade(Player, "Health", 5 + 5 * PlayerUpgrades.get(Player).get("Health"), "Defence")) {
+                Player.setMaxHealth(Player.getMaxHealth() + 2);
+                Player.setHealth(Player.getMaxHealth());
+            }
+        }
+        else if (ClickedItem == Material.GOLDEN_CHESTPLATE) {
+            BuyUpgrade(Player, "Defense", 75 + 50 * PlayerUpgrades.get(Player).get("Defense"), "Defence");
+        }
+        else if (ClickedItem == Material.LEATHER_BOOTS) {
+            if (BuyUpgrade(Player, "Speed", 25 + 10 * PlayerUpgrades.get(Player).get("Speed"), "Defence")) {
+                Player.sendMessage(String.valueOf(Player.getWalkSpeed()));
+                Player.setWalkSpeed(Player.getWalkSpeed() + 0.02f);
+            }
+        }
+        else if (ClickedItem == Material.GOLDEN_APPLE) {
+            BuyUpgrade(Player, "Regeneration", 30 + 30 * PlayerUpgrades.get(Player).get("Regeneration"), "Defence");
+        }
     }
 }

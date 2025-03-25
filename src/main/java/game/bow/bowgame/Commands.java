@@ -1,17 +1,21 @@
 package game.bow.bowgame;
 
-import game.bow.bowgame.Upgrades.GUIHandler;
 import game.bow.bowgame.Upgrades.MainUpgradesGUI;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.List;
 
+import static game.bow.bowgame.Classes.ClassHandler.AddUltPoints;
 import static game.bow.bowgame.Game.GameHandler.*;
+import static game.bow.bowgame.Game.GameUIHandler.UpdateScoreBoard;
+import static game.bow.bowgame.Upgrades.UpgradeHandler.Money;
 
-public class Commands implements CommandExecutor {
+public class Commands implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(CommandSender CommandSender, Command Command, String Label, String[] Args) {
@@ -29,26 +33,52 @@ public class Commands implements CommandExecutor {
             return false;
         }
 
-        if (Objects.equals(Args[0].toLowerCase(), "start")) {
-            StopGame();
-            StartGame();
-        }
+        switch (Args[0].toLowerCase()) {
+            case "start":
+                StopGame();
+                StartGame();
+                return true;
 
-        if (Objects.equals(Args[0].toLowerCase(), "stop")) {
-            StopGame();
-        }
+            case "stop":
+                StopGame();
+                return true;
 
-        if (Objects.equals(Args[0].toLowerCase(), "next")) {
-            NextRound(0);
-        }
-        if (Objects.equals(Args[0].toLowerCase(), "testgui")) {
-            GUIHandler.OpenExampleGUI((Player) CommandSender);
-        }
+            case "next":
+                NextRound(0);
+                return true;
 
-        if (Objects.equals(Args[0].toLowerCase(), "upgradesgui")) {
-            MainUpgradesGUI.OpenUpgradesGUI((Player) CommandSender);
+            case "upgrades":
+                MainUpgradesGUI.OpenUpgradesGUI((Player) CommandSender);
+                return true;
+
+            case "money":
+                if (Args.length == 2) {
+                    Money.replace((Player) CommandSender, Integer.valueOf(Args[1]));
+                }
+                return true;
+
+            case "ultpoints":
+                if (Args.length == 2) {
+                    AddUltPoints((Player) CommandSender, Integer.valueOf(Args[1]));
+                    UpdateScoreBoard();
+                }
+                return true;
         }
 
         return false;
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender commandSender, Command command, String s, String[] strings) {
+        List<String> suggestions = new ArrayList<>();
+
+        suggestions.add("start");
+        suggestions.add("stop");
+        suggestions.add("next");
+        suggestions.add("upgrades");
+        suggestions.add("money");
+        suggestions.add("ultpoints");
+
+        return suggestions;
     }
 }
