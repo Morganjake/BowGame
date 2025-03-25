@@ -125,7 +125,6 @@ public class DefenceUpgradesGUI extends MainUpgradesGUI implements Listener {
         }
         else if (ClickedItem == Material.LEATHER_BOOTS) {
             if (BuyUpgrade(Player, "Speed", 25 + 10 * PlayerUpgrades.get(Player).get("Speed"), "Defence")) {
-                Player.sendMessage(String.valueOf(Player.getWalkSpeed()));
                 Player.setWalkSpeed(Player.getWalkSpeed() + 0.02f);
             }
         }

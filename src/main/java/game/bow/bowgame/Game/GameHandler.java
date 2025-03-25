@@ -59,26 +59,35 @@ public class GameHandler implements Listener {
     public static boolean BlueTeamHacked = false;
     public static boolean RedTeamHacked = false;
 
+    // Each location is in the format:
+    // [0] - Blue spawn
+    // [1] - Red spawn
+    // [2] - Ult orb spawn
     public static Location[][] Maps = {
             {
                     new Location(Bukkit.getWorld("world"), -1141, 90, -191, 90, 0),
-                    new Location(Bukkit.getWorld("world"), -1195, 90, -191, -90, 0)
+                    new Location(Bukkit.getWorld("world"), -1195, 90, -191, -90, 0),
+                    new Location(Bukkit.getWorld("world"), -1168, 86, -191, -90, 0)
             },
             {
                     new Location(Bukkit.getWorld("world"), -1141, 95, -225, 90, 0),
-                    new Location(Bukkit.getWorld("world"), -1195, 95, -225, -90, 0)
+                    new Location(Bukkit.getWorld("world"), -1195, 95, -225, -90, 0),
+                    new Location(Bukkit.getWorld("world"), -1168, 99, -225, -90, 0)
             },
             {
                     new Location(Bukkit.getWorld("world"), -1141, 99, -259, 90, 0),
-                    new Location(Bukkit.getWorld("world"), -1195, 99, -259, -90, 0)
+                    new Location(Bukkit.getWorld("world"), -1195, 99, -259, -90, 0),
+                    new Location(Bukkit.getWorld("world"), -1168, 86, -259, -90, 0)
             },
             {
                     new Location(Bukkit.getWorld("world"), -1141, 104, -293, 90, 0),
-                    new Location(Bukkit.getWorld("world"), -1195, 104, -293, -90, 0)
+                    new Location(Bukkit.getWorld("world"), -1195, 104, -293, -90, 0),
+                    new Location(Bukkit.getWorld("world"), -1168, 105, -293, -90, 0)
             },
             {
                     new Location(Bukkit.getWorld("world"), -1141, 101, -327, 90, 0),
-                    new Location(Bukkit.getWorld("world"), -1195, 101, -327, -90, 0)
+                    new Location(Bukkit.getWorld("world"), -1195, 101, -327, -90, 0),
+                    new Location(Bukkit.getWorld("world"), -1168, 106, -327, -90, 0)
             }
     };
 
@@ -239,6 +248,8 @@ public class GameHandler implements Listener {
                 MainUpgradesGUI.OpenUpgradesGUI(Player);
             }
         }
+
+        SetUltOrb(Maps[NextMap][2]);
 
         for (Block CorpseBit : CorpseBits) {
             CorpseBit.setType(Material.AIR);

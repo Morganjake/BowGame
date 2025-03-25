@@ -1,9 +1,6 @@
 package game.bow.bowgame;
 
-import game.bow.bowgame.Classes.Astronaut;
-import game.bow.bowgame.Classes.Demolitionist;
-import game.bow.bowgame.Classes.Hacker;
-import game.bow.bowgame.Classes.SpaceWeaver;
+import game.bow.bowgame.Classes.*;
 import game.bow.bowgame.Game.GameHandler;
 import game.bow.bowgame.Game.ItemHandler;
 import game.bow.bowgame.Game.PlayerHandler;
@@ -37,6 +34,7 @@ public final class BowGame extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new ItemsGUI(), this);
         getServer().getPluginManager().registerEvents(new ItemHandler(), this);
 
+        getServer().getPluginManager().registerEvents(new ClassHandler(), this);
         getServer().getPluginManager().registerEvents(new SpaceWeaver(), this);
         getServer().getPluginManager().registerEvents(new Demolitionist(), this);
         getServer().getPluginManager().registerEvents(new Astronaut(), this);
