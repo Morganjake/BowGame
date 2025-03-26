@@ -21,6 +21,7 @@ import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 
+import static game.bow.bowgame.Boilerplate.SandboxPlayers;
 import static game.bow.bowgame.Classes.ClassHandler.*;
 import static game.bow.bowgame.Game.GameHandler.GameEnded;
 import static game.bow.bowgame.Game.PlayerHandler.Players;
@@ -51,7 +52,8 @@ public class Astronaut implements Listener {
             FloatationBombs.add(Player.launchProjectile(Snowball.class));
         }
 
-        else if ((Event.getAction() == Action.RIGHT_CLICK_AIR || Event.getAction() == Action.RIGHT_CLICK_BLOCK) && UltPoints.get(Player) == 6) {
+        else if ((Event.getAction() == Action.RIGHT_CLICK_AIR || Event.getAction() == Action.RIGHT_CLICK_BLOCK) &&
+                (UltPoints.get(Player) == 6) || SandboxPlayers.contains(Player)) {
             AddUltPoints(Player, -6);
             Untouchable(Player);
         }

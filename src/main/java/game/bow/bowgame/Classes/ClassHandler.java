@@ -16,6 +16,7 @@ import org.bukkit.util.Vector;
 import java.util.HashMap;
 import java.util.Objects;
 
+import static game.bow.bowgame.Boilerplate.SandboxPlayers;
 import static game.bow.bowgame.Game.GameUIHandler.UpdateScoreBoard;
 import static game.bow.bowgame.Game.PlayerHandler.Players;
 
@@ -75,6 +76,10 @@ public class ClassHandler implements Listener {
     }
 
     public static void PutPlayerOnCooldown(Player Player) {
+
+        if (SandboxPlayers.contains(Player)) {
+            return;
+        }
 
         Cooldowns.put(Player, 30);
 

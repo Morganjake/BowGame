@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import static game.bow.bowgame.Boilerplate.SandboxPlayers;
 import static game.bow.bowgame.Classes.ClassHandler.*;
 import static game.bow.bowgame.Classes.ClassHandler.PutPlayerOnCooldown;
 import static game.bow.bowgame.Game.PlayerHandler.*;
@@ -48,7 +49,8 @@ public class SpaceWeaver implements Listener {
             SpaceWarp(Player, Event.getClickedBlock());
         }
 
-        else if ((Event.getAction() == Action.RIGHT_CLICK_AIR || Event.getAction() == Action.RIGHT_CLICK_BLOCK) && UltPoints.get(Player) == 6) {
+        else if ((Event.getAction() == Action.RIGHT_CLICK_AIR || Event.getAction() == Action.RIGHT_CLICK_BLOCK) &&
+                (UltPoints.get(Player) == 6) || SandboxPlayers.contains(Player)) {
             if (!Player.getWorld().getName().equals("world_the_end")) {
                 SpatialTear(Player);
             }

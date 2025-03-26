@@ -19,6 +19,9 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerPickupArrowEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static game.bow.bowgame.Classes.Astronaut.FloatationBombs;
 import static game.bow.bowgame.Game.GameHandler.GracePeriod;
 import static game.bow.bowgame.Game.ItemHandler.ItemOwners;
@@ -27,16 +30,18 @@ import static game.bow.bowgame.Game.PlayerHandler.*;
 
 public class Boilerplate implements Listener {
 
+    public static List<Player> SandboxPlayers = new ArrayList<>();
+
     @EventHandler
     public void OnInventoryInteract(InventoryClickEvent Event) {
-        if (Players.contains((Player) Event.getWhoClicked())) {
+        if (Players.contains((Player) Event.getWhoClicked()) && !SandboxPlayers.contains((Player) Event.getWhoClicked())) {
             Event.setCancelled(true);
         }
     }
 
     @EventHandler
     public void OnInventoryDrag(InventoryDragEvent Event) {
-        if (Players.contains((Player) Event.getWhoClicked())) {
+        if (Players.contains((Player) Event.getWhoClicked()) && !SandboxPlayers.contains((Player) Event.getWhoClicked())) {
             Event.setCancelled(true);
         }
     }
@@ -44,14 +49,14 @@ public class Boilerplate implements Listener {
     @EventHandler
     public void OnOffhandPlace(InventoryClickEvent Event) {
         if (!(Event.getWhoClicked() instanceof Player)) { return; }
-        if (Players.contains((Player) Event.getWhoClicked()) && Event.getClick() == ClickType.SWAP_OFFHAND) {
+        if (Players.contains((Player) Event.getWhoClicked()) && !SandboxPlayers.contains((Player) Event.getWhoClicked()) && Event.getClick() == ClickType.SWAP_OFFHAND) {
             Event.setCancelled(true);
         }
     }
 
     @EventHandler
     public void OnItemDrop(PlayerDropItemEvent Event) {
-        if (Players.contains(Event.getPlayer())) {
+        if (Players.contains(Event.getPlayer()) && !SandboxPlayers.contains(Event.getPlayer())) {
             Event.setCancelled(true);
         }
     }
@@ -59,7 +64,7 @@ public class Boilerplate implements Listener {
     @EventHandler
     public void OnHungerChange(FoodLevelChangeEvent Event) {
         if (!(Event.getEntity() instanceof Player)) { return; }
-        if (Players.contains((Player) Event.getEntity())) {
+        if (Players.contains((Player) Event.getEntity()) && !SandboxPlayers.contains((Player) Event.getEntity())) {
             Event.setCancelled(true);
         }
     }
@@ -67,7 +72,8 @@ public class Boilerplate implements Listener {
     @EventHandler
     public void OnHealthRegen(EntityRegainHealthEvent Event) {
         if (!(Event.getEntity() instanceof Player)) { return; }
-        if (Players.contains((Player) Event.getEntity()) && Event.getRegainReason() == EntityRegainHealthEvent.RegainReason.SATIATED) {
+        if (Players.contains((Player) Event.getEntity()) && !SandboxPlayers.contains((Player) Event.getEntity())
+                && Event.getRegainReason() == EntityRegainHealthEvent.RegainReason.SATIATED) {
             Event.setCancelled(true);
         }
     }
@@ -75,16 +81,19 @@ public class Boilerplate implements Listener {
     @EventHandler
     public void OnDamage(EntityDamageEvent Event) {
         if (!(Event.getEntity() instanceof Player)) { return; }
-        if (Players.contains((Player) Event.getEntity()) && Event.getCause() == EntityDamageEvent.DamageCause.FALL) {
+        if (Players.contains((Player) Event.getEntity()) && !SandboxPlayers.contains((Player) Event.getEntity())
+                && Event.getCause() == EntityDamageEvent.DamageCause.FALL) {
             Event.setCancelled(true);
         }
 
-        else if (Players.contains((Player) Event.getEntity()) && Event.getCause() == EntityDamageEvent.DamageCause.VOID) {
+        else if (Players.contains((Player) Event.getEntity()) && !SandboxPlayers.contains((Player) Event.getEntity())
+                && Event.getCause() == EntityDamageEvent.DamageCause.VOID) {
             Event.setCancelled(true);
             KillPlayer((Player) Event.getEntity(), (Player) Event.getEntity());
         }
 
-        else if (Players.contains((Player) Event.getEntity()) && Event.getCause() == EntityDamageEvent.DamageCause.LAVA) {
+        else if (Players.contains((Player) Event.getEntity()) && !SandboxPlayers.contains((Player) Event.getEntity())
+                && Event.getCause() == EntityDamageEvent.DamageCause.LAVA) {
             Event.setCancelled(true);
             KillPlayer((Player) Event.getEntity(), (Player) Event.getEntity());
         }
@@ -92,7 +101,7 @@ public class Boilerplate implements Listener {
 
     @EventHandler
     public void OnArrowPickup(PlayerPickupArrowEvent Event) {
-        if (Players.contains(Event.getPlayer())) {
+        if (Players.contains(Event.getPlayer()) && !SandboxPlayers.contains(Event.getPlayer())) {
             Event.setCancelled(true);
         }
     }
@@ -100,7 +109,7 @@ public class Boilerplate implements Listener {
     @EventHandler
     public void OnMove(PlayerMoveEvent Event) {
         Player Player = Event.getPlayer();
-        if (Players.contains(Player)) {
+        if (Players.contains(Player) && !SandboxPlayers.contains(Event.getPlayer())) {
 
             if (GracePeriod) {
                 MainUpgradesGUI.OpenUpgradesGUI(Player);

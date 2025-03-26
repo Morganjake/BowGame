@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static game.bow.bowgame.Boilerplate.SandboxPlayers;
 import static game.bow.bowgame.Classes.ClassHandler.*;
 import static game.bow.bowgame.Classes.ClassHandler.PutPlayerOnCooldown;
 import static game.bow.bowgame.Game.GameHandler.GameEnded;
@@ -51,7 +52,8 @@ public class Demolitionist implements Listener {
             Objects.requireNonNull(Player.getInventory().getItem(0)).setItemMeta(BowMeta);
         }
 
-        else if ((Event.getAction() == Action.RIGHT_CLICK_AIR || Event.getAction() == Action.RIGHT_CLICK_BLOCK) && UltPoints.get(Player) == 6) {
+        else if ((Event.getAction() == Action.RIGHT_CLICK_AIR || Event.getAction() == Action.RIGHT_CLICK_BLOCK) &&
+                (UltPoints.get(Player) == 6) || SandboxPlayers.contains(Player)) {
             AddUltPoints(Player, -6);
             AirStrike(Player);
         }

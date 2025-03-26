@@ -10,10 +10,13 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.List;
 
+import static game.bow.bowgame.Boilerplate.SandboxPlayers;
 import static game.bow.bowgame.Classes.ClassHandler.AddUltPoints;
+import static game.bow.bowgame.Classes.ClassHandler.Classes;
 import static game.bow.bowgame.Game.GameHandler.*;
 import static game.bow.bowgame.Game.GameUIHandler.UpdateScoreBoard;
-import static game.bow.bowgame.Upgrades.UpgradeHandler.Money;
+import static game.bow.bowgame.Game.PlayerHandler.Players;
+import static game.bow.bowgame.Upgrades.UpgradeHandler.*;
 
 public class Commands implements CommandExecutor, TabCompleter {
 
@@ -52,15 +55,30 @@ public class Commands implements CommandExecutor, TabCompleter {
                 return true;
 
             case "money":
-                if (Args.length == 2) {
+                if (Args.length >= 2) {
                     Money.replace((Player) CommandSender, Integer.valueOf(Args[1]));
                 }
                 return true;
 
             case "ultpoints":
-                if (Args.length == 2) {
+                if (Args.length >= 2) {
                     AddUltPoints((Player) CommandSender, Integer.valueOf(Args[1]));
                     UpdateScoreBoard();
+                }
+                return true;
+
+            case "sandbox":
+
+                if (!SandboxPlayers.contains((Player) CommandSender)) {
+                    Players.add(((Player) CommandSender));
+                    SandboxPlayers.add((Player) CommandSender);
+                    PlayerUpgrades.put((Player) CommandSender, GetDefaultStats());
+                    Classes.put((Player) CommandSender, "ALL");
+                    Money.put((Player) CommandSender, 999999999);
+                }
+                else {
+                    Players.remove((Player) CommandSender);
+                    SandboxPlayers.remove((Player) CommandSender);
                 }
                 return true;
         }
@@ -78,6 +96,7 @@ public class Commands implements CommandExecutor, TabCompleter {
         suggestions.add("upgrades");
         suggestions.add("money");
         suggestions.add("ultpoints");
+        suggestions.add("sandbox");
 
         return suggestions;
     }
