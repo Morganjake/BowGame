@@ -86,11 +86,12 @@ public class SpaceWeaver implements Listener {
 
                     i[0]++;
 
+
                     for (int j = 0; j < 10; j++) {
-                        double X = (1 - Math.floor(Math.random() * 2) * 2) * Math.random();
-                        double Y = (1 - Math.floor(Math.random() * 2) * 2) * Math.random();
-                        double Z = (1 - Math.floor(Math.random() * 2) * 2) * Math.random();
-                        Location DustLocation = PlayerLocation.clone().add(X, Y, Z);
+                        Location DustLocation = PlayerLocation.clone();
+                        DustLocation.setPitch((float) (90 - Math.random() * 180));
+                        DustLocation.setYaw((float) (180 - Math.random() * 360));
+                        DustLocation.add(DustLocation.getDirection().multiply((1 - Math.random() * Math.random())));
                         Player.getWorld().spawnParticle(Particle.DUST, DustLocation, 1, new Particle.DustOptions(Color.BLACK, 1));
                     }
 
