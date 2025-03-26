@@ -89,7 +89,7 @@ public class GameUIHandler {
             for (int i = 0; i < UltPoints.get(Player); i++) {
                 Ult += "§c§l♦";
             }
-            for (int i = 0; i < 5 - UltPoints.get(Player); i++) {
+            for (int i = 0; i < 6 - UltPoints.get(Player); i++) {
                 Ult += "§7♦";
             }
 
