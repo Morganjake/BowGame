@@ -11,8 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static game.bow.bowgame.Boilerplate.SandboxPlayers;
-import static game.bow.bowgame.Classes.ClassHandler.AddUltPoints;
-import static game.bow.bowgame.Classes.ClassHandler.Classes;
+import static game.bow.bowgame.Classes.ClassHandler.*;
 import static game.bow.bowgame.Game.GameHandler.*;
 import static game.bow.bowgame.Game.GameUIHandler.UpdateScoreBoard;
 import static game.bow.bowgame.Game.PlayerHandler.Players;
@@ -75,11 +74,16 @@ public class Commands implements CommandExecutor, TabCompleter {
                     PlayerUpgrades.put((Player) CommandSender, GetDefaultStats());
                     Classes.put((Player) CommandSender, "ALL");
                     Money.put((Player) CommandSender, 999999999);
+                    UltPoints.put((Player) CommandSender, 0);
                 }
                 else {
                     Players.remove((Player) CommandSender);
                     SandboxPlayers.remove((Player) CommandSender);
                 }
+                return true;
+
+            case "resetstats":
+                PlayerUpgrades.put((Player) CommandSender, GetDefaultStats());
                 return true;
         }
 
@@ -97,6 +101,7 @@ public class Commands implements CommandExecutor, TabCompleter {
         suggestions.add("money");
         suggestions.add("ultpoints");
         suggestions.add("sandbox");
+        suggestions.add("resetstats");
 
         return suggestions;
     }
