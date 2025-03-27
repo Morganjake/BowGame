@@ -138,7 +138,7 @@ public class Boilerplate implements Listener {
         if (!(Event.getEntity() instanceof Arrow) && !ItemOwners.containsKey(Event.getEntity()) && !FloatationBombs.contains(Event.getEntity())) { return; }
 
         Block Block = Event.getHitBlock();
-        if (Block != null && (Block.getType() == Material.CHORUS_PLANT || Block.getType() == Material.CHORUS_FLOWER)) {
+        if (Block != null && (Block.getType() == Material.CHORUS_PLANT || Block.getType() == Material.CHORUS_FLOWER || Block.getType() == Material.DECORATED_POT)) {
             Event.setCancelled(true);
         }
     }
