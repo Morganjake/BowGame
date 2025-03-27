@@ -7,6 +7,7 @@ import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
@@ -14,12 +15,10 @@ import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
-import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerPickupArrowEvent;
-import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.event.player.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static game.bow.bowgame.Classes.Astronaut.FloatationBombs;
@@ -152,6 +151,18 @@ public class Boilerplate implements Listener {
             Bukkit.getScheduler().runTaskLater(BowGame.GetPlugin(), () -> {
                 Player.setGameMode(GameMode.SPECTATOR);
             }, 1L);
+        }
+    }
+
+    @EventHandler
+    public void OnBlockInteract(PlayerInteractEvent Event) {
+        Player Player = Event.getPlayer();
+        if (Event.getClickedBlock() == null) { return; }
+
+        if (Players.contains(Player) && !SandboxPlayers.contains(Event.getPlayer())) {
+            if (Event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+                Event.setCancelled(true);
+            }
         }
     }
 }
