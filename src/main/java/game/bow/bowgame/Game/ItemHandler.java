@@ -4,7 +4,6 @@ import game.bow.bowgame.BowGame;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
-import org.bukkit.block.data.type.Snow;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -265,10 +264,7 @@ public class ItemHandler implements Listener {
         if (!FreezeGrenades.contains(Event.getEntity())) { return; }
 
         HashMap<Block, BlockData> OriginalBlocks = new HashMap<>();
-        HashMap<Block, BlockData> PassableBlocks = new HashMap<>();
 
-        // Loops over all the blocks and turns all the passable blocks into air before looping turning blocks to ice
-        // This is because when blocks that have plants on them turn to ice the plants break so the plants turn to air so they don't break
         for (int x = -3; x <= 3; x++) {
             for (int y = -3; y <= 3; y++) {
                 for (int z = -3; z <= 3; z++) {
@@ -277,35 +273,14 @@ public class ItemHandler implements Listener {
 
                     // Creates a circle shape
                     if (Block.getLocation().distance(Event.getEntity().getLocation()) < 3) {
-                        if (Block.getType() != Material.AIR && Block.isPassable()) {
-                            PassableBlocks.put(Block, Block.getBlockData());
-                            Block.setType(Material.AIR);
-                        }
-                    }
-                }
-            }
-        }
-
-        for (int x = -3; x <= 3; x++) {
-            for (int y = -3; y <= 3; y++) {
-                for (int z = -3; z <= 3; z++) {
-                    Location blockLocation = Event.getEntity().getLocation().clone().add(x, y, z);
-                    Block Block = Event.getEntity().getWorld().getBlockAt(blockLocation);
-
-                    // Creates a circle shape
-                    if (Block.getLocation().distance(Event.getEntity().getLocation()) < 3) {
-                        if (Block.getType() != Material.AIR && Block.getType() != Material.BLUE_ICE) {
+                        if (Block.getType() != Material.AIR && Block.getType() != Material.BLUE_ICE && !Block.isPassable()) {
                             OriginalBlocks.put(Block, Block.getBlockData());
-                            Block.setType(Material.BLUE_ICE);
+                            Block.setType(Material.BLUE_ICE, false);
+
                         }
                     }
                 }
             }
-        }
-
-        // After all the blocks turn to ice the passable blocks get put back
-        for (var Entry : PassableBlocks.entrySet()) {
-            Entry.getKey().setBlockData(Entry.getValue());
         }
 
         Event.getEntity().getWorld().playSound(Event.getEntity().getLocation(), Sound.BLOCK_GLASS_BREAK, 1, 1);
@@ -326,7 +301,7 @@ public class ItemHandler implements Listener {
             public void run() {
 
                 for (var Entry : OriginalBlocks.entrySet()) {
-                    Entry.getKey().setBlockData(Entry.getValue());
+                    Entry.getKey().setBlockData(Entry.getValue(), false);
                 }
             }
 
