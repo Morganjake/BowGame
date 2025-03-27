@@ -36,9 +36,10 @@ public class ItemHandler implements Listener {
 
     @EventHandler
     public void OnRightClick(PlayerInteractEvent Event) {
-        if (Event.getAction() == Action.RIGHT_CLICK_AIR || Event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+        if (Event.getAction() == Action.LEFT_CLICK_AIR || Event.getAction() == Action.LEFT_CLICK_BLOCK) {
             Player Player = Event.getPlayer();
             if (!Players.contains(Player)) { return; }
+            Event.setCancelled(true);
 
             ItemStack Item = Player.getInventory().getItemInMainHand();
 
