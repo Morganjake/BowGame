@@ -194,7 +194,7 @@ public class ItemHandler implements Listener {
 
                         i[0] += 1;
 
-                        Player.getWorld().spawnParticle(Particle.HEART, Player.getEyeLocation(), 3, 0.2, 0.2, 0.2);
+                        Player.getWorld().spawnParticle(Particle.HEART, Player.getEyeLocation(), 1, 0.2, 0.2, 0.2);
                     }
                 }.runTaskTimer(BowGame.GetPlugin(), 2L, 2L);
             }
