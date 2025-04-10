@@ -151,7 +151,7 @@ public class GameHandler implements Listener {
                         }
                     }
 
-                    NextRound(2);
+                    NextRound(2, null);
                     cancel();
                 }
                 i[0]++;
@@ -186,7 +186,7 @@ public class GameHandler implements Listener {
     }
 
 
-    public static void NextRound(int Winner) {
+    public static void NextRound(int Winner, Integer SelectedMap) {
 
         if (Winner == 0) {
             BlueScore += 1;
@@ -216,14 +216,14 @@ public class GameHandler implements Listener {
             @Override
             public void run() {
                 GameEnded = false;
-                NextRoundInner(Winner);
+                NextRoundInner(Winner, SelectedMap);
             }
 
         }.runTaskLater(BowGame.GetPlugin(), 40L);
     }
 
 
-    public static void NextRoundInner(int Winner) {
+    public static void NextRoundInner(int Winner, Integer SelectedMap) {
 
         ResetStats(Winner);
 
@@ -234,10 +234,18 @@ public class GameHandler implements Listener {
         WarpedEnemies = new ArrayList<>();
         Cooldowns = new HashMap<>();
 
-        int NextMap = (int) Math.floor(Math.random() * Maps.length);
-        while (NextMap == PrevMap) {
-            NextMap = (int) Math.floor(Math.random() * Maps.length);
+        int NextMap = 0;
+
+        if (SelectedMap != null && SelectedMap > 0 && SelectedMap < Maps.length) {
+            NextMap = SelectedMap;
         }
+        else {
+            do {
+                NextMap = (int) Math.floor(Math.random() * Maps.length);
+            } while (NextMap == PrevMap);
+        }
+
+
         PrevMap = NextMap;
 
         for (Player Player : BlueTeam) {

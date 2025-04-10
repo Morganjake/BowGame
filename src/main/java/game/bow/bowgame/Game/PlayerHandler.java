@@ -375,12 +375,12 @@ public class PlayerHandler implements Listener {
 
         if (BlueTeamDead) {
             Bukkit.broadcastMessage("Blue team lost");
-            NextRound(1);
+            NextRound(1, null);
         }
 
         else if (RedTeamDead) {
             Bukkit.broadcastMessage("Red team lost");
-            NextRound(0);
+            NextRound(0, null);
         }
     }
 }
