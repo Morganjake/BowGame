@@ -40,6 +40,7 @@ public class GameHandler implements Listener {
     public static boolean GameEnded = false;
     public static int BlueScore = 0;
     public static int RedScore = 0;
+    public static int PrevMap = -1;
 
     public static HashMap<Player, Integer> Kills = new HashMap<>();
     public static HashMap<Player, Integer> Deaths = new HashMap<>();
@@ -88,9 +89,13 @@ public class GameHandler implements Listener {
                     new Location(Bukkit.getWorld("world"), -1141, 101, -327, 90, 0),
                     new Location(Bukkit.getWorld("world"), -1195, 101, -327, -90, 0),
                     new Location(Bukkit.getWorld("world"), -1168, 106, -327, -90, 0)
+            },
+            {
+                    new Location(Bukkit.getWorld("world"), -1141, 86, -395, 90, 0),
+                    new Location(Bukkit.getWorld("world"), -1195, 86, -395, -90, 0),
+                    new Location(Bukkit.getWorld("world"), -1168, 81, -395, -90, 0)
             }
     };
-
 
     public static void StartGame() {
 
@@ -230,6 +235,10 @@ public class GameHandler implements Listener {
         Cooldowns = new HashMap<>();
 
         int NextMap = (int) Math.floor(Math.random() * Maps.length);
+        while (NextMap == PrevMap) {
+            NextMap = (int) Math.floor(Math.random() * Maps.length);
+        }
+        PrevMap = NextMap;
 
         for (Player Player : BlueTeam) {
             Player.teleport(Maps[NextMap][0]);
