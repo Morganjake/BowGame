@@ -16,6 +16,7 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.player.*;
+import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -126,14 +127,16 @@ public class Boilerplate implements Listener {
                 ));
             }
 
-            if (Event.getPlayer().getGameMode() == GameMode.ADVENTURE && Player.getLocation().getY() < 85.1) {
+            Material BlockUnderPlayer = Player.getWorld().getBlockAt(Player.getLocation().add(new Vector(0, -1,0))).getType();
+
+            if (Event.getPlayer().getGameMode() == GameMode.ADVENTURE && Player.getLocation().getY() < 85.1 && BlockUnderPlayer == Material.OBSIDIAN) {
                 KillPlayer(Player, Player);
             }
         }
     }
 
     @EventHandler
-    public void onArrowHit(ProjectileHitEvent Event) {
+    public void OnArrowHit(ProjectileHitEvent Event) {
         if (!(Event.getEntity() instanceof Arrow) && !ItemOwners.containsKey(Event.getEntity()) && !FloatationBombs.contains(Event.getEntity())) { return; }
 
         Block Block = Event.getHitBlock();
