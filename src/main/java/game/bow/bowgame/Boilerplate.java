@@ -18,7 +18,6 @@ import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.player.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static game.bow.bowgame.Classes.Astronaut.FloatationBombs;
@@ -161,7 +160,20 @@ public class Boilerplate implements Listener {
 
         if (Players.contains(Player) && !SandboxPlayers.contains(Event.getPlayer())) {
             if (Event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-                Event.setCancelled(true);
+
+                boolean IsNotInteractable = switch (Event.getClickedBlock().getType()) {
+                    case CHEST, TRAPPED_CHEST, ENDER_CHEST, BARREL, HOPPER, FURNACE, BLAST_FURNACE, SMOKER, DROPPER,
+                         DISPENSER, ANVIL, CHIPPED_ANVIL, DAMAGED_ANVIL, GRINDSTONE, LOOM, CARTOGRAPHY_TABLE, LECTERN,
+                         BREWING_STAND, JUKEBOX, STONECUTTER, SMITHING_TABLE, BEACON,
+                         OAK_TRAPDOOR, SPRUCE_TRAPDOOR, BIRCH_TRAPDOOR, JUNGLE_TRAPDOOR, ACACIA_TRAPDOOR, DARK_OAK_TRAPDOOR,
+                         MANGROVE_TRAPDOOR, CHERRY_TRAPDOOR, BAMBOO_TRAPDOOR, CRIMSON_TRAPDOOR, WARPED_TRAPDOOR, IRON_TRAPDOOR
+                            -> true;
+                    default -> false;
+                };
+
+                if (IsNotInteractable) {
+                    Event.setCancelled(true);
+                }
             }
         }
     }
