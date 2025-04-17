@@ -12,6 +12,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
@@ -146,6 +147,17 @@ public class Boilerplate implements Listener {
     }
 
     @EventHandler
+    public void OnPaintingDrop(HangingBreakByEntityEvent Event) {
+
+        if (!(Event.getRemover() instanceof Player)) { return; }
+        Player Player = (Player) Event.getRemover();
+
+        if (Players.contains(Player)) {
+            Event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
     public void OnPlayerTeleport(PlayerTeleportEvent Event) {
         Player Player = Event.getPlayer();
 
@@ -161,7 +173,7 @@ public class Boilerplate implements Listener {
         Player Player = Event.getPlayer();
         if (Event.getClickedBlock() == null) { return; }
 
-        if (Players.contains(Player) && !SandboxPlayers.contains(Event.getPlayer())) {
+        if (Players.contains(Player) && !SandboxPlayers.contains(Player)) {
             if (Event.getAction() == Action.RIGHT_CLICK_BLOCK) {
 
                 boolean IsNotInteractable = switch (Event.getClickedBlock().getType()) {
