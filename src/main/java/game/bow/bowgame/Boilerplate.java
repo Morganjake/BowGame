@@ -3,6 +3,7 @@ package game.bow.bowgame;
 import game.bow.bowgame.Upgrades.MainUpgradesGUI;
 import org.bukkit.*;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.type.ChiseledBookshelf;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -179,7 +180,7 @@ public class Boilerplate implements Listener {
                 boolean IsNotInteractable = switch (Event.getClickedBlock().getType()) {
                     case CHEST, TRAPPED_CHEST, ENDER_CHEST, BARREL, HOPPER, FURNACE, BLAST_FURNACE, SMOKER, DROPPER,
                          DISPENSER, ANVIL, CHIPPED_ANVIL, DAMAGED_ANVIL, GRINDSTONE, LOOM, CARTOGRAPHY_TABLE, LECTERN,
-                         BREWING_STAND, JUKEBOX, STONECUTTER, SMITHING_TABLE, BEACON,
+                         BREWING_STAND, JUKEBOX, STONECUTTER, SMITHING_TABLE, BEACON, CHISELED_BOOKSHELF,
                          OAK_TRAPDOOR, SPRUCE_TRAPDOOR, BIRCH_TRAPDOOR, JUNGLE_TRAPDOOR, ACACIA_TRAPDOOR, DARK_OAK_TRAPDOOR,
                          MANGROVE_TRAPDOOR, CHERRY_TRAPDOOR, BAMBOO_TRAPDOOR, CRIMSON_TRAPDOOR, WARPED_TRAPDOOR, IRON_TRAPDOOR
                             -> true;
