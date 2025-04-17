@@ -49,7 +49,9 @@ public class Commands implements CommandExecutor, TabCompleter {
                 if (Args.length >= 2) {
                     NextRound(0, Integer.valueOf(Args[1]));
                 }
-                NextRound(0, null);
+                else {
+                    NextRound(0, null);
+                }
                 return true;
 
             case "upgrades":
