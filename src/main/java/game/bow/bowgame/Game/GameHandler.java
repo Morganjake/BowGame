@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
+import static game.bow.bowgame.Boilerplate.SandboxPlayers;
 import static game.bow.bowgame.Classes.ClassHandler.*;
 import static game.bow.bowgame.Classes.SpaceWeaver.SpaceWarpLocations;
 import static game.bow.bowgame.Classes.SpaceWeaver.WarpedEnemies;
@@ -120,6 +121,9 @@ public class GameHandler implements Listener {
 
             PutOnBlueTeam = !PutOnBlueTeam;
         }
+
+        // Removes all the players in sandbox mode before starting
+        SandboxPlayers = new ArrayList<>();
 
         Bukkit.broadcastMessage(BlueTeam.toString());
         Bukkit.broadcastMessage(RedTeam.toString());
