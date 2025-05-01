@@ -10,6 +10,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Objects;
 
+import static game.bow.bowgame.Game.GameHandler.StopGame;
+
 public final class BowGame extends JavaPlugin {
 
     public static Plugin Plugin;
@@ -39,6 +41,11 @@ public final class BowGame extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new Demolitionist(), this);
         getServer().getPluginManager().registerEvents(new Astronaut(), this);
         getServer().getPluginManager().registerEvents(new Hacker(), this);
+    }
+
+    @Override
+    public void onDisable() {
+        StopGame();
     }
 
     public static Plugin GetPlugin() {

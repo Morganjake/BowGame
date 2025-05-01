@@ -181,6 +181,12 @@ public class GameHandler implements Listener {
             ScoreBossBar.removeAll();
         }
 
+        for (Block CorpseBit : CorpseBits) {
+            CorpseBit.setType(Material.AIR);
+        }
+
+        CorpseBits = new ArrayList<>();
+
         if (ArrowGenerator != null) { ArrowGenerator.cancel(); }
         if (PlayerHealer != null) { PlayerHealer.cancel(); }
     }
