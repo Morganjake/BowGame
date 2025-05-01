@@ -116,7 +116,7 @@ public class PlayerHandler implements Listener {
         Player.getInventory().setBoots(Boots);
 
         Inventory.setItem(0, new ItemStack(Material.BOW));
-        Inventory.setItem(1, GetClassItem(Player));
+        Inventory.setItem(1, ClassWeapons.get(Player));
 
         ItemMeta BowMeta = Objects.requireNonNull(Inventory.getItem(0)).getItemMeta();
 
@@ -226,7 +226,7 @@ public class PlayerHandler implements Listener {
                 Victim.getInventory().setItem(1, new ItemStack(Material.BARRIER));
 
                 Bukkit.getScheduler().runTaskLater(BowGame.GetPlugin(), () -> {
-                    Victim.getInventory().setItem(1, GetClassItem(Victim));
+                    Victim.getInventory().setItem(1, ClassWeapons.get(Victim));
                 }, 200L);
             }
         }

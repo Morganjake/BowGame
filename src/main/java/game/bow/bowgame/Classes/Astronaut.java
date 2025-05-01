@@ -108,7 +108,7 @@ public class Astronaut implements Listener {
                     if (PlayerMiddle.distance(Entity.getLocation()) < 3) {
                         Vector ToTarget = Entity.getLocation().toVector().subtract(PlayerMiddle.toVector()).normalize();
 
-                        // Makes the player go less far
+                        // Makes the player get pushed back less than other entities
                         if (Entity instanceof Player) {
                             Entity.setVelocity(Entity.getVelocity().add(ToTarget));
                         }

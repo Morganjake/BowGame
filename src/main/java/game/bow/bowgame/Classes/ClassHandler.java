@@ -23,6 +23,7 @@ import static game.bow.bowgame.Game.PlayerHandler.Players;
 public class ClassHandler implements Listener {
 
     public static HashMap<Player, String> Classes = new HashMap<>();
+    public static HashMap<Player, ItemStack> ClassWeapons = new HashMap<>();
     public static HashMap<Player, Integer> Cooldowns = new HashMap<>();
     public static HashMap<Player, Integer> UltPoints = new HashMap<>();
 
@@ -40,39 +41,6 @@ public class ClassHandler implements Listener {
             Player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText("§b§lYour ultimate is ready!"));
         }
         UpdateScoreBoard();
-    }
-
-
-    public static ItemStack GetClassItem(Player Player) {
-
-        ItemStack Item = null;
-
-        if (Objects.equals(Classes.get(Player), "Space Weaver")) {
-            Item = new ItemStack(Material.ECHO_SHARD);
-            ItemMeta ItemMeta = Item.getItemMeta();
-            Objects.requireNonNull(ItemMeta).setItemName("§9Space Shard");
-            Item.setItemMeta(ItemMeta);
-        }
-        else if (Objects.equals(Classes.get(Player), "Demolitionist")) {
-            Item = new ItemStack(Material.GUNPOWDER);
-            ItemMeta ItemMeta = Item.getItemMeta();
-            Objects.requireNonNull(ItemMeta).setItemName("§cBoom Boom");
-            Item.setItemMeta(ItemMeta);
-        }
-        else if (Objects.equals(Classes.get(Player), "Astronaut")) {
-            Item = new ItemStack(Material.BREEZE_ROD);
-            ItemMeta ItemMeta = Item.getItemMeta();
-            Objects.requireNonNull(ItemMeta).setItemName("§dGravity Stick");
-            Item.setItemMeta(ItemMeta);
-        }
-        else if (Objects.equals(Classes.get(Player), "Hacker")) {
-            Item = new ItemStack(Material.REDSTONE_TORCH);
-            ItemMeta ItemMeta = Item.getItemMeta();
-            Objects.requireNonNull(ItemMeta).setItemName("§7Hacking Tool");
-            Item.setItemMeta(ItemMeta);
-        }
-
-        return Item;
     }
 
     public static void PutPlayerOnCooldown(Player Player) {
