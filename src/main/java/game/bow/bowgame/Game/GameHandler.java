@@ -6,7 +6,6 @@ import game.bow.bowgame.Upgrades.MainUpgradesGUI;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -25,8 +24,11 @@ import java.util.Objects;
 
 import static game.bow.bowgame.Boilerplate.SandboxPlayers;
 import static game.bow.bowgame.Classes.ClassHandler.*;
-import static game.bow.bowgame.Classes.SpaceWeaver.SpaceWarpLocations;
-import static game.bow.bowgame.Classes.SpaceWeaver.WarpedEnemies;
+import static game.bow.bowgame.Classes.Mage.MagicOverloadActive;
+import static game.bow.bowgame.Classes.Mage.ShootIllusionArrow;
+import static game.bow.bowgame.Classes.SpaceWeaver.*;
+import static game.bow.bowgame.Game.ArrowEffectHandler.CheckForEffects;
+import static game.bow.bowgame.Game.ArrowEffectHandler.CheckForEnchant;
 import static game.bow.bowgame.Game.DeathMessagesHandler.DamageTaken;
 import static game.bow.bowgame.Game.GameUIHandler.*;
 import static game.bow.bowgame.Game.ItemHandler.SlowedPlayers;
@@ -54,9 +56,11 @@ public class GameHandler implements Listener {
     // Holds how many bounces an arrow has left
     public static HashMap<Arrow, Integer> ArrowBounces = new HashMap<>();
 
-
     public static ArrayList<Arrow> ExplosiveArrows = new ArrayList<>();
     public static ArrayList<Arrow> DisablingArrows = new ArrayList<>();
+    public static HashMap<Player, List<Arrow>> IllusionArrows = new HashMap<>();
+    public static ArrayList<Arrow> InvisibilityArrows = new ArrayList<>();
+    public static ArrayList<Arrow> ConfusionArrows = new ArrayList<>();
 
     public static boolean BlueTeamHacked = false;
     public static boolean RedTeamHacked = false;
@@ -180,6 +184,7 @@ public class GameHandler implements Listener {
 
         DamageTaken = new HashMap<>();
         SlowedPlayers = new ArrayList<>();
+        MagicOverloadActive = new ArrayList<>();
 
         if (ScoreBossBar != null) {
             ScoreBossBar.removeAll();
@@ -365,12 +370,13 @@ public class GameHandler implements Listener {
 
         List<Player> EnemyTeam = BlueTeam.contains(Player) ? RedTeam : BlueTeam;
 
+        // Checks nearby players to check for hackers
         for (Player Enemy : EnemyTeam) {
             if (Enemy.getGameMode() != GameMode.SPECTATOR && Classes.get(Enemy).equals("Hacker") && Arrow.getLocation().distance(Enemy.getLocation()) < 10) {
                 if (Math.random() < 0.25) {
                     Arrow.setVelocity(Arrow.getVelocity().multiply(0.4));
                     Player.playSound(Player.getLocation(), Sound.ENTITY_VILLAGER_NO, 1, 1);
-                    break;
+                    break; // Break the loop to avoid hackers stacking their passives
                 }
             }
         }
@@ -380,52 +386,25 @@ public class GameHandler implements Listener {
             Player.playSound(Player.getLocation(), Sound.ENTITY_VILLAGER_NO, 1, 1);
         }
 
+        boolean StopShootArrow = CheckForEnchant(Player, Objects.requireNonNull(Player.getInventory().getItem(0)), Arrow);
+        
+        if (StopShootArrow) {
+            Event.setCancelled(true);
+            return;
+        }
+
         ArrowBounces.put(Arrow, PlayerUpgrades.get(Player).get("Bounce"));
 
-
-        if (Player.getInventory().getItem(0).containsEnchantment(Enchantment.LURE)) {
-            ExplosiveArrows.add(Arrow);
-            Player.getInventory().getItem(0).removeEnchantments();
-        }
-
-        else if (Player.getInventory().getItem(0).containsEnchantment(Enchantment.LUCK_OF_THE_SEA)) {
-            DisablingArrows.add(Arrow);
-            Player.getInventory().getItem(0).removeEnchantments();
-        }
-
         if (Classes.get(Player).equals("Space Weaver")) {
+            SpacialRearrangement(Player, Arrow);
+        }
 
-            List<Player> Team = BlueTeam.contains(Player) ? RedTeam : BlueTeam;
-            final Vector[] ArrowVelocity = {new Vector(-999, -999, -999)};
-
-            new BukkitRunnable() {
-
-                @Override
-                public void run() {
-
-                    if (ArrowVelocity[0] == Arrow.getVelocity()) {
-                        cancel();
-                        return;
-                    }
-
-                    ArrowVelocity[0] = Arrow.getVelocity();
-
-                    if (Arrow.isDead()) {
-                        cancel();
-                        return;
-                    }
-
-                    for (Player Enemy : Team) {
-                        if (Arrow.getLocation().distance(Enemy.getLocation()) < 2) {
-                            Vector ToTarget = Enemy.getLocation().add(new Vector(0, 1, 0)).toVector().subtract(Arrow.getLocation().toVector()).normalize();
-                            Arrow.setVelocity(Arrow.getVelocity().add(ToTarget.multiply(0.15)));
-                        }
-                    }
-                }
-            }.runTaskTimer(BowGame.GetPlugin(), 0L, 1L);
+        if (MagicOverloadActive.contains(Player)) {
+            for (Arrow IllusionArrow : IllusionArrows.get(Player)) {
+                ShootIllusionArrow(Player, IllusionArrow);
+            }
         }
     }
-
 
     @EventHandler
     public static void OnHit(ProjectileHitEvent Event) {
@@ -436,17 +415,7 @@ public class GameHandler implements Listener {
         Arrow Arrow = (Arrow) Event.getEntity();
         if (!(Arrow.getShooter() instanceof Player)) { return; }
 
-        if (ExplosiveArrows.contains(Arrow)) {
-
-            for (Player Player : Players) {
-                if (Arrow.getWorld() != Player.getWorld()) { continue; }
-                if (Arrow.getLocation().distance(Player.getLocation()) < 2) {
-                    Player.damage((double) PlayerUpgrades.get((Player) Arrow.getShooter()).get("Damage") + 5, (Player) Arrow.getShooter());
-                }
-            }
-            Arrow.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, Arrow.getLocation(), 1);
-            Arrow.getWorld().playSound(Arrow.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 1, 1);
-        }
+        CheckForEffects((Player) Arrow.getShooter(), null, Arrow, false);
 
 
         if (!ArrowBounces.containsKey(Arrow)) { return; }

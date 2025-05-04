@@ -19,6 +19,7 @@ import java.util.Objects;
 import static game.bow.bowgame.Boilerplate.SandboxPlayers;
 import static game.bow.bowgame.Game.GameUIHandler.UpdateScoreBoard;
 import static game.bow.bowgame.Game.PlayerHandler.Players;
+import static game.bow.bowgame.Upgrades.UpgradeHandler.PlayerUpgrades;
 
 public class ClassHandler implements Listener {
 
@@ -49,7 +50,7 @@ public class ClassHandler implements Listener {
             return;
         }
 
-        Cooldowns.put(Player, 30);
+        Cooldowns.put(Player, PlayerUpgrades.get(Player).get("Cooldown"));
 
         new BukkitRunnable() {
 

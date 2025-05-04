@@ -5,6 +5,7 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.*;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -56,6 +57,39 @@ public class SpaceWeaver implements Listener {
             }
         }
     }
+
+
+    public static void SpacialRearrangement(Player Player, Arrow Arrow) {
+        List<Player> Team = BlueTeam.contains(Player) ? RedTeam : BlueTeam;
+        final Vector[] ArrowVelocity = {new Vector(-999, -999, -999)};
+
+        new BukkitRunnable() {
+
+            @Override
+            public void run() {
+
+                if (ArrowVelocity[0] == Arrow.getVelocity()) {
+                    cancel();
+                    return;
+                }
+
+                ArrowVelocity[0] = Arrow.getVelocity();
+
+                if (Arrow.isDead()) {
+                    cancel();
+                    return;
+                }
+
+                for (Player Enemy : Team) {
+                    if (Arrow.getLocation().distance(Enemy.getLocation()) < 2) {
+                        Vector ToTarget = Enemy.getLocation().add(new Vector(0, 1, 0)).toVector().subtract(Arrow.getLocation().toVector()).normalize();
+                        Arrow.setVelocity(Arrow.getVelocity().add(ToTarget.multiply(0.15)));
+                    }
+                }
+            }
+        }.runTaskTimer(BowGame.GetPlugin(), 0L, 1L);
+    }
+
 
     private void SpaceWarp(Player Player, Block ClickedBlock) {
 

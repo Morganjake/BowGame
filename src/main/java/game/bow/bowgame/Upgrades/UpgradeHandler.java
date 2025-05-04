@@ -37,6 +37,7 @@ public class UpgradeHandler {
                 Map.entry("Defense", 0),
                 Map.entry("Speed", 0),
                 Map.entry("Regeneration", 0),
+                Map.entry("Cooldown", 30),
                 Map.entry("Explosive", 0),
                 Map.entry("Freeze Grenade", 0),
                 Map.entry("Smoke Bomb", 0),

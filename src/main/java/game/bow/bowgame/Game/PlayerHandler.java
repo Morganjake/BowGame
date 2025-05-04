@@ -28,6 +28,7 @@ import java.util.Objects;
 import static game.bow.bowgame.Classes.ClassHandler.*;
 import static game.bow.bowgame.Classes.SpaceWeaver.SpatialTearLocations;
 import static game.bow.bowgame.Classes.SpaceWeaver.WarpedEnemies;
+import static game.bow.bowgame.Game.ArrowEffectHandler.CheckForEffects;
 import static game.bow.bowgame.Game.DeathMessagesHandler.AddDamage;
 import static game.bow.bowgame.Game.DeathMessagesHandler.SendDeathMessage;
 import static game.bow.bowgame.Game.GameHandler.*;
@@ -77,6 +78,37 @@ public class PlayerHandler implements Listener {
         Inventory Inventory = Player.getInventory();
         Player.getInventory().clear();
 
+        SetPlayerArmour(Player);
+
+        Inventory.setItem(0, new ItemStack(Material.BOW));
+        Inventory.setItem(1, ClassWeapons.get(Player));
+
+        ItemMeta BowMeta = Objects.requireNonNull(Inventory.getItem(0)).getItemMeta();
+
+        Objects.requireNonNull(BowMeta).setUnbreakable(true);
+
+        Objects.requireNonNull(Inventory.getItem(0)).setItemMeta(BowMeta);
+
+        Inventory.setItem(3, new ItemStack(Material.EMERALD));
+        Inventory.setItem(4, new ItemStack(Material.EMERALD));
+
+        ItemMeta Item1Meta = Objects.requireNonNull(Inventory.getItem(3)).getItemMeta();
+        ItemMeta Item2Meta = Objects.requireNonNull(Inventory.getItem(4)).getItemMeta();
+
+        Objects.requireNonNull(Item1Meta).setDisplayName("§2Item 1");
+        Objects.requireNonNull(Item2Meta).setDisplayName("§2Item 2");
+
+        Objects.requireNonNull(Inventory.getItem(3)).setItemMeta(Item1Meta);
+        Objects.requireNonNull(Inventory.getItem(4)).setItemMeta(Item2Meta);
+
+        Player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 999999, 0, false, false));
+
+        if (Classes.get(Player).equals("Astronaut")) {
+            Player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 999999, 1, false, false));
+        }
+    }
+
+    public static void SetPlayerArmour(Player Player) {
         ItemStack Helmet = new ItemStack(Material.LEATHER_HELMET);
         ItemStack Chestplate = new ItemStack(Material.LEATHER_CHESTPLATE);
         ItemStack Leggings = new ItemStack(Material.LEATHER_LEGGINGS);
@@ -114,33 +146,6 @@ public class PlayerHandler implements Listener {
         Player.getInventory().setChestplate(Chestplate);
         Player.getInventory().setLeggings(Leggings);
         Player.getInventory().setBoots(Boots);
-
-        Inventory.setItem(0, new ItemStack(Material.BOW));
-        Inventory.setItem(1, ClassWeapons.get(Player));
-
-        ItemMeta BowMeta = Objects.requireNonNull(Inventory.getItem(0)).getItemMeta();
-
-        Objects.requireNonNull(BowMeta).setUnbreakable(true);
-
-        Objects.requireNonNull(Inventory.getItem(0)).setItemMeta(BowMeta);
-
-        Inventory.setItem(3, new ItemStack(Material.EMERALD));
-        Inventory.setItem(4, new ItemStack(Material.EMERALD));
-
-        ItemMeta Item1Meta = Objects.requireNonNull(Inventory.getItem(3)).getItemMeta();
-        ItemMeta Item2Meta = Objects.requireNonNull(Inventory.getItem(4)).getItemMeta();
-
-        Objects.requireNonNull(Item1Meta).setDisplayName("§2Item 1");
-        Objects.requireNonNull(Item2Meta).setDisplayName("§2Item 2");
-
-        Objects.requireNonNull(Inventory.getItem(3)).setItemMeta(Item1Meta);
-        Objects.requireNonNull(Inventory.getItem(4)).setItemMeta(Item2Meta);
-
-        Player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 999999, 0, false, false));
-
-        if (Classes.get(Player).equals("Astronaut")) {
-            Player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 999999, 1, false, false));
-        }
     }
 
 
@@ -182,7 +187,7 @@ public class PlayerHandler implements Listener {
                 return;
             }
 
-            if (Player.getGameMode() == GameMode.SPECTATOR) { return; }
+            if (DeadPlayers.contains(Player)) { return; }
 
             double BowPullback = Arrow.getVelocity().length() / (Math.pow(1.1, PlayerUpgrades.get(Player).get("Velocity")) * 3);
             double Damage = (PlayerUpgrades.get(Player).get("Damage") + 10) * BowPullback;
@@ -208,27 +213,7 @@ public class PlayerHandler implements Listener {
 
             Event.setDamage(Damage);
 
-            if (ExplosiveArrows.contains(Arrow)) {
-
-                for (Player OtherPlayer : Players) {
-                    if (OtherPlayer == Victim) { continue; }
-                    if (Arrow.getLocation().distance(OtherPlayer.getLocation()) < 2) {
-                        OtherPlayer.damage((double) PlayerUpgrades.get((Player) Arrow.getShooter()).get("Damage") + 5, (Player) Arrow.getShooter());
-                    }
-                }
-                Arrow.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, Arrow.getLocation(), 1);
-                Arrow.getWorld().playSound(Arrow.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 1, 1);
-                ExplosiveArrows.remove(Arrow);
-            }
-
-            else if (DisablingArrows.contains(Arrow)) {
-
-                Victim.getInventory().setItem(1, new ItemStack(Material.BARRIER));
-
-                Bukkit.getScheduler().runTaskLater(BowGame.GetPlugin(), () -> {
-                    Victim.getInventory().setItem(1, ClassWeapons.get(Victim));
-                }, 200L);
-            }
+            CheckForEffects(Player, Victim, Arrow, true);
         }
 
         if (Victim.getHealth() - Event.getDamage() < 0) {

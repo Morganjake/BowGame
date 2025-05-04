@@ -13,6 +13,7 @@ import java.util.Arrays;
 
 import static game.bow.bowgame.Classes.ClassHandler.ClassWeapons;
 import static game.bow.bowgame.Classes.ClassHandler.Classes;
+import static game.bow.bowgame.Classes.Mage.SelectedSpell;
 
 public class ClassGUI extends MainUpgradesGUI  {
 
@@ -84,9 +85,26 @@ public class ClassGUI extends MainUpgradesGUI  {
                         true
                 ),
                 Arrays.asList(
-                        "§7§lGlitch: §fNearby enemy might get their bow jammed",
+                        "§7§lGlitch: §fNearby enemies might get their bow jammed",
                         "§7§lDisabling Arrow: §fShoot an arrow that tracks the enemy and disables their abilities",
                         "§7§lShutdown: §fDrastically reduce your enemies velocity"
+                )
+        );
+
+        ItemStack Mage = MainUpgradesGUI.SetIcon(
+                Material.NETHERITE_SHOVEL,
+                TextColorGradient(
+                        "Mage",
+                        Arrays.asList("#A12092", "#DB25C6", "#A12092"),
+                        true
+                ),
+                Arrays.asList(
+                        "§5§lSwitch Magic: §dCrouch left click to switch the currently equipped spell",
+                        "   §5§l- Confusion Arrow: §dConfused the enemies by playing player sounds all around them",
+                        "   §5§l- Illusion Arrow: §dHolds the arrow in space and shoots it next time the player uses the ability",
+                        "   §5§l- Invisibility Arrow: §dTurns effected players invisible",
+                        "§5§lMagic Arrow: §dShoot an arrow with the currently selected spell",
+                        "§5§lMagic Overload: §dIllusion arrows don't go away and shoot every time you shoot"
                 )
         );
 
@@ -95,6 +113,7 @@ public class ClassGUI extends MainUpgradesGUI  {
         GUI.setItem(12, Demolitionist);
         GUI.setItem(13, Astronaut);
         GUI.setItem(14, Hacker);
+        GUI.setItem(15, Mage);
         Player.openInventory(GUI);
     }
 
@@ -173,11 +192,32 @@ public class ClassGUI extends MainUpgradesGUI  {
                             true
                     ),
                     Arrays.asList(
-                            "§7§lGlitch: §fNearby enemy might get their bow jammed",
+                            "§7§lGlitch: §fNearby enemies might get their bow jammed",
                             "§7§lDisabling Arrow: §fShoot an arrow that tracks the enemy and disables their abilities",
                             "§7§lShutdown: §fDrastically reduce your enemies velocity"
                     )
             ));
+            Player.playSound(Player, Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
+        }
+        else if (Item == Material.NETHERITE_SHOVEL) {
+            Classes.put(Player, "Mage");
+            ClassWeapons.put(Player, MainUpgradesGUI.SetIcon(
+                    Material.NETHERITE_SHOVEL,
+                    TextColorGradient(
+                            "New Magic Wand",
+                            Arrays.asList("#A12092", "#DB25C6", "#A12092"),
+                            true
+                    ),
+                    Arrays.asList(
+                            "§5§lSwitch Spell: §dCrouch left click to switch the currently equipped spell",
+                            "   §5§l- Confusion Arrow: §dConfused the enemies by playing player sounds all around them",
+                            "   §5§l- Illusion Arrow: §dHolds the arrow in space and shoots it next time the player uses the ability",
+                            "   §5§l- Invisibility Arrow: §dTurns effected players invisible",
+                            "§5§lMagic Arrow: §dShoot an arrow with the currently selected spell",
+                            "§5§lMagic Overload: §dIllusion arrows don't go away and shoot every time you shoot"
+                    )
+            ));
+            SelectedSpell.put(Player, 1);
             Player.playSound(Player, Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
         }
     }
