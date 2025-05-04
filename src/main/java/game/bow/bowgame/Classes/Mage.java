@@ -85,11 +85,6 @@ public class Mage implements Listener {
             AddUltPoints(Player, -6);
 
             MagicOverloadActive.add(Player);
-
-            Map<String, Integer> NewPlayerUpgrades = new HashMap<>(PlayerUpgrades.get(Player));
-            NewPlayerUpgrades.put("Cooldown", NewPlayerUpgrades.get("Cooldown") / 2);
-
-            PlayerUpgrades.put(Player, NewPlayerUpgrades);
         }
     }
 

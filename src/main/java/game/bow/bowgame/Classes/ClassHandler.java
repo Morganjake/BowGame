@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.Objects;
 
 import static game.bow.bowgame.Boilerplate.SandboxPlayers;
+import static game.bow.bowgame.Classes.Mage.MagicOverloadActive;
 import static game.bow.bowgame.Game.GameUIHandler.UpdateScoreBoard;
 import static game.bow.bowgame.Game.PlayerHandler.Players;
 import static game.bow.bowgame.Upgrades.UpgradeHandler.PlayerUpgrades;
@@ -50,7 +51,12 @@ public class ClassHandler implements Listener {
             return;
         }
 
-        Cooldowns.put(Player, PlayerUpgrades.get(Player).get("Cooldown"));
+        float Cooldown = (float) (30.0 / Math.pow(1.05, PlayerUpgrades.get(Player).get("Ability Cooldown")));
+
+        if (MagicOverloadActive.contains(Player)) {
+            Cooldown /= 2;
+        }
+        Cooldowns.put(Player, (int) Cooldown);
 
         new BukkitRunnable() {
 

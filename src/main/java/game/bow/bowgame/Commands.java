@@ -7,8 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import static game.bow.bowgame.Boilerplate.SandboxPlayers;
 import static game.bow.bowgame.Classes.ClassHandler.*;
@@ -66,7 +65,7 @@ public class Commands implements CommandExecutor, TabCompleter {
 
             case "ultpoints":
                 if (Args.length >= 2) {
-                    AddUltPoints((Player) CommandSender, Integer.valueOf(Args[1]));
+                    AddUltPoints((Player) CommandSender, Integer.parseInt(Args[1]));
                     UpdateScoreBoard();
                 }
                 return true;
@@ -90,6 +89,25 @@ public class Commands implements CommandExecutor, TabCompleter {
             case "resetstats":
                 PlayerUpgrades.put((Player) CommandSender, GetDefaultStats());
                 return true;
+
+            case "setstat":
+                if (Args.length >= 3) {
+
+
+
+                    String Upgrade = Objects.equals(Args[1], "AbilityCooldown") ? "Ability Cooldown" : Args[1];
+
+                    if (!PlayerUpgrades.get((Player) CommandSender).containsKey(Upgrade)) {
+                        CommandSender.sendMessage("§4Upgrade doesn't exist!");
+                        return true;
+                    }
+
+                    Map<String, Integer> NewPlayerUpgrades = new HashMap<>(PlayerUpgrades.get((Player) CommandSender));
+                    NewPlayerUpgrades.put(Upgrade, NewPlayerUpgrades.get(Upgrade) + Integer.parseInt(Args[2]));
+
+                    PlayerUpgrades.put((Player) CommandSender, NewPlayerUpgrades);
+                }
+                return true;
         }
 
         return false;
@@ -107,6 +125,7 @@ public class Commands implements CommandExecutor, TabCompleter {
         suggestions.add("ultpoints");
         suggestions.add("sandbox");
         suggestions.add("resetstats");
+        suggestions.add("setstat");
 
         return suggestions;
     }

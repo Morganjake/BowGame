@@ -11,7 +11,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import static game.bow.bowgame.Classes.ClassHandler.Classes;
 import static game.bow.bowgame.Game.GameHandler.BlueScore;
 import static game.bow.bowgame.Game.GameHandler.RedScore;
 import static game.bow.bowgame.Game.PlayerHandler.*;
@@ -37,7 +36,7 @@ public class UpgradeHandler {
                 Map.entry("Defense", 0),
                 Map.entry("Speed", 0),
                 Map.entry("Regeneration", 0),
-                Map.entry("Cooldown", 30),
+                Map.entry("Ability Cooldown", 0),
                 Map.entry("Explosive", 0),
                 Map.entry("Freeze Grenade", 0),
                 Map.entry("Smoke Bomb", 0),
