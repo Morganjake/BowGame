@@ -61,7 +61,7 @@ public class ArrowEffectHandler {
             for (Player OtherPlayer : Players) {
                 if (Arrow.getLocation().distance(OtherPlayer.getLocation()) < 2) {
                     InvisiblePlayers.add(OtherPlayer);
-                    OtherPlayer.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 300, 0, false, false));
+                    OtherPlayer.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 200, 0, false, false));
 
                     OtherPlayer.getInventory().setHelmet(null);
                     OtherPlayer.getInventory().setChestplate(null);
