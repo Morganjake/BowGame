@@ -153,7 +153,7 @@ public class ClassGUI extends MainUpgradesGUI  {
             ClassWeapons.put(Player, MainUpgradesGUI.SetIcon(
                     Material.GUNPOWDER,
                     TextColorGradient(
-                            "Demolitionist",
+                            "Boom Boom",
                             Arrays.asList("#A41513", "#E81817", "#A41513"),
                             true
                     ),
@@ -170,7 +170,7 @@ public class ClassGUI extends MainUpgradesGUI  {
             ClassWeapons.put(Player, MainUpgradesGUI.SetIcon(
                     Material.BREEZE_ROD,
                     TextColorGradient(
-                            "Astronaut",
+                            "Gravity Stick",
                             Arrays.asList("#231E49", "#4F368F", "#231E49"),
                             true
                     ),
@@ -187,7 +187,7 @@ public class ClassGUI extends MainUpgradesGUI  {
             ClassWeapons.put(Player, MainUpgradesGUI.SetIcon(
                     Material.REDSTONE_TORCH,
                     TextColorGradient(
-                            "Hacker",
+                            "Hacking Tool",
                             Arrays.asList("#6D7A92", "#5F6A7f", "#6D7A92"),
                             true
                     ),
