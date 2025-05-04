@@ -45,20 +45,6 @@ public class DefenceUpgradesGUI extends MainUpgradesGUI implements Listener {
                         String.valueOf(5 + 5 * PlayerUpgrades.get(Player).get("Health"))
                 )
         );
-        ItemStack defence = MainUpgradesGUI.SetIcon(
-                Material.GOLDEN_CHESTPLATE,
-                TextColorGradient(
-                        "Defence",
-                        upgradeGradient,
-                        true),
-                CreateUpgradeLore(
-                        "Decreases damage taken",
-                        "Damage taken",
-                        String.valueOf(Math.pow(0.9, PlayerUpgrades.get(Player).get("Defense"))),
-                        String.valueOf(Math.pow(0.9, PlayerUpgrades.get(Player).get("Defense") + 1)),
-                        String.valueOf(75 + 50 * PlayerUpgrades.get(Player).get("Defense"))
-                )
-        );
         ItemStack speed = MainUpgradesGUI.SetIcon(
                 Material.LEATHER_BOOTS,
                 TextColorGradient(
@@ -87,10 +73,39 @@ public class DefenceUpgradesGUI extends MainUpgradesGUI implements Listener {
                         String.valueOf(30 + 30 * PlayerUpgrades.get(Player).get("Regeneration"))
                 )
         );
+        ItemStack defence = MainUpgradesGUI.SetIcon(
+                Material.GOLDEN_CHESTPLATE,
+                TextColorGradient(
+                        "Defence",
+                        upgradeGradient,
+                        true),
+                CreateUpgradeLore(
+                        "Decreases damage taken",
+                        "Damage taken",
+                        String.valueOf(Math.pow(0.9, PlayerUpgrades.get(Player).get("Defense"))),
+                        String.valueOf(Math.pow(0.9, PlayerUpgrades.get(Player).get("Defense") + 1)),
+                        String.valueOf(75 + 50 * PlayerUpgrades.get(Player).get("Defense"))
+                )
+        );
+        ItemStack abilityCooldown = MainUpgradesGUI.SetIcon(
+                Material.CLOCK,
+                TextColorGradient(
+                        "Ability Cooldown",
+                        upgradeGradient,
+                        true),
+                CreateUpgradeLore(
+                        "Reduces ability cooldown",
+                        "Ability cooldown mult",
+                        String.valueOf(Math.pow(0.95, PlayerUpgrades.get(Player).get("Ability Cooldown"))),
+                        String.valueOf(Math.pow(0.95, PlayerUpgrades.get(Player).get("Ability Cooldown") + 1)),
+                        String.valueOf(40 + 30 * PlayerUpgrades.get(Player).get("Ability Cooldown"))
+                )
+        );
         gui.setItem(10, health);
-        gui.setItem(12, defence);
-        gui.setItem(14, speed);
+        gui.setItem(4, speed);
         gui.setItem(16, regeneration);
+        gui.setItem(21, defence);
+        gui.setItem(23, abilityCooldown);
 
         ItemStack returnToMain = SetIcon(
                 Material.BARRIER,
@@ -130,6 +145,9 @@ public class DefenceUpgradesGUI extends MainUpgradesGUI implements Listener {
         }
         else if (ClickedItem == Material.GOLDEN_APPLE) {
             BuyUpgrade(Player, "Regeneration", 30 + 30 * PlayerUpgrades.get(Player).get("Regeneration"), "Defence");
+        }
+        else if (ClickedItem == Material.CLOCK) {
+            BuyUpgrade(Player, "Ability Cooldown", 40 + 30 * PlayerUpgrades.get(Player).get("Ability Cooldown"), "Defence");
         }
     }
 }

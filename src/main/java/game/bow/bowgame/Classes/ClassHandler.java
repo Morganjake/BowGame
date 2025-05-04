@@ -51,7 +51,7 @@ public class ClassHandler implements Listener {
             return;
         }
 
-        float Cooldown = (float) (30.0 / Math.pow(1.05, PlayerUpgrades.get(Player).get("Ability Cooldown")));
+        float Cooldown = (float) (30.0 * Math.pow(0.95, PlayerUpgrades.get(Player).get("Ability Cooldown")));
 
         if (MagicOverloadActive.contains(Player)) {
             Cooldown /= 2;
