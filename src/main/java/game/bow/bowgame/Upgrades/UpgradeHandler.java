@@ -30,7 +30,7 @@ public class UpgradeHandler {
                 Map.entry("Damage", 0),
                 Map.entry("Velocity", 0),
                 Map.entry("Backstab", 0),
-                Map.entry("Poison", 0),
+                Map.entry("Bleed", 0),
                 Map.entry("Bounce", 0),
                 Map.entry("Health", 0),
                 Map.entry("Defense", 0),

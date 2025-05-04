@@ -73,18 +73,18 @@ public class BowUpgradesGUI extends MainUpgradesGUI implements Listener {
                         String.valueOf(50 + 40 * PlayerUpgrades.get(Player).get("Backstab"))
                 )
         );
-        ItemStack poison = MainUpgradesGUI.SetIcon(
-                Material.POISONOUS_POTATO,
+        ItemStack bleed = MainUpgradesGUI.SetIcon(
+                Material.POINTED_DRIPSTONE,
                 TextColorGradient(
-                        "Poison",
+                        "Bleed",
                         upgradeGradient, // Orange-red gradient
                         true),
                 CreateUpgradeLore(
-                        "Increases poison duration",
-                        "Poison duration",
-                        String.valueOf(PlayerUpgrades.get(Player).get("Poison") * 2),
-                        String.valueOf(PlayerUpgrades.get(Player).get("Poison") * 2 + 2),
-                        String.valueOf(60 + 60 * PlayerUpgrades.get(Player).get("Poison"))
+                        "Increases bleed duration",
+                        "Bleed duration",
+                        String.valueOf(PlayerUpgrades.get(Player).get("Bleed") * 2),
+                        String.valueOf(PlayerUpgrades.get(Player).get("Bleed") * 2 + 2),
+                        String.valueOf(60 + 60 * PlayerUpgrades.get(Player).get("Bleed"))
                 )
         );
         ItemStack bounce = MainUpgradesGUI.SetIcon(
@@ -104,7 +104,7 @@ public class BowUpgradesGUI extends MainUpgradesGUI implements Listener {
         GUI.setItem(4, velocity);
         GUI.setItem(10, arrowDamage);
         GUI.setItem(16, backstab);
-        GUI.setItem(21, poison);
+        GUI.setItem(21, bleed);
         GUI.setItem(23, bounce);
 
         ItemStack returnToMain = SetIcon(
@@ -139,8 +139,8 @@ public class BowUpgradesGUI extends MainUpgradesGUI implements Listener {
         else if (ClickedItem == Material.IRON_SWORD) {
             BuyUpgrade(Player, "Backstab", 50 + 40 * PlayerUpgrades.get(Player).get("Backstab"), "Bow");
         }
-        else if (ClickedItem == Material.POISONOUS_POTATO) {
-            BuyUpgrade(Player, "Poison", 60 + 60 * PlayerUpgrades.get(Player).get("Poison"), "Bow");
+        else if (ClickedItem == Material.POINTED_DRIPSTONE) {
+            BuyUpgrade(Player, "Bleed", 60 + 60 * PlayerUpgrades.get(Player).get("Bleed"), "Bow");
         }
         else if (ClickedItem == Material.SLIME_BALL) {
             BuyUpgrade(Player, "Bounce", 70 + 35 * PlayerUpgrades.get(Player).get("Bounce"), "Bow");

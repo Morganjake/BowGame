@@ -19,9 +19,11 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -43,6 +45,8 @@ public class PlayerHandler implements Listener {
     public static List<Player> BlueTeam = new ArrayList<>();
     public static List<Player> RedTeam = new ArrayList<>();
     public static List<Block> CorpseBits = new ArrayList<>();
+
+    private static HashMap<Player, Integer> BleedDuration =  new HashMap<>();
 
 
     public static void AddPlayerToGame(Player Player, String Team) {
@@ -193,8 +197,42 @@ public class PlayerHandler implements Listener {
             double Damage = (PlayerUpgrades.get(Player).get("Damage") + 10) * BowPullback;
             Damage *= Math.pow(0.9, PlayerUpgrades.get(Victim).get("Defense"));
 
-            if (PlayerUpgrades.get(Player).get("Poison") > 0 && BowPullback > 0.9) {
-                Victim.addPotionEffect(new PotionEffect(PotionEffectType.POISON, PlayerUpgrades.get(Player).get("Poison") * 40, 1));
+            if (PlayerUpgrades.get(Player).get("Bleed") > 0 && BowPullback > 0.9) {
+
+                if (BleedDuration.containsKey(Victim)) {
+                    BleedDuration.replace(Victim, PlayerUpgrades.get(Player).get("Bleed") * 2);
+                }
+                else {
+                    BleedDuration.put(Victim, PlayerUpgrades.get(Player).get("Bleed") * 2);
+
+                    Player FinalPlayer = Player;
+
+                    new BukkitRunnable() {
+
+                        @Override
+                        public void run() {
+
+                            if (BleedDuration.get(Victim) > 0) {
+                                BleedDuration.replace(Victim, BleedDuration.get(Victim) - 1);
+
+                                if (Victim.getHealth() - 1 <= 0) {
+                                    BleedDuration.remove(Victim);
+                                    KillPlayer(Victim, FinalPlayer);
+                                    cancel();
+                                    return;
+                                }
+
+                                Victim.setHealth(Victim.getHealth() - 1.0);
+                                Victim.getWorld().playSound(Victim.getLocation(), Sound.ENTITY_GENERIC_HURT,1, 1);
+
+                                Victim.getWorld().spawnParticle(Particle.ITEM, Victim.getLocation(), 20, 0, 0, 0, 0, new ItemStack(Material.REDSTONE));
+                            }
+                            else {
+                                cancel();
+                            }
+                        }
+                    }.runTaskTimer(BowGame.GetPlugin(), 20L, 20L);
+                }
             }
 
             if (PlayerUpgrades.get(Player).get("Backstab") > 0) {
