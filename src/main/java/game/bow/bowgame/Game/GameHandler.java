@@ -219,6 +219,7 @@ public class GameHandler implements Listener {
         SpaceWarpLocations = new HashMap<>();
         WarpedEnemies = new ArrayList<>();
         Cooldowns = new HashMap<>();
+        MagicOverloadActive = new ArrayList<>();
 
         if (ArrowGenerator != null) { ArrowGenerator.cancel(); }
         if (PlayerHealer != null) { PlayerHealer.cancel(); }
@@ -400,8 +401,10 @@ public class GameHandler implements Listener {
         }
 
         if (MagicOverloadActive.contains(Player)) {
-            for (Arrow IllusionArrow : IllusionArrows.get(Player)) {
-                ShootIllusionArrow(Player, IllusionArrow);
+            if (IllusionArrows.containsKey(Player)) {
+                for (Arrow IllusionArrow : IllusionArrows.get(Player)) {
+                    ShootIllusionArrow(Player, IllusionArrow);
+                }
             }
         }
     }
