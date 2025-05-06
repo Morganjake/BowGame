@@ -82,8 +82,14 @@ public class Demolitionist implements Listener {
             @Override
             public void run() {
 
-                if (GameEnded) { cancel(); }
-                if (AirStrikeCount[0] > 5) { cancel(); }
+                if (GameEnded) {
+                    cancel();
+                    return;
+                }
+                if (AirStrikeCount[0] > 5) {
+                    cancel();
+                    return;
+                }
                 AirStrikeCount[0]++;
 
                 for (Player Enemy : EnemyTeam) {
@@ -108,8 +114,14 @@ public class Demolitionist implements Listener {
             @Override
             public void run() {
 
-                if (GameEnded) { cancel(); }
-                if (AirStrikeCount[0] > 5) { cancel(); }
+                if (GameEnded) {
+                    cancel();
+                    return;
+                }
+                if (AirStrikeCount[0] > 5) {
+                    cancel();
+                    return;
+                }
 
                 for (Location AirStrikeLocation : AirStrikeLocations) {
                     Player.getWorld().spawnParticle(Particle.EXPLOSION, AirStrikeLocation, 1);
@@ -134,8 +146,14 @@ public class Demolitionist implements Listener {
             @Override
             public void run() {
 
-                if (GameEnded) { cancel(); }
-                if (AirStrikeTickCount[0] > 100) { cancel(); }
+                if (GameEnded) {
+                    cancel();
+                    return;
+                }
+                if (AirStrikeTickCount[0] > 100) {
+                    cancel();
+                    return;
+                }
                 AirStrikeTickCount[0]++;
 
                 for (Player Enemy : EnemyTeam) {
@@ -143,7 +161,6 @@ public class Demolitionist implements Listener {
                     Enemy.playSound(Enemy, Sound.BLOCK_NOTE_BLOCK_PLING, 0.2f, 1);
                 }
             }
-
         }.runTaskTimer(BowGame.GetPlugin(), 0L, 2L);
     }
 }
