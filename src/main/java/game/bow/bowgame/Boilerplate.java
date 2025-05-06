@@ -17,6 +17,7 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.player.*;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
@@ -128,6 +129,7 @@ public class Boilerplate implements Listener {
                 ));
             }
 
+            // Kill floor on the end map
             Material BlockUnderPlayer = Player.getWorld().getBlockAt(Player.getLocation().add(new Vector(0, -1,0))).getType();
 
             if (Event.getPlayer().getGameMode() == GameMode.ADVENTURE && Player.getLocation().getY() < 85.1 && BlockUnderPlayer == Material.OBSIDIAN) {
@@ -161,10 +163,27 @@ public class Boilerplate implements Listener {
     public void OnPlayerTeleport(PlayerTeleportEvent Event) {
         Player Player = Event.getPlayer();
 
+        // Sets dead players back to spectator when do to the end
         if (DeadPlayers.contains(Player)) {
-            Bukkit.getScheduler().runTaskLater(BowGame.GetPlugin(), () -> {
-                Player.setGameMode(GameMode.SPECTATOR);
-            }, 1L);
+
+            final int[] i = {0};
+
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    Player.sendMessage(String.valueOf(Player.getLocation()));
+                    if (Player.getWorld().getName().equals("world_the_end")) {
+                        Bukkit.getScheduler().runTaskLater(BowGame.GetPlugin(), () -> {
+                            Player.setGameMode(GameMode.SPECTATOR);
+                        }, 1L);
+                        cancel();
+                    }
+                    else if (i[0] == 100) {
+                        cancel();
+                    }
+                    i[0]++;
+                }
+            }.runTaskTimer(BowGame.GetPlugin(), 1L, 1L);
         }
     }
 
