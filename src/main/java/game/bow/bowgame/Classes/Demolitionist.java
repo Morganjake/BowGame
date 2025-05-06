@@ -86,7 +86,7 @@ public class Demolitionist implements Listener {
                     cancel();
                     return;
                 }
-                if (AirStrikeCount[0] > 5) {
+                if (AirStrikeCount[0] > 6) {
                     cancel();
                     return;
                 }
@@ -118,7 +118,7 @@ public class Demolitionist implements Listener {
                     cancel();
                     return;
                 }
-                if (AirStrikeCount[0] > 5) {
+                if (AirStrikeCount[0] > 6) {
                     cancel();
                     return;
                 }
@@ -130,7 +130,7 @@ public class Demolitionist implements Listener {
                     Player.getWorld().playSound(AirStrikeLocation, Sound.ENTITY_GENERIC_EXPLODE, 1, 1);
 
                     for (Player OtherPlayer : Players) {
-                        if (AirStrikeLocation.distance(OtherPlayer.getLocation()) < 1.5) {
+                        if (AirStrikeLocation.distance(OtherPlayer.getLocation()) < 1.75) {
                             OtherPlayer.damage(12, Player);
                         }
                     }
@@ -150,7 +150,7 @@ public class Demolitionist implements Listener {
                     cancel();
                     return;
                 }
-                if (AirStrikeTickCount[0] > 100) {
+                if (AirStrikeTickCount[0] > 120) {
                     cancel();
                     return;
                 }
