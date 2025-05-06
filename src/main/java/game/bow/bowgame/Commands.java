@@ -1,6 +1,7 @@
 package game.bow.bowgame;
 
 import game.bow.bowgame.Upgrades.MainUpgradesGUI;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -14,8 +15,7 @@ import static game.bow.bowgame.Boilerplate.SandboxPlayers;
 import static game.bow.bowgame.Classes.ClassHandler.*;
 import static game.bow.bowgame.Game.GameHandler.*;
 import static game.bow.bowgame.Game.GameUIHandler.UpdateScoreBoard;
-import static game.bow.bowgame.Game.PlayerHandler.DeadPlayers;
-import static game.bow.bowgame.Game.PlayerHandler.Players;
+import static game.bow.bowgame.Game.PlayerHandler.*;
 import static game.bow.bowgame.Upgrades.UpgradeHandler.*;
 
 public class Commands implements CommandExecutor, TabCompleter {
@@ -118,6 +118,14 @@ public class Commands implements CommandExecutor, TabCompleter {
                 ((Player) CommandSender).setGameMode(GameMode.SPECTATOR);
                 ((Player) CommandSender).getInventory().setItem(0, null);
                 return true;
+
+            case "kill":
+                if (Args.length >= 2) {
+                    if (Bukkit.getPlayer(Args[1]) != null) {
+                        KillPlayer(Bukkit.getPlayer(Args[1]), (Player) CommandSender);
+                    }
+                }
+                return true;
         }
 
         return false;
@@ -137,6 +145,7 @@ public class Commands implements CommandExecutor, TabCompleter {
         suggestions.add("resetstats");
         suggestions.add("setstat");
         suggestions.add("deadstate");
+        suggestions.add("kill");
 
         return suggestions;
     }
