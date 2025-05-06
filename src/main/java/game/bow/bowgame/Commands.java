@@ -1,6 +1,7 @@
 package game.bow.bowgame;
 
 import game.bow.bowgame.Upgrades.MainUpgradesGUI;
+import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -13,6 +14,7 @@ import static game.bow.bowgame.Boilerplate.SandboxPlayers;
 import static game.bow.bowgame.Classes.ClassHandler.*;
 import static game.bow.bowgame.Game.GameHandler.*;
 import static game.bow.bowgame.Game.GameUIHandler.UpdateScoreBoard;
+import static game.bow.bowgame.Game.PlayerHandler.DeadPlayers;
 import static game.bow.bowgame.Game.PlayerHandler.Players;
 import static game.bow.bowgame.Upgrades.UpgradeHandler.*;
 
@@ -108,6 +110,14 @@ public class Commands implements CommandExecutor, TabCompleter {
                     PlayerUpgrades.put((Player) CommandSender, NewPlayerUpgrades);
                 }
                 return true;
+
+            case "deadstate":
+                if (DeadPlayers.contains((Player) CommandSender)) { return true; }
+
+                DeadPlayers.add((Player) CommandSender);
+                ((Player) CommandSender).setGameMode(GameMode.SPECTATOR);
+                ((Player) CommandSender).getInventory().setItem(0, null);
+                return true;
         }
 
         return false;
@@ -126,6 +136,7 @@ public class Commands implements CommandExecutor, TabCompleter {
         suggestions.add("sandbox");
         suggestions.add("resetstats");
         suggestions.add("setstat");
+        suggestions.add("deadstate");
 
         return suggestions;
     }
