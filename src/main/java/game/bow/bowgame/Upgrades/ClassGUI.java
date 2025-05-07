@@ -8,12 +8,16 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 import static game.bow.bowgame.Classes.ClassHandler.ClassWeapons;
 import static game.bow.bowgame.Classes.ClassHandler.Classes;
 import static game.bow.bowgame.Classes.Mage.SelectedSpell;
+import static game.bow.bowgame.Game.PlayerHandler.BlueTeam;
+import static game.bow.bowgame.Game.PlayerHandler.Players;
 
 public class ClassGUI extends MainUpgradesGUI  {
 
@@ -45,7 +49,7 @@ public class ClassGUI extends MainUpgradesGUI  {
                 Arrays.asList(
                         "§1§lSpacial Rearrangement: §9Arrows curve slightly towards players",
                         "§1§lSpace Warp: §9Create a wormhole to teleport back to instantly and create a wormhole at your location",
-                        "§1§lSpatial Tear: §9Bring an enemy into another world where you extra damage"
+                        "§1§lSpatial Tear: §9Brings an enemy into another world where you extra damage"
                 )
         );
 
@@ -114,6 +118,26 @@ public class ClassGUI extends MainUpgradesGUI  {
         GUI.setItem(13, Astronaut);
         GUI.setItem(14, Hacker);
         GUI.setItem(15, Mage);
+
+        for (Player OtherPlayer : Players) {
+            if (BlueTeam.contains(Player) == BlueTeam.contains(OtherPlayer)) {
+                ItemStack PlayerHead = new ItemStack(Material.PLAYER_HEAD);
+                SkullMeta HeadMeta = (SkullMeta) PlayerHead.getItemMeta();
+                Objects.requireNonNull(HeadMeta).setDisplayName(OtherPlayer.getDisplayName());
+                Objects.requireNonNull(HeadMeta).setOwningPlayer(OtherPlayer);
+                PlayerHead.setItemMeta(HeadMeta);
+                GUI.setItem(switch (Classes.get(OtherPlayer)) {
+                            case "Space Weaver" -> 20;
+                            case "Demolitionist" -> 21;
+                            case "Astronaut" -> 22;
+                            case "Hacker" -> 23;
+                            case "Mage" -> 24;
+                            default -> 26;
+                        },
+                        PlayerHead);
+            }
+        }
+
         Player.openInventory(GUI);
     }
 
@@ -143,7 +167,7 @@ public class ClassGUI extends MainUpgradesGUI  {
                     Arrays.asList(
                             "§1§lSpacial Rearrangement: §9Arrows curve slightly towards players",
                             "§1§lSpace Warp: §9Create a wormhole to teleport back to instantly and create a wormhole at your location",
-                            "§1§lSpatial Tear: §9Bring an enemy into another world where you extra damage"
+                            "§1§lSpatial Tear: §9Brings an enemy into another world where you extra damage"
                     )
             ));
             Player.playSound(Player, Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
