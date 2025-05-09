@@ -14,6 +14,8 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.List;
@@ -64,6 +66,12 @@ public class Hacker implements Listener {
                 BlueTeamHacked = true;
             }
 
+            List<Player> Team = BlueTeam.contains(Player) ? RedTeam : BlueTeam;
+
+            for (Player Enemy : Team) {
+                Enemy.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 10, 0, false, false));
+            }
+
             int[] i = {0};
 
             new BukkitRunnable() {
@@ -82,8 +90,6 @@ public class Hacker implements Listener {
                         return;
                     }
                     i[0]++;
-
-                    List<Player> Team = BlueTeam.contains(Player) ? RedTeam : BlueTeam;
 
                     for (Player Enemy : Team) {
                         Player.getWorld().spawnParticle(Particle.ANGRY_VILLAGER, Enemy.getEyeLocation(), 1, 0.5, 0.5, 0.5);
