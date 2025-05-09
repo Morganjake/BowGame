@@ -42,7 +42,7 @@ public class ClassGUI extends MainUpgradesGUI  {
         ItemStack SpaceWeaver = MainUpgradesGUI.SetIcon(
                 Material.ECHO_SHARD,
                 TextColorGradient(
-                        "Space Weaver",
+                        "Space Weaver ★★☆☆☆",
                         Arrays.asList("#554AB5", "#E81817", "#554AB5"),
                         true
                 ),
@@ -56,7 +56,7 @@ public class ClassGUI extends MainUpgradesGUI  {
         ItemStack Demolitionist = MainUpgradesGUI.SetIcon(
                 Material.GUNPOWDER,
                 TextColorGradient(
-                        "Demolitionist",
+                        "Demolitionist ★☆☆☆☆",
                         Arrays.asList("#A41513", "#E81817", "#A41513"),
                         true
                 ),
@@ -70,7 +70,7 @@ public class ClassGUI extends MainUpgradesGUI  {
         ItemStack Astronaut = MainUpgradesGUI.SetIcon(
                 Material.NETHER_STAR,
                 TextColorGradient(
-                        "Astronaut",
+                        "Astronaut ★★☆☆☆",
                         Arrays.asList("#231E49", "#4F368F", "#231E49"),
                         true
                 ),
@@ -84,7 +84,7 @@ public class ClassGUI extends MainUpgradesGUI  {
         ItemStack Hacker = MainUpgradesGUI.SetIcon(
                 Material.LEATHER_HELMET,
                 TextColorGradient(
-                        "Hacker",
+                        "Hacker ★★★☆☆",
                         Arrays.asList("#6D7A92", "#5F6A7f", "#6D7A92"),
                         true
                 ),
@@ -98,7 +98,7 @@ public class ClassGUI extends MainUpgradesGUI  {
         ItemStack Mage = MainUpgradesGUI.SetIcon(
                 Material.NETHERITE_SHOVEL,
                 TextColorGradient(
-                        "Mage",
+                        "Mage ★★★★☆",
                         Arrays.asList("#A12092", "#DB25C6", "#A12092"),
                         true
                 ),
