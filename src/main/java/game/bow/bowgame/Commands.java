@@ -3,11 +3,20 @@ package game.bow.bowgame;
 import game.bow.bowgame.Upgrades.MainUpgradesGUI;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.*;
 
@@ -18,7 +27,9 @@ import static game.bow.bowgame.Game.GameUIHandler.UpdateScoreBoard;
 import static game.bow.bowgame.Game.PlayerHandler.*;
 import static game.bow.bowgame.Upgrades.UpgradeHandler.*;
 
-public class Commands implements CommandExecutor, TabCompleter {
+public class Commands implements CommandExecutor, TabCompleter, Listener {
+
+    public static ArrayList<Player> StartSelectPlayers = new ArrayList<>();
 
     @Override
     public boolean onCommand(CommandSender CommandSender, Command Command, String Label, String[] Args) {
@@ -39,7 +50,7 @@ public class Commands implements CommandExecutor, TabCompleter {
         switch (Args[0].toLowerCase()) {
             case "start":
                 StopGame();
-                StartGame();
+                StartGame(false);
                 return true;
 
             case "stop":
@@ -126,6 +137,35 @@ public class Commands implements CommandExecutor, TabCompleter {
                     }
                 }
                 return true;
+                
+            case "startselect":
+
+                Inventory GUI = Bukkit.createInventory(null, 54, "§3§lSelect blue team players");
+
+                int PlayerCount = 0;
+
+                for (Player Player : Bukkit.getOnlinePlayers()) {
+
+                    ItemStack PlayerHead = new ItemStack(Material.PLAYER_HEAD);
+                    SkullMeta HeadMeta = (SkullMeta) PlayerHead.getItemMeta();
+                    Objects.requireNonNull(HeadMeta).setDisplayName(Player.getDisplayName());
+                    Objects.requireNonNull(HeadMeta).setOwningPlayer(Player);
+                    PlayerHead.setItemMeta(HeadMeta);
+
+                    GUI.setItem(PlayerCount, PlayerHead);
+
+                    PlayerCount++;
+                }
+
+                ItemStack ConfirmButton = new ItemStack(Material.GREEN_STAINED_GLASS_PANE);
+                ItemMeta ConfirmButtonMeta = ConfirmButton.getItemMeta();
+                Objects.requireNonNull(ConfirmButtonMeta).setItemName("§a§lConfirm players");
+                ConfirmButton.setItemMeta(ConfirmButtonMeta);
+
+                GUI.setItem(53, ConfirmButton);
+                ((Player) CommandSender).openInventory(GUI);
+
+                return true;
         }
 
         return false;
@@ -146,7 +186,33 @@ public class Commands implements CommandExecutor, TabCompleter {
         suggestions.add("setstat");
         suggestions.add("deadstate");
         suggestions.add("kill");
+        suggestions.add("startselect");
 
         return suggestions;
+    }
+
+    @EventHandler
+    public void OnInventoryClick(InventoryClickEvent Event) {
+
+        Player Player = (Player) Event.getWhoClicked();
+        ItemStack ClickedItem = Event.getCurrentItem();
+
+        if (ClickedItem == null || !Event.getView().getTitle().equals("§3§lSelect blue team players")) {
+            return;
+        }
+
+        Event.setCancelled(true);
+
+        Material Item = ClickedItem.getType();
+
+        if (Item == Material.PLAYER_HEAD) {
+            StartSelectPlayers.add(Bukkit.getPlayer(Objects.requireNonNull(((SkullMeta) Objects.requireNonNull(ClickedItem.getItemMeta())).getOwner())));
+            Player.playSound(Player, Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
+        }
+
+        else if (Item == Material.GREEN_STAINED_GLASS_PANE) {
+            StartGame(true);
+            Player.playSound(Player, Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
+        }
     }
 }

@@ -121,6 +121,8 @@ public class ClassGUI extends MainUpgradesGUI  {
 
         for (Player OtherPlayer : Players) {
             if (BlueTeam.contains(Player) == BlueTeam.contains(OtherPlayer)) {
+                if (!Classes.containsKey(OtherPlayer)) { continue; }
+
                 ItemStack PlayerHead = new ItemStack(Material.PLAYER_HEAD);
                 SkullMeta HeadMeta = (SkullMeta) PlayerHead.getItemMeta();
                 Objects.requireNonNull(HeadMeta).setDisplayName(OtherPlayer.getDisplayName());
@@ -242,6 +244,7 @@ public class ClassGUI extends MainUpgradesGUI  {
 
         for (Player OtherPlayer : Players) {
             if (BlueTeam.contains(Player) == BlueTeam.contains(OtherPlayer) && Player != OtherPlayer) {
+                SelectClass(OtherPlayer);
                 if (Objects.equals(Classes.get(Player), Classes.get(OtherPlayer))) {
                     Player.sendMessage("§4§l" + OtherPlayer.getName() + " has already selected the " + Classes.get(Player) + " class!");
                     Classes.remove(Player);

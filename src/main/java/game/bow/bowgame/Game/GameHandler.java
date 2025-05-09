@@ -27,6 +27,7 @@ import static game.bow.bowgame.Classes.ClassHandler.*;
 import static game.bow.bowgame.Classes.Mage.MagicOverloadActive;
 import static game.bow.bowgame.Classes.Mage.ShootIllusionArrow;
 import static game.bow.bowgame.Classes.SpaceWeaver.*;
+import static game.bow.bowgame.Commands.StartSelectPlayers;
 import static game.bow.bowgame.Game.ArrowEffectHandler.CheckForEffects;
 import static game.bow.bowgame.Game.ArrowEffectHandler.CheckForEnchant;
 import static game.bow.bowgame.Game.DeathMessagesHandler.DamageTaken;
@@ -102,14 +103,22 @@ public class GameHandler implements Listener {
             }
     };
 
-    public static void StartGame() {
+    public static void StartGame(boolean SelectedBlueTeam) {
 
         StopGame();
 
         BlueScore = 0;
         RedScore = 0;
 
-        boolean PutOnBlueTeam = true;
+        boolean PutOnBlueTeam = !SelectedBlueTeam;
+
+        if (SelectedBlueTeam) {
+            for (Player Player : StartSelectPlayers) {
+                AddPlayerToGame(Player, "Blue");
+                Kills.put(Player, 0);
+                Deaths.put(Player, 0);
+            }
+        }
 
         for (Player Player : Bukkit.getOnlinePlayers()) {
 
@@ -117,13 +126,17 @@ public class GameHandler implements Listener {
                 AddPlayerToGame(Player, "Blue");
             }
             else {
-                AddPlayerToGame(Player, "Red");
+                if (!SelectedBlueTeam || !StartSelectPlayers.contains(Player)) {
+                    AddPlayerToGame(Player, "Red");
+                }
             }
 
             Kills.put(Player, 0);
             Deaths.put(Player, 0);
 
-            PutOnBlueTeam = !PutOnBlueTeam;
+            if (!SelectedBlueTeam) {
+                PutOnBlueTeam = !PutOnBlueTeam;
+            }
         }
 
         // Removes all the players in sandbox mode before starting

@@ -29,6 +29,7 @@ public final class BowGame extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new Boilerplate() ,this);
         getServer().getPluginManager().registerEvents(new PlayerHandler() ,this);
         getServer().getPluginManager().registerEvents(new GameHandler() ,this);
+        getServer().getPluginManager().registerEvents(new Commands() ,this);
         getServer().getPluginManager().registerEvents(new GUIListener(), this);
         getServer().getPluginManager().registerEvents(new BowUpgradesGUI(), this);
         getServer().getPluginManager().registerEvents(new DefenceUpgradesGUI(), this);
