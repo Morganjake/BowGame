@@ -170,7 +170,6 @@ public class ClassGUI extends MainUpgradesGUI  {
                             "§1§lSpatial Tear: §9Brings an enemy into another world where you extra damage"
                     )
             ));
-            Player.playSound(Player, Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
         }
         else if (Item == Material.GUNPOWDER) {
             Classes.put(Player, "Demolitionist");
@@ -187,7 +186,6 @@ public class ClassGUI extends MainUpgradesGUI  {
                             "§4§lAirstrike: §cCall an airstrike down on your enemies"
                     )
             ));
-            Player.playSound(Player, Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
         }
         else if (Item == Material.NETHER_STAR) {
             Classes.put(Player, "Astronaut");
@@ -204,7 +202,6 @@ public class ClassGUI extends MainUpgradesGUI  {
                             "§1§lUntouchable: §9Create a shield of gravity repelling arrows away from you"
                     )
             ));
-            Player.playSound(Player, Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
         }
         else if (Item == Material.LEATHER_HELMET) {
             Classes.put(Player, "Hacker");
@@ -221,7 +218,6 @@ public class ClassGUI extends MainUpgradesGUI  {
                             "§7§lShutdown: §fDrastically reduce your enemies velocity"
                     )
             ));
-            Player.playSound(Player, Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
         }
         else if (Item == Material.NETHERITE_SHOVEL) {
             Classes.put(Player, "Mage");
@@ -242,7 +238,20 @@ public class ClassGUI extends MainUpgradesGUI  {
                     )
             ));
             SelectedSpell.put(Player, 1);
-            Player.playSound(Player, Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
         }
+
+        for (Player OtherPlayer : Players) {
+            if (BlueTeam.contains(Player) == BlueTeam.contains(OtherPlayer) && Player != OtherPlayer) {
+                if (Objects.equals(Classes.get(Player), Classes.get(OtherPlayer))) {
+                    Player.sendMessage("§4§l" + OtherPlayer.getName() + " has already selected the " + Classes.get(Player) + " class!");
+                    Classes.remove(Player);
+                    ClassWeapons.remove(Player);
+                    Player.playSound(Player, Sound.ENTITY_VILLAGER_NO, 1, 1);
+                    return;
+                }
+            }
+        }
+
+        Player.playSound(Player, Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
     }
 }
