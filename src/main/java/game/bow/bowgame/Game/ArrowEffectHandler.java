@@ -77,7 +77,7 @@ public class ArrowEffectHandler {
                         SetPlayerArmour(InvisiblePlayer);
                     }
                 }
-            }.runTaskLater(BowGame.GetPlugin(), 300L);
+            }.runTaskLater(BowGame.GetPlugin(), 200L);
 
             InvisibilityArrows.remove(Arrow);
         }
