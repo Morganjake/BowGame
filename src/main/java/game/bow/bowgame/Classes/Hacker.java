@@ -69,7 +69,7 @@ public class Hacker implements Listener {
             List<Player> Team = BlueTeam.contains(Player) ? RedTeam : BlueTeam;
 
             for (Player Enemy : Team) {
-                Enemy.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 10, 0, false, false));
+                Enemy.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 200, 1, false, false));
             }
 
             int[] i = {0};

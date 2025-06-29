@@ -82,7 +82,7 @@ public class Astronaut implements Listener {
 
         int[] i = {0};
 
-        Player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 15, 1, false, false));
+        Player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 300, 1, false, false));
 
         new BukkitRunnable() {
             @Override
