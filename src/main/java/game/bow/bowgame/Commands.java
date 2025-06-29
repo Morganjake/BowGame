@@ -206,7 +206,10 @@ public class Commands implements CommandExecutor, TabCompleter, Listener {
         Material Item = ClickedItem.getType();
 
         if (Item == Material.PLAYER_HEAD) {
-            StartSelectPlayers.add(Bukkit.getPlayer(Objects.requireNonNull(((SkullMeta) Objects.requireNonNull(ClickedItem.getItemMeta())).getOwner())));
+            Player HeadPlayer = Bukkit.getPlayer(Objects.requireNonNull(((SkullMeta) Objects.requireNonNull(ClickedItem.getItemMeta())).getOwner()));
+            if (!StartSelectPlayers.contains(HeadPlayer)) {
+                StartSelectPlayers.add(HeadPlayer);
+            }
             Player.playSound(Player, Sound.BLOCK_NOTE_BLOCK_PLING, 1, 1);
         }
 
