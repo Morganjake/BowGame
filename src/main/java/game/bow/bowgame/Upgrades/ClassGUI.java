@@ -69,7 +69,7 @@ public class ClassGUI extends MainUpgradesGUI  {
                         true
                 ),
                 Arrays.asList(
-                        "§4§lBomb man: §cExplosives are cheaper",
+                        "§4§lBomb Man: §cExplosives are cheaper",
                         "§4§lExplosive Arrow: §cLets you shoot an explosive arrow dealing AOE damage",
                         "§4§lAirstrike: §cCall an airstrike down on your enemies"
                 )
