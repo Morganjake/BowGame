@@ -5,4 +5,4 @@ api-version: '1.21'
 commands:
     bowgame:
         description: Controls the Bow Game plugin
-        usage: /bowgame <start|stop|upgradesgui|testgui>
+        usage: /bowgame

@@ -35,6 +35,7 @@ import static game.bow.bowgame.Game.GameUIHandler.*;
 import static game.bow.bowgame.Game.ItemHandler.SlowedPlayers;
 import static game.bow.bowgame.Game.PlayerHandler.*;
 import static game.bow.bowgame.Upgrades.ClassGUI.SelectClass;
+import static game.bow.bowgame.Upgrades.ClassGUI.SelectedClasses;
 import static game.bow.bowgame.Upgrades.UpgradeHandler.PlayerUpgrades;
 import static game.bow.bowgame.Upgrades.UpgradeHandler.ResetStats;
 
@@ -153,7 +154,7 @@ public class GameHandler implements Listener {
             @Override
             public void run() {
 
-                // Waits 20 seconds or until all players has selected a class
+                // Waits 40 seconds or until all players has selected a class
                 boolean AllPlayersSelected = true;
                 for (Player Player : Players) {
                     SelectClass(Player);
@@ -192,6 +193,7 @@ public class GameHandler implements Listener {
         BlueTeam = new ArrayList<>();
         RedTeam = new ArrayList<>();
 
+        SelectedClasses = new HashMap<>();
         Classes = new HashMap<>();
         UltPoints = new HashMap<>();
 
@@ -330,12 +332,7 @@ public class GameHandler implements Listener {
 
                     if (Player.getGameMode() == GameMode.SPECTATOR) { continue; }
 
-                    if ((Player.getHealth() + 1 + (double) PlayerUpgrades.get(Player).get("Regeneration")) > Player.getMaxHealth()) {
-                        Player.setHealth(Player.getMaxHealth());
-                    }
-                    else {
-                        Player.setHealth(Player.getHealth() + 1 + (double) PlayerUpgrades.get(Player).get("Regeneration"));
-                    }
+                    Player.setHealth(Math.min((Player.getHealth() + 1 + (double) PlayerUpgrades.get(Player).get("Regeneration")), Player.getMaxHealth()));
                 }
             }
         };

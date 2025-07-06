@@ -31,7 +31,6 @@ public class ClassHandler implements Listener {
 
     public static boolean UltOrbTaken = false;
 
-
     public static void AddUltPoints(Player Player, int Amount) {
         UltPoints.replace(Player, Math.max(0, Math.min(UltPoints.get(Player) + Amount, 6)));
         Player.setExp((float) UltPoints.get(Player) * 17 / 6 / 17);
