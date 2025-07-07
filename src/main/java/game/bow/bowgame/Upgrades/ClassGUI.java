@@ -125,6 +125,8 @@ public class ClassGUI extends MainUpgradesGUI  {
                     Material.GREEN_STAINED_GLASS_PANE,
                     TextColorGradient("Confirm", List.of("#17c914"), true),
                     List.of("Confirming will stop you from changing your class")
+                    TextColorGradient("Confirm", List.of("#17c914", "#17c914"), true),
+                    List.of("§aConfirming will stop you from changing your class")
             );
             GUI.setItem(26, Confirm);
         }
