@@ -171,9 +171,9 @@ public class PlayerHandler implements Listener {
         if (!Players.contains(Player)) { return; }
         if (!PlayerUpgrades.containsKey(Player)) { return; }
 
-        Event.setDamage(0);
-
         if (Event.getDamager() instanceof Arrow) {
+
+            Event.setDamage(0);
 
             Arrow Arrow = (Arrow) Event.getDamager();
 
