@@ -57,7 +57,7 @@ public class ClassGUI extends MainUpgradesGUI  {
                 Arrays.asList(
                         "§1§lSpacial Rearrangement: §9Arrows curve slightly towards players",
                         "§1§lSpace Warp: §9Create a wormhole to teleport back to instantly and create a wormhole at your location",
-                        "§1§lSpatial Tear: §9Brings an enemy into another world where you extra damage"
+                        "§1§lSpatial Tear: §9Brings an enemy into another world where you deal extra damage"
                 )
         );
 
@@ -192,7 +192,7 @@ public class ClassGUI extends MainUpgradesGUI  {
                         Arrays.asList(
                                 "§1§lSpacial Rearrangement: §9Arrows curve slightly towards players",
                                 "§1§lSpace Warp: §9Create a wormhole to teleport back to instantly and create a wormhole at your location",
-                                "§1§lSpatial Tear: §9Brings an enemy into another world where you extra damage"
+                                "§1§lSpatial Tear: §9Brings an enemy into another world where you deal extra damage"
                         )
                 ));
            }
