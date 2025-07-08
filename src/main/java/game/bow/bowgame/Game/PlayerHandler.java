@@ -255,6 +255,9 @@ public class PlayerHandler implements Listener {
 
             CheckForEffects(Player, Victim, Arrow, true);
         }
+        else {
+            Event.setDamage(Event.getDamage() * Math.pow(0.9, PlayerUpgrades.get(Victim).get("Defense")));
+        }
 
         if (Victim.getHealth() - Event.getDamage() < 0) {
             Event.setCancelled(true);
