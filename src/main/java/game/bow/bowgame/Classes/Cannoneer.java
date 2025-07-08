@@ -167,9 +167,9 @@ public class Cannoneer implements Listener {
 
                 int ParticleCount = switch (CannonStrength.get(Player)) {
                     case 0, 1 -> 4;
-                    case 2, 3 -> 6;
-                    case 4, 5 -> 8;
-                    case 6 -> 10;
+                    case 2, 3 -> 5;
+                    case 4, 5 -> 6;
+                    case 6 -> 8;
                     default -> 0;
                 };
 
@@ -194,18 +194,16 @@ public class Cannoneer implements Listener {
                         int InnerParticleCount = ParticleCount;
 
                         Location Location;
-                        Particle.DustOptions DustColour;
+
 
                         if (SavedLocation.containsKey(Player)) {
                             Location = SavedLocation.get(Player).clone();
-                            DustColour = new Particle.DustOptions(Color.RED, 1);
                             InnerParticleCount *= 2;
-                            Offset[0] += 20;
+                            Offset[0] += 15;
                         }
                         else {
                             Location = Player.getEyeLocation();
-                            DustColour = new Particle.DustOptions(Color.GRAY, 1);
-                            Offset[0] += 5;
+                            Offset[0] += 3;
                         }
 
                         Vector Direction = Location.getDirection().normalize();
@@ -216,9 +214,24 @@ public class Cannoneer implements Listener {
                         for (int j = 0; j < 50; j++) {
                             Location.add(Direction.clone().multiply(4));
 
+                            Particle.DustOptions DustColour;
+
+                            if (SavedLocation.containsKey(Player)) {
+                                DustColour = new Particle.DustOptions(Color.RED, 2);
+                            }
+                            else {
+                                if (j % 2 == 0) {
+                                    DustColour = new Particle.DustOptions(Color.BLACK, 1);
+                                }
+                                else {
+                                    DustColour = new Particle.DustOptions(Color.YELLOW, 1);
+                                }
+                            }
+
                             for (int i = 0; i < InnerParticleCount; i++) {
 
-                                double Angle = Math.toRadians(((double) 360 / InnerParticleCount) * i + Offset[0]);
+                                double Angle = Math.toRadians(((double) 360 / InnerParticleCount) * i);
+                                Angle += j % 2 == 0 ? Offset[0] : -Offset[0];
 
                                 double X = Math.cos(Angle) * (CannonStrength.get(Player) + 1) / 2;
                                 double Y = Math.sin(Angle) * (CannonStrength.get(Player) + 1) / 2;
