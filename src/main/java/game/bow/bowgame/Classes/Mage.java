@@ -26,6 +26,8 @@ import static game.bow.bowgame.Boilerplate.SandboxPlayers;
 import static game.bow.bowgame.Classes.ClassHandler.*;
 import static game.bow.bowgame.Classes.ClassHandler.AddUltPoints;
 import static game.bow.bowgame.Game.GameHandler.*;
+import static game.bow.bowgame.Game.GameUIHandler.UpdatePlayerScoreBoard;
+import static game.bow.bowgame.Game.GameUIHandler.UpdateScoreBoard;
 import static game.bow.bowgame.Game.PlayerHandler.*;
 import static game.bow.bowgame.Upgrades.UpgradeHandler.PlayerUpgrades;
 
@@ -102,6 +104,8 @@ public class Mage implements Listener {
             Player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText("§d§lSwitched spell to Invisibility Arrow!"));
             SelectedSpell.put(Player, 3);
         }
+
+        UpdatePlayerScoreBoard(Player);
     }
 
     public static void ConfusionArrow(Player Victim) {

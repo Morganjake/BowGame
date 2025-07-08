@@ -9,7 +9,9 @@ import org.bukkit.scoreboard.*;
 
 import java.util.Arrays;
 
+import static game.bow.bowgame.Classes.ClassHandler.Classes;
 import static game.bow.bowgame.Classes.ClassHandler.UltPoints;
+import static game.bow.bowgame.Classes.Mage.SelectedSpell;
 import static game.bow.bowgame.Game.GameHandler.*;
 import static game.bow.bowgame.Game.PlayerHandler.*;
 import static game.bow.bowgame.Upgrades.GUIHandler.TextColorGradient;
@@ -46,6 +48,13 @@ public class GameUIHandler {
     }
 
     public static void UpdateScoreBoard() {
+        for (Player Player : Players) {
+            UpdatePlayerScoreBoard(Player);
+        }
+    }
+
+    public static void UpdatePlayerScoreBoard(Player PlayerToUpdate) {
+
         ScoreboardManager ScoreboardManager = Bukkit.getScoreboardManager();
         Scoreboard ScoreBoard = ScoreboardManager.getNewScoreboard();
 
@@ -104,8 +113,16 @@ public class GameUIHandler {
             }
         }
 
-        for (Player Player : Players) {
-            Player.setScoreboard(ScoreBoard);
+        if (Classes.get(PlayerToUpdate).equals("Mage")) {
+            Score a = Objective.getScore(switch (SelectedSpell.get(PlayerToUpdate)) {
+                case 1 -> "§dConfusion arrow selected";
+                case 2 -> "§dIllusion arrow selected";
+                case 3 -> "§dInvisibility arrow selected";
+                default -> "";
+            });
+            a.setScore(0);
         }
+
+        PlayerToUpdate.setScoreboard(ScoreBoard);
     }
 }
