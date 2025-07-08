@@ -1,6 +1,7 @@
 package game.bow.bowgame.Game;
 
 import game.bow.bowgame.BowGame;
+import game.bow.bowgame.Classes.Cannoneer;
 import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Arrow;
@@ -9,12 +10,12 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.checkerframework.checker.units.qual.A;
+import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+import static game.bow.bowgame.Classes.Cannoneer.*;
 import static game.bow.bowgame.Classes.ClassHandler.ClassWeapons;
 import static game.bow.bowgame.Classes.Mage.*;
 import static game.bow.bowgame.Game.GameHandler.*;
@@ -25,8 +26,8 @@ import static game.bow.bowgame.Upgrades.UpgradeHandler.PlayerUpgrades;
 public class ArrowEffectHandler {
 
     public static void CheckForEffects(Player Player, Player Victim, Arrow Arrow, Boolean DirectHit) {
-        if (ExplosiveArrows.contains(Arrow)) {
 
+        if (ExplosiveArrows.contains(Arrow)) {
             for (Player OtherPlayer : Players) {
                 if (OtherPlayer == Victim) { continue; }
                 if (Arrow.getLocation().distance(OtherPlayer.getLocation()) < 2) {
@@ -83,7 +84,7 @@ public class ArrowEffectHandler {
         }
     }
 
-    public static boolean CheckForEnchant(Player Player, ItemStack Bow, Arrow Arrow) {
+    public static boolean CheckForEnchant(Player Player, ItemStack Bow, Arrow Arrow, float Force) {
         if (Bow.containsEnchantment(Enchantment.LURE)) {
             ExplosiveArrows.add(Arrow);
             Bow.removeEnchantments();
@@ -119,6 +120,25 @@ public class ArrowEffectHandler {
             InvisibilityArrows.add(Arrow);
             Arrow.getWorld().playSound(Arrow.getLocation(), Sound.ENTITY_SPLASH_POTION_THROW, 1, 1);
             Bow.removeEnchantments();
+        }
+
+        else if (Bow.containsEnchantment(Enchantment.MENDING)) {
+
+            PlayersUsingCannon.remove(Player);
+
+            if (Force > 2.9) {
+                SavedLocation.put(Player, Player.getEyeLocation().clone());
+                ShootCannon(Player, CannonStrength.get(Player));
+            }
+            else {
+                Player.damage((double) 10 + (CannonStrength.get(Player)) * 6, Player);
+                Player.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, Player.getLocation(), 1);
+                Player.getWorld().playSound(Player.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 1, 1);
+                Player.getVelocity().add(new Vector(0, 1, 0));
+            }
+
+            Bow.removeEnchantments();
+            return true;
         }
 
         return false;

@@ -276,7 +276,6 @@ public class ItemHandler implements Listener {
                         if (Block.getType() != Material.AIR && Block.getType() != Material.BLUE_ICE && !Block.isPassable()) {
                             OriginalBlocks.put(Block, Block.getBlockData());
                             Block.setType(Material.BLUE_ICE, false);
-
                         }
                     }
                 }

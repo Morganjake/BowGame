@@ -3,14 +3,10 @@ package game.bow.bowgame.Upgrades;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.block.data.type.Slab;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Wither;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
@@ -19,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
+import static game.bow.bowgame.Classes.Cannoneer.CannonStrength;
 import static game.bow.bowgame.Classes.ClassHandler.ClassWeapons;
 import static game.bow.bowgame.Classes.ClassHandler.Classes;
 import static game.bow.bowgame.Classes.Mage.SelectedSpell;
@@ -30,7 +27,7 @@ public class ClassGUI extends MainUpgradesGUI  {
     public static HashMap<Player, String> SelectedClasses = new HashMap<>();
 
     public static void SelectClass(Player Player) {
-        Inventory GUI = Bukkit.createInventory(null, 27, "§9§lSelect your class");
+        Inventory GUI = Bukkit.createInventory(null, 45, "§9§lSelect your class");
 
         ItemStack Help = MainUpgradesGUI.SetIcon(
                 Material.BOOK,
@@ -120,15 +117,28 @@ public class ClassGUI extends MainUpgradesGUI  {
                 )
         );
 
+        ItemStack Cannoneer = MainUpgradesGUI.SetIcon(
+                Material.BLACK_DYE,
+                TextColorGradient(
+                        "Cannoneer ★★★☆☆",
+                        Arrays.asList("#1a1c1f", "#25272b", "#1a1c1f"),
+                        true
+                ),
+                Arrays.asList(
+                        "§8§lHeavy Rounds: §7Enemies will receive slowness every 3rd shot, slowness gets worse the more shots they receive",
+                        "§8§lCannon: §7Turn your bow into a block piercing cannon",
+                        "§8§lSuper Duper Mega Galaxy Collapsing Cannon: §7Use your ult points to charge up your cannon up to maximum power obliterating your enemies",
+                        "§4Make sure you fully pull back your bow before shooting the cannon, it may be unstable otherwise"
+                )
+        );
+
         if (SelectedClasses.containsKey(Player)) {
             ItemStack Confirm = MainUpgradesGUI.SetIcon(
                     Material.GREEN_STAINED_GLASS_PANE,
-                    TextColorGradient("Confirm", List.of("#17c914"), true),
-                    List.of("Confirming will stop you from changing your class")
                     TextColorGradient("Confirm", List.of("#17c914", "#17c914"), true),
                     List.of("§aConfirming will stop you from changing your class")
             );
-            GUI.setItem(26, Confirm);
+            GUI.setItem(44, Confirm);
         }
 
         GUI.setItem(4, Help);
@@ -137,6 +147,8 @@ public class ClassGUI extends MainUpgradesGUI  {
         GUI.setItem(13, Astronaut);
         GUI.setItem(14, Hacker);
         GUI.setItem(15, Mage);
+        
+        GUI.setItem(30, Cannoneer);
 
         for (Player OtherPlayer : Players) {
             if (BlueTeam.contains(Player) == BlueTeam.contains(OtherPlayer)) {
@@ -154,6 +166,7 @@ public class ClassGUI extends MainUpgradesGUI  {
                             case "Astronaut" -> 22;
                             case "Hacker" -> 23;
                             case "Mage" -> 24;
+                            case "Cannoneer" -> 39;
                             default -> 25;
                         },
                         PlayerHead);
@@ -267,6 +280,25 @@ public class ClassGUI extends MainUpgradesGUI  {
                         )
                 ));
                 SelectedSpell.put(Player, 1);
+            }
+        }
+        else if (Item == Material.BLACK_DYE) {
+            if (SetClass(Player, "Cannoneer")) {
+                ClassWeapons.put(Player, MainUpgradesGUI.SetIcon(
+                        Material.BLACK_DYE,
+                        TextColorGradient(
+                                "Big Cannon",
+                                Arrays.asList("#1a1c1f", "#25272b", "#1a1c1f"),
+                                true
+                        ),
+                        Arrays.asList(
+                                "§8§lHeavy Rounds: §7Enemies will receive slowness every 3rd shot, slowness gets worse the more shots they receive",
+                                "§8§lCannon: §7Turn your bow into a block piercing cannon",
+                                "§8§lSuper Duper Mega Galaxy Collapsing Cannon: §7Use your ult points to charge up your cannon up to maximum power obliterating your enemies",
+                                "§4Make sure you fully pull back your bow before shooting the cannon, it may be unstable otherwise"
+                        )
+                ));
+                CannonStrength.put(Player, 0);
             }
         }
         else if (Item == Material.GREEN_STAINED_GLASS_PANE) {

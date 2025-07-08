@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Objects;
 
 import static game.bow.bowgame.Boilerplate.SandboxPlayers;
+import static game.bow.bowgame.Classes.Cannoneer.HitCount;
 import static game.bow.bowgame.Classes.ClassHandler.*;
 import static game.bow.bowgame.Classes.Mage.MagicOverloadActive;
 import static game.bow.bowgame.Classes.Mage.ShootIllusionArrow;
@@ -199,6 +200,7 @@ public class GameHandler implements Listener {
 
         DamageTaken = new HashMap<>();
         SlowedPlayers = new ArrayList<>();
+        HitCount = new HashMap<>();
         MagicOverloadActive = new ArrayList<>();
 
         if (ScoreBossBar != null) {
@@ -233,6 +235,7 @@ public class GameHandler implements Listener {
         SlowedPlayers = new ArrayList<>();
         SpaceWarpLocations = new HashMap<>();
         WarpedEnemies = new ArrayList<>();
+        HitCount = new HashMap<>();
         Cooldowns = new HashMap<>();
         MagicOverloadActive = new ArrayList<>();
 
@@ -263,6 +266,7 @@ public class GameHandler implements Listener {
         SlowedPlayers = new ArrayList<>();
         SpaceWarpLocations = new HashMap<>();
         WarpedEnemies = new ArrayList<>();
+        HitCount = new HashMap<>();
         Cooldowns = new HashMap<>();
 
         int NextMap = 0;
@@ -397,7 +401,7 @@ public class GameHandler implements Listener {
             Player.playSound(Player.getLocation(), Sound.ENTITY_VILLAGER_NO, 1, 1);
         }
 
-        boolean StopShootArrow = CheckForEnchant(Player, Objects.requireNonNull(Player.getInventory().getItem(0)), Arrow);
+        boolean StopShootArrow = CheckForEnchant(Player, Objects.requireNonNull(Event.getBow()), Arrow, Event.getForce());
         
         if (StopShootArrow) {
             Event.setCancelled(true);
@@ -429,7 +433,6 @@ public class GameHandler implements Listener {
         if (!(Arrow.getShooter() instanceof Player)) { return; }
 
         CheckForEffects((Player) Arrow.getShooter(), null, Arrow, false);
-
 
         if (!ArrowBounces.containsKey(Arrow)) { return; }
 

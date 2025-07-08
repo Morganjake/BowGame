@@ -27,6 +27,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
+import static game.bow.bowgame.Classes.Cannoneer.AddSlowness;
+import static game.bow.bowgame.Classes.Cannoneer.CannonStrength;
 import static game.bow.bowgame.Classes.ClassHandler.*;
 import static game.bow.bowgame.Classes.SpaceWeaver.SpatialTearLocations;
 import static game.bow.bowgame.Classes.SpaceWeaver.WarpedEnemies;
@@ -247,6 +249,10 @@ public class PlayerHandler implements Listener {
                 }
             }
 
+            if (Classes.get(Player).equals("Cannoneer") && BowPullback > 0.9) {
+                AddSlowness(Victim);
+            }
+
             if (WarpedEnemies.contains(Victim)) {
                 Damage *= 1.5;
             }
@@ -270,18 +276,18 @@ public class PlayerHandler implements Listener {
     }
 
 
-    public static void KillPlayer(Player Player, Player Attacker) {
+    public static void KillPlayer(Player Victim, Player Attacker) {
 
-        if (DeadPlayers.contains(Player)) { return; }
+        if (DeadPlayers.contains(Victim)) { return; }
 
-        DeadPlayers.add(Player);
-        Player.setGameMode(GameMode.SPECTATOR);
-        Player.getInventory().setItem(0, null);
+        DeadPlayers.add(Victim);
+        Victim.setGameMode(GameMode.SPECTATOR);
+        Victim.getInventory().setItem(0, null);
 
-        SendDeathMessage(Player, Attacker);
+        SendDeathMessage(Victim, Attacker);
 
-        if (Player == Attacker) {
-            if (BlueTeam.contains(Player)) {
+        if (Victim == Attacker) {
+            if (BlueTeam.contains(Victim)) {
                 Attacker.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText("§4§l☠ You killed §b§lyourself"));
             }
             else {
@@ -289,18 +295,18 @@ public class PlayerHandler implements Listener {
             }
         }
         else {
-            if (BlueTeam.contains(Player)) {
-                Attacker.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText("§4§l🗡 You killed §b§l" + Player.getName()));
+            if (BlueTeam.contains(Victim)) {
+                Attacker.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText("§4§l🗡 You killed §b§l" + Victim.getName()));
             }
             else {
-                Attacker.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText("§4§l🗡 You killed §c§l" + Player.getName()));
+                Attacker.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText("§4§l🗡 You killed §c§l" + Victim.getName()));
             }
 
             if (BlueTeam.contains(Attacker)) {
-                Player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText("§4☠ §lYou died to §b§l" + Attacker.getName()));
+                Victim.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText("§4☠ §lYou died to §b§l" + Attacker.getName()));
             }
             else {
-                Player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText("§4☠ §lYou died to §c§l" + Attacker.getName()));
+                Victim.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText("§4☠ §lYou died to §c§l" + Attacker.getName()));
             }
         }
 
@@ -313,52 +319,56 @@ public class PlayerHandler implements Listener {
             }, 1L);
         }
 
-        if (SpatialTearLocations.containsKey(Player)) {
-            Player.teleport(SpatialTearLocations.get(Player));
-            SpatialTearLocations.remove(Player);
+        if (SpatialTearLocations.containsKey(Victim)) {
+            Victim.teleport(SpatialTearLocations.get(Victim));
+            SpatialTearLocations.remove(Victim);
 
             Bukkit.getScheduler().runTaskLater(BowGame.GetPlugin(), () -> {
-                Player.setGameMode(GameMode.SPECTATOR);
+                Victim.setGameMode(GameMode.SPECTATOR);
             }, 1L);
         }
 
-        Deaths.replace(Player, Deaths.get(Player) + 1);
+        if (CannonStrength.containsKey(Victim)) {
+            CannonStrength.replace(Victim, 0);
+        }
+
+        Deaths.replace(Victim, Deaths.get(Victim) + 1);
         Kills.replace(Attacker, Kills.get(Attacker) + 1);
 
         AddUltPoints(Attacker, 1);
-        AddUltPoints(Player, 1);
+        AddUltPoints(Victim, 1);
 
         UpdateScoreBoard();
 
         for (int i = 0; i < 100; i++) {
-            Location ParticleLocation = Player.getLocation().clone().add(new Vector(0, Math.random() * 1.8, 0));
-            Player.getWorld().spawnParticle(Particle.ITEM, ParticleLocation, 1, new ItemStack(Material.REDSTONE));
-            Player.getWorld().spawnParticle(Particle.SMOKE, ParticleLocation, 3, Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5, 0.03);
+            Location ParticleLocation = Victim.getLocation().clone().add(new Vector(0, Math.random() * 1.8, 0));
+            Victim.getWorld().spawnParticle(Particle.ITEM, ParticleLocation, 1, new ItemStack(Material.REDSTONE));
+            Victim.getWorld().spawnParticle(Particle.SMOKE, ParticleLocation, 3, Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5, 0.03);
         }
 
-        Player.playSound(Player.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_LARGE_BLAST, 1, 1);
-        Attacker.playSound(Player.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_LARGE_BLAST, 1, 1);
+        Victim.playSound(Victim.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_LARGE_BLAST, 1, 1);
+        Attacker.playSound(Victim.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_LARGE_BLAST, 1, 1);
 
         for (Player OtherPlayer : Bukkit.getOnlinePlayers()) {
-            if (OtherPlayer != Player && OtherPlayer != Attacker) {
-                OtherPlayer.playSound(Player.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_BLAST_FAR, 1, 1);
+            if (OtherPlayer != Victim && OtherPlayer != Attacker) {
+                OtherPlayer.playSound(Victim.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_BLAST_FAR, 1, 1);
             }
         }
 
-        Location HeadLocation = Player.getLocation();
+        Location HeadLocation = Victim.getLocation();
 
-        while (Player.getWorld().getBlockAt(HeadLocation).getType() != Material.AIR) {
+        while (Victim.getWorld().getBlockAt(HeadLocation).getType() != Material.AIR) {
             HeadLocation.add(new Vector(0, 1, 0));
         }
 
-        while (Player.getWorld().getBlockAt(HeadLocation).getType() == Material.AIR) {
+        while (Victim.getWorld().getBlockAt(HeadLocation).getType() == Material.AIR) {
             HeadLocation.add(new Vector(0, -1, 0));
         }
 
-        Block HeadBlock = Player.getWorld().getBlockAt(HeadLocation.add(new Vector(0, 1, 0)));
+        Block HeadBlock = Victim.getWorld().getBlockAt(HeadLocation.add(new Vector(0, 1, 0)));
         HeadBlock.setType(Material.PLAYER_HEAD);
         Skull Head = (Skull) HeadBlock.getState();
-        Head.setOwningPlayer(Player);
+        Head.setOwningPlayer(Victim);
         Head.update();
 
         CorpseBits.add(HeadBlock);
@@ -366,12 +376,12 @@ public class PlayerHandler implements Listener {
         for (int x = -3; x <= 3; x++) {
             for (int y = -3; y <= 3; y++) {
                 for (int z = -3; z <= 3; z++) {
-                    Location BlockLocation = Player.getLocation().clone().add(x, y, z);
-                    Block Block = Player.getWorld().getBlockAt(BlockLocation);
+                    Location BlockLocation = Victim.getLocation().clone().add(x, y, z);
+                    Block Block = Victim.getWorld().getBlockAt(BlockLocation);
 
                     // Creates a circle shape
-                    if (Block.getLocation().distance(Player.getLocation()) < 3) {
-                        Block PotentialBlock = Player.getWorld().getBlockAt(BlockLocation.add(new Vector(0, 1, 0)));
+                    if (Block.getLocation().distance(Victim.getLocation()) < 3) {
+                        Block PotentialBlock = Victim.getWorld().getBlockAt(BlockLocation.add(new Vector(0, 1, 0)));
                         if (PotentialBlock.getType() == Material.AIR && !Block.isPassable() && Block.getBlockData().getMaterial().isBlock()
                         && Block.getBlockData().isFaceSturdy(BlockFace.UP, BlockSupport.FULL)) {
                             if (Math.floor(Math.random() * 3) == 1) {

@@ -43,6 +43,7 @@ public final class BowGame extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new Astronaut(), this);
         getServer().getPluginManager().registerEvents(new Hacker(), this);
         getServer().getPluginManager().registerEvents(new Mage(), this);
+        getServer().getPluginManager().registerEvents(new Cannoneer(), this);
     }
 
     @Override
