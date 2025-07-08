@@ -55,7 +55,7 @@ public class Cannoneer implements Listener {
                 return;
             }
 
-//            PutPlayerOnCooldown(Player);
+            PutPlayerOnCooldown(Player);
 
             ItemMeta BowMeta = Objects.requireNonNull(Player.getInventory().getItem(0)).getItemMeta();
             BowMeta.addEnchant(Enchantment.MENDING, 1, true);
