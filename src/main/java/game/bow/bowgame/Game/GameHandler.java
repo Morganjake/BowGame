@@ -365,7 +365,7 @@ public class GameHandler implements Listener {
                     cancel();
                 }
                 else {
-                    Bukkit.broadcastMessage("§9§lGame starting in: " + (5 - i[0]));
+                    Bukkit.broadcastMessage("§9§lGame starting in: " + (6 - i[0]));
                 }
             }
         }.runTaskTimer(BowGame.GetPlugin(), 0L, 20L);
