@@ -164,11 +164,11 @@ public class Mage implements Listener {
                     Victim.playSound(Victim.getLocation().add(SoundOffset), Sound.ENTITY_GENERIC_HURT, 1, 1);
                 }
 
-                if (Math.random() < 0.05) {
+                if (Math.random() < 0.1) {
                     Victim.addPotionEffect(new PotionEffect(PotionEffectType.DARKNESS, 50, 0, false, false));
                 }
 
-                if (Math.random() < 0.025) {
+                if (Math.random() < 0.05) {
                     Victim.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 30, 0, false, false));
                 }
             }
