@@ -86,7 +86,7 @@ public class Demolitionist implements Listener {
                     cancel();
                     return;
                 }
-                if (AirStrikeCount[0] > 6) {
+                if (AirStrikeCount[0] > 5) {
                     cancel();
                     return;
                 }
@@ -104,11 +104,14 @@ public class Demolitionist implements Listener {
                         ParticleLocation.add(ParticleLocation.getDirection().multiply(0.75));
                         Player.getWorld().spawnParticle(Particle.DUST, ParticleLocation, 1, new Particle.DustOptions(Color.RED, 2));
                     }
+
+                    AirStrikeCircles(Enemy);
                 }
             }
 
         }.runTaskTimer(BowGame.GetPlugin(), 40L, 40L);
 
+        // Bukkit Runnable that plays the explosion effects
         new BukkitRunnable() {
 
             @Override
@@ -125,8 +128,8 @@ public class Demolitionist implements Listener {
 
                 for (Location AirStrikeLocation : AirStrikeLocations) {
                     Player.getWorld().spawnParticle(Particle.EXPLOSION, AirStrikeLocation, 1);
-                    Player.getWorld().spawnParticle(Particle.SMOKE, AirStrikeLocation, 50, 0, 0, 0, 0.2);
-                    Player.getWorld().spawnParticle(Particle.LARGE_SMOKE, AirStrikeLocation, 50, 0, 0, 0, 0.2);
+                    Player.getWorld().spawnParticle(Particle.SMOKE, AirStrikeLocation, 50, 0.05, 0.05, 0.05, 0.2);
+                    Player.getWorld().spawnParticle(Particle.LARGE_SMOKE, AirStrikeLocation, 50, 0.05, 0.05, 0.05, 0.2);
                     Player.getWorld().playSound(AirStrikeLocation, Sound.ENTITY_GENERIC_EXPLODE, 1, 1);
 
                     for (Player OtherPlayer : Players) {
@@ -141,6 +144,7 @@ public class Demolitionist implements Listener {
 
         }.runTaskTimer(BowGame.GetPlugin(), 50L, 40L);
 
+        // Bukkit Runnable to make the dust and sound under the enemy
         new BukkitRunnable() {
 
             @Override
@@ -162,5 +166,35 @@ public class Demolitionist implements Listener {
                 }
             }
         }.runTaskTimer(BowGame.GetPlugin(), 0L, 2L);
+    }
+
+    private static void AirStrikeCircles(Player Player) {
+
+        Location Location = Player.getLocation().clone();
+
+        final int[] j = {10};
+
+        new BukkitRunnable() {
+
+            @Override
+            public void run() {
+
+                if (j[0] == 0) {
+                    cancel();
+                    return;
+                }
+
+                for (int k = 0; k < 2; k++) {
+                    for (int i = 0; i < 18; i++) {
+                        Location ParticleLocation = Location.clone().add(new Vector(0, 4 * j[0] - k * 2, 0));
+                        ParticleLocation.setYaw(i * 20);
+                        ParticleLocation.add(ParticleLocation.getDirection().multiply(0.75));
+                        Player.getWorld().spawnParticle(Particle.DUST, ParticleLocation, 1, new Particle.DustOptions(Color.RED, 2));
+                    }
+                }
+
+                j[0]--;
+            }
+        }.runTaskTimer(BowGame.GetPlugin(), 0L, 1L);
     }
 }
