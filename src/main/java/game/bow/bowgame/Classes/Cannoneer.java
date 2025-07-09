@@ -144,7 +144,7 @@ public class Cannoneer implements Listener {
                 CannonStrength.replace(Player, 0);
                 SavedLocation.remove(Player);
             }
-        }.runTaskLater(BowGame.GetPlugin(), 20L);
+        }.runTaskLater(BowGame.GetPlugin(), 4L * Power);
     }
 
     @EventHandler
