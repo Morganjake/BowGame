@@ -115,7 +115,7 @@ public class Astronaut implements Listener {
                             Entity.setVelocity(Entity.getVelocity().add(ToTarget));
                         }
                         else {
-                            Entity.setVelocity(Entity.getVelocity().add(ToTarget.multiply(5)));
+                            Entity.setVelocity(Entity.getVelocity().add(ToTarget.multiply(8)));
                         }
                     }
                 }
