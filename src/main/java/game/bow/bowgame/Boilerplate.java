@@ -171,7 +171,6 @@ public class Boilerplate implements Listener {
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    Player.sendMessage(String.valueOf(Player.getLocation()));
                     if (Player.getWorld().getName().equals("world_the_end")) {
                         Bukkit.getScheduler().runTaskLater(BowGame.GetPlugin(), () -> {
                             Player.setGameMode(GameMode.SPECTATOR);

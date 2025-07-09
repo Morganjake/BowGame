@@ -81,6 +81,7 @@ public class SpaceWeaver implements Listener {
                 }
 
                 for (Player Enemy : Team) {
+                    if (Arrow.getWorld() != Enemy.getWorld()) { continue; }
                     if (Arrow.getLocation().distance(Enemy.getLocation()) < 2) {
                         Vector ToTarget = Enemy.getLocation().add(new Vector(0, 1, 0)).toVector().subtract(Arrow.getLocation().toVector()).normalize();
                         Arrow.setVelocity(Arrow.getVelocity().add(ToTarget.multiply(0.15)));
