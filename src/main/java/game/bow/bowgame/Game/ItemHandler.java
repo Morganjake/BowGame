@@ -35,15 +35,15 @@ public class ItemHandler implements Listener {
 
     @EventHandler
     public void OnRightClick(PlayerInteractEvent Event) {
-        if (Event.getAction() == Action.LEFT_CLICK_AIR || Event.getAction() == Action.LEFT_CLICK_BLOCK) {
+        if (Event.getAction() == Action.RIGHT_CLICK_AIR || Event.getAction() == Action.RIGHT_CLICK_BLOCK) {
             Player Player = Event.getPlayer();
             if (!Players.contains(Player)) { return; }
-            Event.setCancelled(true);
 
             ItemStack Item = Player.getInventory().getItemInMainHand();
 
             if (Item.getType() == Material.TNT) {
                 Item.setAmount(Item.getAmount() - 1);
+                Event.setCancelled(true);
 
                 TNTPrimed Tnt = Player.getWorld().spawn(Player.getEyeLocation(), TNTPrimed.class);
                 Tnt.setVelocity(Player.getLocation().getDirection().multiply(Math.pow(1.1, PlayerUpgrades.get(Player).get("Velocity"))));
@@ -52,18 +52,24 @@ public class ItemHandler implements Listener {
             }
             else if (Item.getType() == Material.PRISMARINE_SHARD) {
                 Item.setAmount(Item.getAmount() - 1);
+                Event.setCancelled(true);
+
                 Snowball Snowball = Player.launchProjectile(Snowball.class);
                 ItemOwners.put(Snowball, Player);
                 FreezeGrenades.add(Snowball);
             }
             else if (Item.getType() == Material.INK_SAC) {
                 Item.setAmount(Item.getAmount() - 1);
+                Event.setCancelled(true);
+
                 ItemOwners.put(Player.launchProjectile(Egg.class), Player);
             }
             else if (Item.getType() == Material.BLAZE_ROD) {
                 if (Event.getClickedBlock() == null) { return; }
                 if (Event.getClickedPosition() == null) { return; }
+
                 Item.setAmount(Item.getAmount() - 1);
+                Event.setCancelled(true);
 
                 Block Block = Event.getClickedBlock();
                 Location Location = Event.getClickedBlock().getLocation().add(Event.getClickedPosition());
@@ -124,10 +130,10 @@ public class ItemHandler implements Listener {
                                 if (Location.distance(Hit.getLocation()) < 6) {
 
                                     if (WarpedEnemies.contains(Hit)) {
-                                        Hit.damage(10 + 5 * (6 - Location.distance(Hit.getLocation())), Player);
+                                        Hit.damage(20 + 5 * (6 - Location.distance(Hit.getLocation())), Player);
                                     }
                                     else {
-                                        Hit.damage((10 + 5 * (6 - Location.distance(Hit.getLocation())) * 1.5), Player);
+                                        Hit.damage((20 + 5 * (6 - Location.distance(Hit.getLocation())) * 1.5), Player);
                                     }
                                 }
 
@@ -173,6 +179,7 @@ public class ItemHandler implements Listener {
             }
             else if (Item.getType() == Material.RED_DYE) {
                 Item.setAmount(Item.getAmount() - 1);
+                Event.setCancelled(true);
 
                 final int[] i = {1};
 
