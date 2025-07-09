@@ -241,9 +241,9 @@ public class PlayerHandler implements Listener {
 
             if (PlayerUpgrades.get(Player).get("Backstab") > 0) {
 
-                double ArrowAngle = Math.abs(Victim.getLocation().getYaw() - Arrow.getLocation().getYaw());
+                double ArrowAngle = Victim.getLocation().getYaw() - Arrow.getLocation().getYaw() * -1;
 
-                if (ArrowAngle > 135 && ArrowAngle < 225) {
+                if ((ArrowAngle > -45 && ArrowAngle < 45) || ArrowAngle < -315 || ArrowAngle > 315) {
                     Damage *= 1 + PlayerUpgrades.get(Player).get("Backstab") * 0.3;
                     Player.playSound(Player, Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
                 }
