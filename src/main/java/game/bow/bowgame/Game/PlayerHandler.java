@@ -314,6 +314,8 @@ public class PlayerHandler implements Listener {
             Attacker.teleport(SpatialTearLocations.get(Attacker));
             SpatialTearLocations.remove(Attacker);
 
+            Attacker.setHealth(Attacker.getMaxHealth());
+
             Bukkit.getScheduler().runTaskLater(BowGame.GetPlugin(), () -> {
                 Attacker.setGameMode(GameMode.ADVENTURE);
             }, 1L);
