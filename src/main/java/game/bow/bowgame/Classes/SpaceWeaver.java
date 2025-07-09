@@ -197,6 +197,7 @@ public class SpaceWeaver implements Listener {
             Vector Direction = Player.getLocation().getDirection().normalize();
             Vector ToTarget = Enemy.getLocation().toVector().subtract(Player.getLocation().toVector()).normalize();
             double Degrees = Math.toDegrees(Direction.dot(ToTarget));
+
             if (Degrees > 50 && Degrees < 70 && Player.getLocation().distance(Enemy.getLocation()) < 10) {
                 if (WarpedEnemy == null || Player.getLocation().distance(WarpedEnemy.getLocation()) < Player.getLocation().distance(Enemy.getLocation())) {
                     WarpedEnemy = Enemy;
@@ -205,6 +206,8 @@ public class SpaceWeaver implements Listener {
         }
 
         if (WarpedEnemy != null) {
+
+            Player.setHealth(Player.getMaxHealth());
 
             SpatialTearLocations.put(Player, Player.getLocation().clone());
             SpatialTearLocations.put(WarpedEnemy, WarpedEnemy.getLocation().clone());
@@ -231,6 +234,7 @@ public class SpaceWeaver implements Listener {
             WarpedEnemy.getInventory().setItem(0, null);
 
             Player FinalWarpedEnemy = WarpedEnemy;
+
             Bukkit.getScheduler().runTaskLater(BowGame.GetPlugin(), () -> {
                 Player.getInventory().setItem(0, new ItemStack(Material.BOW));
                 FinalWarpedEnemy.getInventory().setItem(0, new ItemStack(Material.BOW));
