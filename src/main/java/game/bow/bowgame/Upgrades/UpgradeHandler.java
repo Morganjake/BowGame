@@ -62,10 +62,10 @@ public class UpgradeHandler {
 
             // Balances money depending on the size of each team
             if (BlueTeam.contains(Player)) {
-                Money.replace(Player, (int) ((float) Money.get(Player) * (float) Math.max(1, RedTeam.size() / BlueTeam.size())));
+                Money.replace(Player, (int) ((float) Money.get(Player) * (float) Math.max(1, 1 + (RedTeam.size() / BlueTeam.size() - 1) / 2)));
             }
             else {
-                Money.replace(Player, (int) ((float) Money.get(Player) * (float) Math.max(1, BlueTeam.size() / RedTeam.size())));
+                Money.replace(Player, (int) ((float) Money.get(Player) * (float) Math.max(1, 1 + (BlueTeam.size() / RedTeam.size() - 1) / 2)));
             }
         }
     }
