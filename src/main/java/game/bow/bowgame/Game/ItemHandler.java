@@ -33,11 +33,14 @@ public class ItemHandler implements Listener {
 
     public static ArrayList<Entity> FreezeGrenades = new ArrayList<>();
 
+    private static final ArrayList<Player> Debounce = new ArrayList<>();
+
     @EventHandler
     public void OnRightClick(PlayerInteractEvent Event) {
         if (Event.getAction() == Action.RIGHT_CLICK_AIR || Event.getAction() == Action.RIGHT_CLICK_BLOCK) {
             Player Player = Event.getPlayer();
             if (!Players.contains(Player)) { return; }
+            if (Debounce.contains(Player)) { return; }
 
             ItemStack Item = Player.getInventory().getItemInMainHand();
 
@@ -49,6 +52,8 @@ public class ItemHandler implements Listener {
                 Tnt.setVelocity(Player.getLocation().getDirection().multiply(Math.pow(1.1, PlayerUpgrades.get(Player).get("Velocity"))));
                 Tnt.setFuseTicks(30);
                 ItemOwners.put(Tnt, Player);
+
+                SetDebounce(Player);
             }
             else if (Item.getType() == Material.PRISMARINE_SHARD) {
                 Item.setAmount(Item.getAmount() - 1);
@@ -57,12 +62,16 @@ public class ItemHandler implements Listener {
                 Snowball Snowball = Player.launchProjectile(Snowball.class);
                 ItemOwners.put(Snowball, Player);
                 FreezeGrenades.add(Snowball);
+
+                SetDebounce(Player);
             }
             else if (Item.getType() == Material.INK_SAC) {
                 Item.setAmount(Item.getAmount() - 1);
                 Event.setCancelled(true);
 
                 ItemOwners.put(Player.launchProjectile(Egg.class), Player);
+
+                SetDebounce(Player);
             }
             else if (Item.getType() == Material.BLAZE_ROD) {
                 if (Event.getClickedBlock() == null) { return; }
@@ -176,6 +185,8 @@ public class ItemHandler implements Listener {
 
                 }.runTaskTimer(BowGame.GetPlugin(), 0L, 3L);
 
+                SetDebounce(Player);
+
             }
             else if (Item.getType() == Material.RED_DYE) {
                 Item.setAmount(Item.getAmount() - 1);
@@ -204,8 +215,18 @@ public class ItemHandler implements Listener {
                         Player.getWorld().spawnParticle(Particle.HEART, Player.getEyeLocation(), 1, 0.2, 0.2, 0.2);
                     }
                 }.runTaskTimer(BowGame.GetPlugin(), 2L, 2L);
+
+                SetDebounce(Player);
             }
         }
+    }
+
+    private static void SetDebounce(Player Player) {
+        Debounce.add(Player);
+
+        Bukkit.getScheduler().runTaskLater(BowGame.GetPlugin(), () -> {
+            Debounce.remove(Player);
+        }, 1L);
     }
 
 
