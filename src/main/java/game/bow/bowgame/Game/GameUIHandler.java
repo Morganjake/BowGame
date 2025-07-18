@@ -66,50 +66,66 @@ public class GameUIHandler {
                 true
         ));
 
+        Score o = Objective.getScore(" ");
+        o.setScore(5);
+
         for (Player Player : BlueTeam) {
 
-            String Ult = "";
-
-            for (int i = 0; i < UltPoints.get(Player); i++) {
-                Ult += "§9§l♦";
-            }
-            for (int i = 0; i < 6 - UltPoints.get(Player); i++) {
-                Ult += "§7♦";
-            }
+            String Ult = GetUltPointDisplay(Player, "9", "");
 
             if (Deaths.get(Player) == 0) {
                 Score a = Objective.getScore("§9§l" + Player.getName() + " " + Ult + ":§9 " + Kills.get(Player) + " / " + Deaths.get(Player) + " / " + Kills.get(Player));
-                a.setScore(0);
+                a.setScore(4);
             }
             else {
                 Score a = Objective.getScore(
                         "§9§l" + Player.getName() + " " + Ult + ":§9 " + Kills.get(Player) + " / " + Deaths.get(Player) + " / " + Kills.get(Player) / Deaths.get(Player));
-                a.setScore(0);
+                a.setScore(4);
             }
         }
 
-        Score o = Objective.getScore(" ");
-        o.setScore(0);
+        for (Player Player : DisconnectedBlueTeam) {
+
+            String Ult = GetUltPointDisplay(Player, "1", "§m");
+
+            if (Deaths.get(Player) == 0) {
+                Score a = Objective.getScore("§1§l§m" + Player.getName() + " " + Ult + ":§1§m " + Kills.get(Player) + " / " + Deaths.get(Player) + " / " + Kills.get(Player));
+                a.setScore(3);
+            }
+            else {
+                Score a = Objective.getScore(
+                        "§1§l§m" + Player.getName() + " " + Ult + ":§1§m " + Kills.get(Player) + " / " + Deaths.get(Player) + " / " + Kills.get(Player) / Deaths.get(Player));
+                a.setScore(3);
+            }
+        }
 
         for (Player Player : RedTeam) {
 
-            String Ult = "";
-
-            for (int i = 0; i < UltPoints.get(Player); i++) {
-                Ult += "§c§l♦";
-            }
-            for (int i = 0; i < 6 - UltPoints.get(Player); i++) {
-                Ult += "§7♦";
-            }
+            String Ult = GetUltPointDisplay(Player, "c", "");
 
             if (Deaths.get(Player) == 0) {
                 Score a = Objective.getScore("§c§l" + Player.getName() + " " + Ult + ":§c " + Kills.get(Player) + " / " + Deaths.get(Player) + " / " + Kills.get(Player));
-                a.setScore(0);
+                a.setScore(2);
             }
             else {
                 Score a = Objective.getScore(
                         "§c§l" + Player.getName() + " " + Ult + ":§c " + Kills.get(Player) + " / " + Deaths.get(Player) + " / " + Kills.get(Player) / Deaths.get(Player));
-                a.setScore(0);
+                a.setScore(2);
+            }
+        }
+
+        for (Player Player : DisconnectedRedTeam) {
+
+            String Ult = GetUltPointDisplay(Player, "4", "§m");
+
+            if (Deaths.get(Player) == 0) {
+                Score a = Objective.getScore("§4§l§m" + Player.getName() + " " + Ult + ":§4§m " + Kills.get(Player) + " / " + Deaths.get(Player) + " / " + Kills.get(Player));
+                a.setScore(1);
+            }
+            else {
+                Score a = Objective.getScore(
+                        "§4§l§m" + Player.getName() + " " + Ult + ":§4§m " + Kills.get(Player) + " / " + Deaths.get(Player) + " / " + Kills.get(Player) / Deaths.get(Player));
+                a.setScore(1);
             }
         }
 
@@ -124,5 +140,18 @@ public class GameUIHandler {
         }
 
         PlayerToUpdate.setScoreboard(ScoreBoard);
+    }
+
+    private static String GetUltPointDisplay(Player Player, String TeamColour, String Strikethrough) {
+        String Ult = "";
+
+        for (int i = 0; i < UltPoints.get(Player); i++) {
+            Ult += "§" + TeamColour + Strikethrough + "§l" + Strikethrough + "♦";
+        }
+        for (int i = 0; i < 6 - UltPoints.get(Player); i++) {
+            Ult += "§7" + Strikethrough +"♦";
+        }
+
+        return Ult;
     }
 }

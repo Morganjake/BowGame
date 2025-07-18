@@ -45,7 +45,9 @@ public class PlayerHandler implements Listener {
     public static List<Player> Players = new ArrayList<>();
     public static List<Player> DeadPlayers = new ArrayList<>();
     public static List<Player> BlueTeam = new ArrayList<>();
+    public static List<Player> DisconnectedBlueTeam = new ArrayList<>();
     public static List<Player> RedTeam = new ArrayList<>();
+    public static List<Player> DisconnectedRedTeam = new ArrayList<>();
     public static List<Block> CorpseBits = new ArrayList<>();
 
     private static HashMap<Player, Integer> BleedDuration =  new HashMap<>();

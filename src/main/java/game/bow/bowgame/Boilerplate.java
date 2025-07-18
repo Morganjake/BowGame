@@ -25,6 +25,7 @@ import java.util.List;
 
 import static game.bow.bowgame.Classes.Astronaut.FloatationBombs;
 import static game.bow.bowgame.Game.GameHandler.GracePeriod;
+import static game.bow.bowgame.Game.GameUIHandler.UpdateScoreBoard;
 import static game.bow.bowgame.Game.ItemHandler.ItemOwners;
 import static game.bow.bowgame.Game.ItemHandler.SlowedPlayers;
 import static game.bow.bowgame.Game.PlayerHandler.*;
@@ -208,6 +209,55 @@ public class Boilerplate implements Listener {
                     Event.setCancelled(true);
                 }
             }
+        }
+    }
+
+    @EventHandler
+    public void OnPlayerJoin(PlayerJoinEvent Event) {
+
+        Player Player = Event.getPlayer();
+
+        if (DisconnectedBlueTeam.contains(Player) || DisconnectedRedTeam.contains(Player)) {
+            Players.add(Player);
+            DeadPlayers.add(Player);
+            Bukkit.getScheduler().runTaskLater(BowGame.GetPlugin(), () -> {
+                Player.setGameMode(GameMode.SPECTATOR);
+            }, 1L);
+        }
+
+        if (DisconnectedBlueTeam.contains(Player)) {
+            DisconnectedBlueTeam.remove(Player);
+            BlueTeam.add(Player);
+
+        }
+        else if (DisconnectedRedTeam.contains(Player)) {
+            DisconnectedRedTeam.remove(Player);
+            RedTeam.add(Player);
+        }
+
+        UpdateScoreBoard();
+    }
+
+    @EventHandler
+    public void OnPlayerLeave(PlayerQuitEvent Event) {
+
+        Player Player = Event.getPlayer();
+
+        if (Players.contains(Player)) {
+
+            Players.remove(Player);
+            KillPlayer(Player, Player);
+
+            if (BlueTeam.contains(Player)) {
+                BlueTeam.remove(Player);
+                DisconnectedBlueTeam.add(Player);
+            }
+            else if (RedTeam.contains(Player)) {
+                RedTeam.remove(Player);
+                DisconnectedRedTeam.add(Player);
+            }
+
+            UpdateScoreBoard();
         }
     }
 }
