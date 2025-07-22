@@ -339,7 +339,9 @@ public class PlayerHandler implements Listener {
         Deaths.replace(Victim, Deaths.get(Victim) + 1);
         Kills.replace(Attacker, Kills.get(Attacker) + 1);
 
-        AddUltPoints(Attacker, 1);
+        if (Attacker != Victim) {
+            AddUltPoints(Attacker, 1);
+        }
         AddUltPoints(Victim, 1);
 
         UpdateScoreBoard();
