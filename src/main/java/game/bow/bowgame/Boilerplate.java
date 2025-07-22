@@ -1,6 +1,6 @@
 package game.bow.bowgame;
 
-import game.bow.bowgame.Upgrades.MainUpgradesGUI;
+import game.bow.bowgame.GUIs.MainUpgradesGUI;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Arrow;

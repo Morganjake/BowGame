@@ -1,7 +1,6 @@
 package game.bow.bowgame.Game;
 
 import game.bow.bowgame.BowGame;
-import game.bow.bowgame.Classes.Cannoneer;
 import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Arrow;
@@ -21,7 +20,7 @@ import static game.bow.bowgame.Classes.Mage.*;
 import static game.bow.bowgame.Game.GameHandler.*;
 import static game.bow.bowgame.Game.PlayerHandler.Players;
 import static game.bow.bowgame.Game.PlayerHandler.SetPlayerArmour;
-import static game.bow.bowgame.Upgrades.UpgradeHandler.PlayerUpgrades;
+import static game.bow.bowgame.GUIs.UpgradeHandler.PlayerUpgrades;
 
 public class ArrowEffectHandler {
 

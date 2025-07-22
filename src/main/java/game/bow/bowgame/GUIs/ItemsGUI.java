@@ -1,4 +1,4 @@
-package game.bow.bowgame.Upgrades;
+package game.bow.bowgame.GUIs;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -14,8 +14,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import static game.bow.bowgame.Classes.ClassHandler.Classes;
-import static game.bow.bowgame.Upgrades.UpgradeHandler.*;
-import static game.bow.bowgame.Upgrades.UpgradeHandler.BuyUpgrade;
+import static game.bow.bowgame.GUIs.UpgradeHandler.*;
+import static game.bow.bowgame.GUIs.UpgradeHandler.BuyUpgrade;
 
 public class ItemsGUI extends MainUpgradesGUI implements Listener {
 

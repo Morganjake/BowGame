@@ -4,7 +4,7 @@ import game.bow.bowgame.Classes.*;
 import game.bow.bowgame.Game.GameHandler;
 import game.bow.bowgame.Game.ItemHandler;
 import game.bow.bowgame.Game.PlayerHandler;
-import game.bow.bowgame.Upgrades.*;
+import game.bow.bowgame.GUIs.*;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 

@@ -1,4 +1,4 @@
-package game.bow.bowgame.Upgrades;
+package game.bow.bowgame.GUIs;
 
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;

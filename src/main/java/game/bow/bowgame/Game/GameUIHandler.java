@@ -14,7 +14,7 @@ import static game.bow.bowgame.Classes.ClassHandler.UltPoints;
 import static game.bow.bowgame.Classes.Mage.SelectedSpell;
 import static game.bow.bowgame.Game.GameHandler.*;
 import static game.bow.bowgame.Game.PlayerHandler.*;
-import static game.bow.bowgame.Upgrades.GUIHandler.TextColorGradient;
+import static game.bow.bowgame.GUIs.GUIHandler.TextColorGradient;
 
 public class GameUIHandler {
 

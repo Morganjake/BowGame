@@ -9,7 +9,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
@@ -20,7 +19,7 @@ import static game.bow.bowgame.Boilerplate.SandboxPlayers;
 import static game.bow.bowgame.Classes.Mage.MagicOverloadActive;
 import static game.bow.bowgame.Game.GameUIHandler.UpdateScoreBoard;
 import static game.bow.bowgame.Game.PlayerHandler.Players;
-import static game.bow.bowgame.Upgrades.UpgradeHandler.PlayerUpgrades;
+import static game.bow.bowgame.GUIs.UpgradeHandler.PlayerUpgrades;
 
 public class ClassHandler implements Listener {
 

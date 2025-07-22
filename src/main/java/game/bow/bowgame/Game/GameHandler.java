@@ -2,7 +2,7 @@ package game.bow.bowgame.Game;
 
 
 import game.bow.bowgame.BowGame;
-import game.bow.bowgame.Upgrades.MainUpgradesGUI;
+import game.bow.bowgame.GUIs.MainUpgradesGUI;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -35,10 +35,10 @@ import static game.bow.bowgame.Game.DeathMessagesHandler.DamageTaken;
 import static game.bow.bowgame.Game.GameUIHandler.*;
 import static game.bow.bowgame.Game.ItemHandler.SlowedPlayers;
 import static game.bow.bowgame.Game.PlayerHandler.*;
-import static game.bow.bowgame.Upgrades.ClassGUI.SelectClass;
-import static game.bow.bowgame.Upgrades.ClassGUI.SelectedClasses;
-import static game.bow.bowgame.Upgrades.UpgradeHandler.PlayerUpgrades;
-import static game.bow.bowgame.Upgrades.UpgradeHandler.ResetStats;
+import static game.bow.bowgame.GUIs.ClassGUI.SelectClass;
+import static game.bow.bowgame.GUIs.ClassGUI.SelectedClasses;
+import static game.bow.bowgame.GUIs.UpgradeHandler.PlayerUpgrades;
+import static game.bow.bowgame.GUIs.UpgradeHandler.ResetStats;
 
 
 public class GameHandler implements Listener {

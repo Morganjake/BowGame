@@ -23,7 +23,7 @@ import static game.bow.bowgame.Classes.SpaceWeaver.WarpedEnemies;
 import static game.bow.bowgame.Game.DeathMessagesHandler.AddDamage;
 import static game.bow.bowgame.Game.PlayerHandler.KillPlayer;
 import static game.bow.bowgame.Game.PlayerHandler.Players;
-import static game.bow.bowgame.Upgrades.UpgradeHandler.PlayerUpgrades;
+import static game.bow.bowgame.GUIs.UpgradeHandler.PlayerUpgrades;
 
 public class ItemHandler implements Listener {
 

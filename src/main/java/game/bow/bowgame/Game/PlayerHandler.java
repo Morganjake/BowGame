@@ -37,8 +37,8 @@ import static game.bow.bowgame.Game.DeathMessagesHandler.AddDamage;
 import static game.bow.bowgame.Game.DeathMessagesHandler.SendDeathMessage;
 import static game.bow.bowgame.Game.GameHandler.*;
 import static game.bow.bowgame.Game.GameUIHandler.UpdateScoreBoard;
-import static game.bow.bowgame.Upgrades.ClassGUI.SelectClass;
-import static game.bow.bowgame.Upgrades.UpgradeHandler.PlayerUpgrades;
+import static game.bow.bowgame.GUIs.ClassGUI.SelectClass;
+import static game.bow.bowgame.GUIs.UpgradeHandler.PlayerUpgrades;
 
 public class PlayerHandler implements Listener {
 

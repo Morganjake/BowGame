@@ -1,4 +1,4 @@
-package game.bow.bowgame.Upgrades;
+package game.bow.bowgame.GUIs;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -9,7 +9,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.Arrays;
 import java.util.List;
 
-import static game.bow.bowgame.Upgrades.UpgradeHandler.Money;
+import static game.bow.bowgame.GUIs.UpgradeHandler.Money;
 
 public class MainUpgradesGUI extends GUIHandler {
 

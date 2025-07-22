@@ -27,9 +27,8 @@ import static game.bow.bowgame.Classes.ClassHandler.*;
 import static game.bow.bowgame.Classes.ClassHandler.AddUltPoints;
 import static game.bow.bowgame.Game.GameHandler.*;
 import static game.bow.bowgame.Game.GameUIHandler.UpdatePlayerScoreBoard;
-import static game.bow.bowgame.Game.GameUIHandler.UpdateScoreBoard;
 import static game.bow.bowgame.Game.PlayerHandler.*;
-import static game.bow.bowgame.Upgrades.UpgradeHandler.PlayerUpgrades;
+import static game.bow.bowgame.GUIs.UpgradeHandler.PlayerUpgrades;
 
 public class Mage implements Listener {
 

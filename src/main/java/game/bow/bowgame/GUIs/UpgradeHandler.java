@@ -1,4 +1,4 @@
-package game.bow.bowgame.Upgrades;
+package game.bow.bowgame.GUIs;
 
 
 import org.bukkit.Material;
@@ -14,9 +14,9 @@ import java.util.Objects;
 import static game.bow.bowgame.Game.GameHandler.BlueScore;
 import static game.bow.bowgame.Game.GameHandler.RedScore;
 import static game.bow.bowgame.Game.PlayerHandler.*;
-import static game.bow.bowgame.Upgrades.BowUpgradesGUI.OpenBowUpgradesGUI;
-import static game.bow.bowgame.Upgrades.DefenceUpgradesGUI.OpenDefenceUpgradesGUI;
-import static game.bow.bowgame.Upgrades.ItemsGUI.OpenItemsGUI;
+import static game.bow.bowgame.GUIs.BowUpgradesGUI.OpenBowUpgradesGUI;
+import static game.bow.bowgame.GUIs.DefenceUpgradesGUI.OpenDefenceUpgradesGUI;
+import static game.bow.bowgame.GUIs.ItemsGUI.OpenItemsGUI;
 
 public class UpgradeHandler {
 

@@ -1,6 +1,6 @@
 package game.bow.bowgame;
 
-import game.bow.bowgame.Upgrades.MainUpgradesGUI;
+import game.bow.bowgame.GUIs.MainUpgradesGUI;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -25,7 +25,7 @@ import static game.bow.bowgame.Classes.ClassHandler.*;
 import static game.bow.bowgame.Game.GameHandler.*;
 import static game.bow.bowgame.Game.GameUIHandler.UpdateScoreBoard;
 import static game.bow.bowgame.Game.PlayerHandler.*;
-import static game.bow.bowgame.Upgrades.UpgradeHandler.*;
+import static game.bow.bowgame.GUIs.UpgradeHandler.*;
 
 public class Commands implements CommandExecutor, TabCompleter, Listener {
 
