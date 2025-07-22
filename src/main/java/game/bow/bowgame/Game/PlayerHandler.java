@@ -400,6 +400,8 @@ public class PlayerHandler implements Listener {
             }
         }
 
+        if (GameEnded) { return; }
+
         boolean BlueTeamDead = true;
         boolean RedTeamDead = true;
 
