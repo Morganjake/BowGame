@@ -133,6 +133,7 @@ public class SpaceWeaver implements Listener {
                     }
 
                     for (Player OtherPlayer : Players) {
+                        if (DeadPlayers.contains(OtherPlayer)) { continue; }
                         if (PlayerLocation.distance(OtherPlayer.getLocation()) < 4) {
                             Vector ToTarget = PlayerLocation.toVector().subtract(OtherPlayer.getLocation().toVector()).normalize();
                             OtherPlayer.setVelocity(OtherPlayer.getVelocity().add(ToTarget.multiply(0.2)));
