@@ -199,7 +199,7 @@ public class GameHandler implements Listener {
         UltPoints = new HashMap<>();
 
         DamageTaken = new HashMap<>();
-        SlowedPlayers = new ArrayList<>();
+        SlowedPlayers = new HashMap<>();
         HitCount = new HashMap<>();
         MagicOverloadActive = new ArrayList<>();
 
@@ -232,7 +232,7 @@ public class GameHandler implements Listener {
 
         DeadPlayers = new ArrayList<>();
         DamageTaken = new HashMap<>();
-        SlowedPlayers = new ArrayList<>();
+        SlowedPlayers = new HashMap<>();
         SpaceWarpLocations = new HashMap<>();
         WarpedEnemies = new ArrayList<>();
         HitCount = new HashMap<>();
@@ -263,7 +263,7 @@ public class GameHandler implements Listener {
 
         DeadPlayers = new ArrayList<>();
         DamageTaken = new HashMap<>();
-        SlowedPlayers = new ArrayList<>();
+        SlowedPlayers = new HashMap<>();
         SpaceWarpLocations = new HashMap<>();
         WarpedEnemies = new ArrayList<>();
         HitCount = new HashMap<>();

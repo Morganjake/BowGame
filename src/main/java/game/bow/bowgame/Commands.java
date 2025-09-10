@@ -106,8 +106,6 @@ public class Commands implements CommandExecutor, TabCompleter, Listener {
             case "setstat":
                 if (Args.length >= 3) {
 
-
-
                     String Upgrade = Objects.equals(Args[1], "AbilityCooldown") ? "Ability Cooldown" : Args[1];
 
                     if (!PlayerUpgrades.get((Player) CommandSender).containsKey(Upgrade)) {

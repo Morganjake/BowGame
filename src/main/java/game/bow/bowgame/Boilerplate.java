@@ -119,7 +119,7 @@ public class Boilerplate implements Listener {
                 return;
             }
 
-            if (SlowedPlayers.contains(Player) && Event.getTo() != null && Event.getTo().getY() > Event.getFrom().getY()) {
+            if (SlowedPlayers.containsKey(Player) && Event.getTo() != null && Event.getTo().getY() > Event.getFrom().getY()) {
                 Event.getPlayer().teleport(new Location(
                         Player.getWorld(),
                         Event.getFrom().getX(),

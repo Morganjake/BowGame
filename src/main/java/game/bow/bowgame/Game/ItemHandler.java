@@ -29,7 +29,7 @@ public class ItemHandler implements Listener {
 
     // Holds who shot an entity
     public static HashMap<Entity, Player> ItemOwners = new HashMap<>();
-    public static ArrayList<Player> SlowedPlayers = new ArrayList<>();
+    public static HashMap<Player, Integer> SlowedPlayers = new HashMap<>();
 
     public static ArrayList<Entity> FreezeGrenades = new ArrayList<>();
 
@@ -317,7 +317,14 @@ public class ItemHandler implements Listener {
         for (Player Player : Players) {
             if (Event.getEntity().getWorld() != Player.getWorld()) { continue; }
             if (Player.getLocation().distance(Event.getEntity().getLocation()) < 3) {
-                SlowedPlayers.add(Player);
+
+                if (SlowedPlayers.containsKey(Player)) {
+                    SlowedPlayers.replace(Player, SlowedPlayers.get(Player) + 1);
+                }
+                else {
+                    SlowedPlayers.put(Player, 1);
+                }
+
                 Player.setWalkSpeed(Player.getWalkSpeed() / 3);
             }
         }
@@ -343,17 +350,19 @@ public class ItemHandler implements Listener {
 
                 if (i[0] > 30) {
 
-                    for (Player Player: SlowedPlayers) {
+                    for (Player Player: SlowedPlayers.keySet()) {
                         Player.setWalkSpeed(Player.getWalkSpeed() * 3);
+                        SlowedPlayers.replace(Player, SlowedPlayers.get(Player) - 1);
+                        if (SlowedPlayers.get(Player) == 0) {
+                            SlowedPlayers.remove(Player);
+                        }
                     }
-
-                    SlowedPlayers = new ArrayList<>();
                     cancel();
                 }
 
                 i[0]++;
 
-                for (Player Player: SlowedPlayers) {
+                for (Player Player: SlowedPlayers.keySet()) {
                     Event.getEntity().getWorld().spawnParticle(Particle.SNOWFLAKE, Player.getEyeLocation(), 1, 0.2, 0.2, 0.2, 0);
                 }
             }
