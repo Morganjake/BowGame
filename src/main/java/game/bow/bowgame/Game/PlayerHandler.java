@@ -251,7 +251,7 @@ public class PlayerHandler implements Listener {
                 }
             }
 
-            if (Classes.get(Player).equals("Cannoneer") && BowPullback > 0.9) {
+            if (Classes.get(Player).equals("Cannoneer") && BowPullback > 0.5) {
                 AddSlowness(Victim);
             }
 

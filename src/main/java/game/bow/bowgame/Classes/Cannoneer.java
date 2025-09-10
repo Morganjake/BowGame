@@ -9,7 +9,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -33,7 +32,7 @@ public class Cannoneer implements Listener {
 
     public static final HashMap<Player, Integer> CannonStrength = new HashMap<>();
     public static ArrayList<Player> PlayersUsingCannon = new ArrayList<>();
-    public static HashMap<Player, Integer> HitCount = new HashMap<>();
+    public static HashMap<Player, Integer> CannoneerHitCount = new HashMap<>();
 
     // Used to save where the player was looking at for the cannon delay
     public static final HashMap<Player, Location> SavedLocation = new HashMap<>();
@@ -250,16 +249,16 @@ public class Cannoneer implements Listener {
 
     public static void AddSlowness(Player Victim) {
 
-        if (HitCount.containsKey(Victim)) {
-            HitCount.replace(Victim, HitCount.get(Victim) + 1);
+        if (CannoneerHitCount.containsKey(Victim)) {
+            CannoneerHitCount.replace(Victim, CannoneerHitCount.get(Victim) + 1);
         }
         else {
-            HitCount.put(Victim, 1);
+            CannoneerHitCount.put(Victim, 1);
         }
 
-        if (HitCount.get(Victim) % 3 == 0) {
+        if (CannoneerHitCount.get(Victim) % 3 == 0) {
             Victim.playSound(Victim, Sound.BLOCK_ANVIL_LAND, 1, 1);
-            Victim.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 200, HitCount.get(Victim) / 3, false ,false));
+            Victim.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 200, CannoneerHitCount.get(Victim) / 3, false ,false));
         }
     }
 }
