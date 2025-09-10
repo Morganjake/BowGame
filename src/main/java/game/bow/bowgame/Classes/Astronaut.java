@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import static game.bow.bowgame.Boilerplate.SandboxPlayers;
 import static game.bow.bowgame.Classes.ClassHandler.*;
 import static game.bow.bowgame.Game.GameHandler.GameEnded;
+import static game.bow.bowgame.Game.PlayerHandler.DeadPlayers;
 import static game.bow.bowgame.Game.PlayerHandler.Players;
 
 public class Astronaut implements Listener {
@@ -88,7 +89,7 @@ public class Astronaut implements Listener {
             @Override
             public void run() {
 
-                if (GameEnded) { cancel(); }
+                if (GameEnded || DeadPlayers.contains(Player)) { cancel(); return; }
                 if (i[0] > 300) { return; }
                 i[0]++;
 
