@@ -36,7 +36,10 @@ public class ArrowEffectHandler {
 
             Arrow.getWorld().spawnParticle(Particle.EXPLOSION_EMITTER, Arrow.getLocation(), 1);
             Arrow.getWorld().playSound(Arrow.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 1, 1);
-            ExplosiveArrows.remove(Arrow);
+
+            if (!ArrowBounces.containsKey(Arrow)) {
+                ExplosiveArrows.remove(Arrow);
+            }
         }
 
         else if (DirectHit && Victim != null && DisablingArrows.contains(Arrow)) {
