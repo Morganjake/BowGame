@@ -17,6 +17,8 @@ import java.util.List;
 import static game.bow.bowgame.Classes.Cannoneer.*;
 import static game.bow.bowgame.Classes.ClassHandler.ClassWeapons;
 import static game.bow.bowgame.Classes.Mage.*;
+import static game.bow.bowgame.Classes.SpaceWeaver.SpaceManipulation;
+import static game.bow.bowgame.Classes.SpaceWeaver.SpaceManipulationPlayers;
 import static game.bow.bowgame.Game.GameHandler.*;
 import static game.bow.bowgame.Game.PlayerHandler.Players;
 import static game.bow.bowgame.Game.PlayerHandler.SetPlayerArmour;
@@ -40,6 +42,10 @@ public class ArrowEffectHandler {
             if (!ArrowBounces.containsKey(Arrow)) {
                 ExplosiveArrows.remove(Arrow);
             }
+        }
+
+        if (SpaceManipulationPlayers.contains(Player) && (!ArrowBounces.containsKey(Arrow) || ArrowBounces.get(Arrow) == 0) && !DirectHit) {
+            SpaceManipulation(Player, Arrow);
         }
 
         else if (DirectHit && Victim != null && DisablingArrows.contains(Arrow)) {

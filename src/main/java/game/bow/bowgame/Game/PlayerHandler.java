@@ -30,8 +30,6 @@ import java.util.Objects;
 import static game.bow.bowgame.Classes.Cannoneer.AddSlowness;
 import static game.bow.bowgame.Classes.Cannoneer.CannonStrength;
 import static game.bow.bowgame.Classes.ClassHandler.*;
-import static game.bow.bowgame.Classes.SpaceWeaver.SpatialTearLocations;
-import static game.bow.bowgame.Classes.SpaceWeaver.WarpedEnemies;
 import static game.bow.bowgame.Game.ArrowEffectHandler.CheckForEffects;
 import static game.bow.bowgame.Game.DeathMessagesHandler.AddDamage;
 import static game.bow.bowgame.Game.DeathMessagesHandler.SendDeathMessage;
@@ -255,10 +253,6 @@ public class PlayerHandler implements Listener {
                 AddSlowness(Victim);
             }
 
-            if (WarpedEnemies.contains(Victim)) {
-                Damage *= 1.5;
-            }
-
             Event.setDamage(Damage);
 
             CheckForEffects(Player, Victim, Arrow, true);
@@ -310,26 +304,6 @@ public class PlayerHandler implements Listener {
             else {
                 Victim.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText("§4☠ §lYou died to §c§l" + Attacker.getName()));
             }
-        }
-
-        if (SpatialTearLocations.containsKey(Attacker)) {
-            Attacker.teleport(SpatialTearLocations.get(Attacker));
-            SpatialTearLocations.remove(Attacker);
-
-            Attacker.setHealth(Attacker.getMaxHealth());
-
-            Bukkit.getScheduler().runTaskLater(BowGame.GetPlugin(), () -> {
-                Attacker.setGameMode(GameMode.ADVENTURE);
-            }, 1L);
-        }
-
-        if (SpatialTearLocations.containsKey(Victim)) {
-            Victim.teleport(SpatialTearLocations.get(Victim));
-            SpatialTearLocations.remove(Victim);
-
-            Bukkit.getScheduler().runTaskLater(BowGame.GetPlugin(), () -> {
-                Victim.setGameMode(GameMode.SPECTATOR);
-            }, 1L);
         }
 
         if (CannonStrength.containsKey(Victim)) {

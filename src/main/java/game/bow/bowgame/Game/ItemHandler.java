@@ -19,7 +19,6 @@ import org.bukkit.util.Vector;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static game.bow.bowgame.Classes.SpaceWeaver.WarpedEnemies;
 import static game.bow.bowgame.Game.DeathMessagesHandler.AddDamage;
 import static game.bow.bowgame.Game.PlayerHandler.KillPlayer;
 import static game.bow.bowgame.Game.PlayerHandler.Players;
@@ -137,13 +136,7 @@ public class ItemHandler implements Listener {
 
                             for (Player Hit: Players) {
                                 if (Location.distance(Hit.getLocation()) < 6) {
-
-                                    if (WarpedEnemies.contains(Hit)) {
-                                        Hit.damage(20 + 5 * (6 - Location.distance(Hit.getLocation())), Player);
-                                    }
-                                    else {
-                                        Hit.damage((20 + 5 * (6 - Location.distance(Hit.getLocation())) * 1.5), Player);
-                                    }
+                                    Hit.damage((20 + 5 * (6 - Location.distance(Hit.getLocation())) * 1.5), Player);
                                 }
 
                                 if (Location.distance(Hit.getLocation()) < 10) {
@@ -248,10 +241,6 @@ public class ItemHandler implements Listener {
 
         Event.setDamage((4 - Distance) * 4);
         Event.setDamage(Event.getDamage() * Math.pow(0.9, PlayerUpgrades.get(Victim).get("Defense")));
-
-        if (WarpedEnemies.contains(Victim)) {
-            Event.setDamage(Event.getDamage() * 1.5);
-        }
 
         if (Victim.getHealth() - Event.getDamage() <= 0) {
             Event.setCancelled(true);

@@ -234,7 +234,7 @@ public class GameHandler implements Listener {
         DamageTaken = new HashMap<>();
         SlowedPlayers = new HashMap<>();
         SpaceWarpLocations = new HashMap<>();
-        WarpedEnemies = new ArrayList<>();
+        SpaceManipulationPlayers = new ArrayList<>();
         CannoneerHitCount = new HashMap<>();
         Cooldowns = new HashMap<>();
         MagicOverloadActive = new ArrayList<>();
@@ -265,13 +265,13 @@ public class GameHandler implements Listener {
         DamageTaken = new HashMap<>();
         SlowedPlayers = new HashMap<>();
         SpaceWarpLocations = new HashMap<>();
-        WarpedEnemies = new ArrayList<>();
-        HitCount = new HashMap<>();
+        SpaceManipulationPlayers = new ArrayList<>();
+        CannoneerHitCount = new HashMap<>();
         Cooldowns = new HashMap<>();
 
         int NextMap = 0;
 
-        if (SelectedMap != null && SelectedMap > 0 && SelectedMap < Maps.length) {
+        if (SelectedMap != null && SelectedMap >= 0 && SelectedMap < Maps.length) {
             NextMap = SelectedMap;
         }
         else {
@@ -387,7 +387,7 @@ public class GameHandler implements Listener {
 
         // Checks nearby players to check for hackers
         for (Player Enemy : EnemyTeam) {
-            if (Enemy.getGameMode() != GameMode.SPECTATOR && Classes.get(Enemy).equals("Hacker") && Arrow.getLocation().distance(Enemy.getLocation()) < 10) {
+            if (!DeadPlayers.contains(Player) && Classes.get(Enemy).equals("Hacker") && Arrow.getLocation().distance(Enemy.getLocation()) < 10) {
                 if (Math.random() < 0.25) {
                     Arrow.setVelocity(Arrow.getVelocity().multiply(0.4));
                     Player.playSound(Player.getLocation(), Sound.ENTITY_VILLAGER_NO, 1, 1);

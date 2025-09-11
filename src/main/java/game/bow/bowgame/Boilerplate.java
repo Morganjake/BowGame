@@ -161,33 +161,6 @@ public class Boilerplate implements Listener {
     }
 
     @EventHandler
-    public void OnPlayerTeleport(PlayerTeleportEvent Event) {
-        Player Player = Event.getPlayer();
-
-        // Sets dead players back to spectator when do to the end
-        if (DeadPlayers.contains(Player)) {
-
-            final int[] i = {0};
-
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    if (Player.getWorld().getName().equals("world_the_end")) {
-                        Bukkit.getScheduler().runTaskLater(BowGame.GetPlugin(), () -> {
-                            Player.setGameMode(GameMode.SPECTATOR);
-                        }, 1L);
-                        cancel();
-                    }
-                    else if (i[0] == 100) {
-                        cancel();
-                    }
-                    i[0]++;
-                }
-            }.runTaskTimer(BowGame.GetPlugin(), 1L, 1L);
-        }
-    }
-
-    @EventHandler
     public void OnBlockInteract(PlayerInteractEvent Event) {
         Player Player = Event.getPlayer();
         if (Event.getClickedBlock() == null) { return; }
