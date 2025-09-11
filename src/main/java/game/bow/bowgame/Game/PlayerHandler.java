@@ -310,13 +310,13 @@ public class PlayerHandler implements Listener {
             CannonStrength.replace(Victim, 0);
         }
 
-        Deaths.replace(Victim, Deaths.get(Victim) + 1);
-        Kills.replace(Attacker, Kills.get(Attacker) + 1);
-
         if (Attacker != Victim) {
+            Kills.replace(Attacker, Kills.get(Attacker) + 1);
             AddUltPoints(Attacker, 1);
+            AddUltPoints(Victim, 1);
         }
-        AddUltPoints(Victim, 1);
+
+        Deaths.replace(Victim, Deaths.get(Victim) + 1);
 
         UpdateScoreBoard();
 
