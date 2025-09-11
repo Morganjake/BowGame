@@ -54,8 +54,10 @@ public class ClassHandler implements Listener {
         if (MagicOverloadActive.contains(Player)) {
             Cooldown /= 2;
         }
+
         Cooldowns.put(Player, (int) Cooldown);
 
+        float FinalCooldown = Cooldown;
         new BukkitRunnable() {
 
             @Override
@@ -72,6 +74,22 @@ public class ClassHandler implements Listener {
                 }
 
                 else if (Cooldowns.containsKey(Player)) {
+
+                    String CooldownString = "§a§lAbility Cooldown: §2§l>";
+
+                    for (int i = 0; i < Cooldowns.get(Player); i++) {
+                        CooldownString += "-";
+                    }
+
+                    CooldownString += "§7";
+
+                    for (int i = 0; i < FinalCooldown - Cooldowns.get(Player); i++) {
+                        CooldownString += "-";
+                    }
+
+                    CooldownString += "§2§l<";
+
+                    Player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(CooldownString));
                     Cooldowns.replace(Player, Cooldowns.get(Player) - 1);
                 }
             }
