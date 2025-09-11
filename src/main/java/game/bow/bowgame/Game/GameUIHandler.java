@@ -79,7 +79,7 @@ public class GameUIHandler {
             }
             else {
                 Score a = Objective.getScore(
-                        "§9§l" + Player.getName() + " " + Ult + ":§9 " + Kills.get(Player) + " / " + Deaths.get(Player) + " / " + Kills.get(Player) / Deaths.get(Player));
+                        "§9§l" + Player.getName() + " " + Ult + ":§9 " + Kills.get(Player) + " / " + Deaths.get(Player) + " / " + (Kills.get(Player) * 100 / Deaths.get(Player) / 100.0));
                 a.setScore(4);
             }
         }
@@ -94,7 +94,7 @@ public class GameUIHandler {
             }
             else {
                 Score a = Objective.getScore(
-                        "§1§l§m" + Player.getName() + " " + Ult + ":§1§m " + Kills.get(Player) + " / " + Deaths.get(Player) + " / " + Kills.get(Player) / Deaths.get(Player));
+                        "§1§l§m" + Player.getName() + " " + Ult + ":§1§m " + Kills.get(Player) + " / " + Deaths.get(Player) + " / " + (Kills.get(Player) * 100 / Deaths.get(Player) / 100.0));
                 a.setScore(3);
             }
         }
@@ -109,7 +109,7 @@ public class GameUIHandler {
             }
             else {
                 Score a = Objective.getScore(
-                        "§c§l" + Player.getName() + " " + Ult + ":§c " + Kills.get(Player) + " / " + Deaths.get(Player) + " / " + Kills.get(Player) / Deaths.get(Player));
+                        "§c§l" + Player.getName() + " " + Ult + ":§c " + Kills.get(Player) + " / " + Deaths.get(Player) + " / " + (Kills.get(Player) * 100 / Deaths.get(Player) / 100.0));
                 a.setScore(2);
             }
         }
@@ -124,7 +124,7 @@ public class GameUIHandler {
             }
             else {
                 Score a = Objective.getScore(
-                        "§4§l§m" + Player.getName() + " " + Ult + ":§4§m " + Kills.get(Player) + " / " + Deaths.get(Player) + " / " + Kills.get(Player) / Deaths.get(Player));
+                        "§4§l§m" + Player.getName() + " " + Ult + ":§4§m " + Kills.get(Player) + " / " + Deaths.get(Player) + " / " + (Kills.get(Player) * 100 / Deaths.get(Player) / 100.0));
                 a.setScore(1);
             }
         }
