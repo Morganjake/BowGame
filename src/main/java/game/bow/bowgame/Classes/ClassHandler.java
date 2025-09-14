@@ -74,22 +74,7 @@ public class ClassHandler implements Listener {
                 }
 
                 else if (Cooldowns.containsKey(Player)) {
-
-                    String CooldownString = "§a§lAbility Cooldown: §2§l>";
-
-                    for (int i = 0; i < Cooldowns.get(Player); i++) {
-                        CooldownString += "-";
-                    }
-
-                    CooldownString += "§7";
-
-                    for (int i = 0; i < FinalCooldown - Cooldowns.get(Player); i++) {
-                        CooldownString += "-";
-                    }
-
-                    CooldownString += "§2§l<";
-
-                    Player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(CooldownString));
+                    Player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText("§aAbility Cooldown: §2§l" + Cooldowns.get(Player) + " §aseconds left!"));
                     Cooldowns.replace(Player, Cooldowns.get(Player) - 1);
                 }
             }
