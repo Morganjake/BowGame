@@ -260,7 +260,7 @@ public class SpaceWeaver implements Listener {
             double Z = 12 * Math.sin(Phi) * Math.sin(Theta);
 
             ArrowWormhole = Location.clone().add(X, Y, Z);
-            TargetLocation = Location.add((Math.random() - 0.5) * 3, (Math.random() - 0.5) * 3, (Math.random() - 0.5) * 3);
+            TargetLocation = Location.add((Math.random() - 0.5) * 5, (Math.random() - 0.5) * 5, (Math.random() - 0.5) * 5);
 
             Vector WormholeDirection = ArrowWormhole.toVector().subtract(TargetLocation.toVector()).normalize();
             double Distance = TargetLocation.distance(ArrowWormhole);
