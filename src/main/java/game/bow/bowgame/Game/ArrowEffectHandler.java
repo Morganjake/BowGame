@@ -134,7 +134,7 @@ public class ArrowEffectHandler {
 
             PlayersUsingCannon.remove(Player);
 
-            if (Force > 2.9) {
+            if (Force > 0.9) {
                 SavedLocation.put(Player, Player.getEyeLocation().clone());
                 ShootCannon(Player, CannonStrength.get(Player));
             }

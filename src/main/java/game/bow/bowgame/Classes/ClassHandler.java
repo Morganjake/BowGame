@@ -57,7 +57,6 @@ public class ClassHandler implements Listener {
 
         Cooldowns.put(Player, (int) Cooldown);
 
-        float FinalCooldown = Cooldown;
         new BukkitRunnable() {
 
             @Override
