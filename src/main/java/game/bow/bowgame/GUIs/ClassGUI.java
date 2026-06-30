@@ -39,7 +39,7 @@ public class ClassGUI extends MainUpgradesGUI  {
                 Arrays.asList(
                         "§fFirst row - Passive Ability - Always active",
                         "§fSecond row - Normal Ability - Has a 30 second cooldown",
-                        "§fThird row - Ultimate Ability - You need 5 ult points to use it",
+                        "§fThird row - Ultimate Ability - You need 6 ult points to use it",
                         "§fLeft click to use the normal ability, right click to use the ultimate"
                 )
         );
