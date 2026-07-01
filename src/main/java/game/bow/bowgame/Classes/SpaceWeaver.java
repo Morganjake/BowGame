@@ -229,7 +229,7 @@ public class SpaceWeaver implements Listener {
 
     public static void SpaceManipulation(Player Player, Arrow Arrow) {
 
-        if (WormholeArrows.containsKey(Arrow) && WormholeArrows.get(Arrow) == 10) {
+        if (WormholeArrows.containsKey(Arrow) && WormholeArrows.get(Arrow) == 5) {
             return;
         }
 
@@ -260,7 +260,7 @@ public class SpaceWeaver implements Listener {
             double Z = 12 * Math.sin(Phi) * Math.sin(Theta);
 
             ArrowWormhole = Location.clone().add(X, Y, Z);
-            TargetLocation = Location.add((Math.random() - 0.5) * 5, (Math.random() - 0.5) * 5, (Math.random() - 0.5) * 5);
+            TargetLocation = Location.add((Math.random() - 0.5) * 3, (Math.random() - 0.5) * 3, (Math.random() - 0.5) * 3);
 
             Vector WormholeDirection = ArrowWormhole.toVector().subtract(TargetLocation.toVector()).normalize();
             double Distance = TargetLocation.distance(ArrowWormhole);
