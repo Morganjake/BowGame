@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Objects;
 
 import static game.bow.bowgame.Boilerplate.SandboxPlayers;
-import static game.bow.bowgame.Classes.Cannoneer.CannoneerHitCount;
+import static game.bow.bowgame.Classes.Cannoneer.*;
 import static game.bow.bowgame.Classes.ClassHandler.*;
 import static game.bow.bowgame.Classes.Mage.MagicOverloadActive;
 import static game.bow.bowgame.Classes.Mage.ShootIllusionArrow;
@@ -200,8 +200,12 @@ public class GameHandler implements Listener {
 
         DamageTaken = new HashMap<>();
         SlowedPlayers = new HashMap<>();
-        CannoneerHitCount = new HashMap<>();
         MagicOverloadActive = new ArrayList<>();
+
+        CannonStrength = new HashMap<>();
+        PlayersUsingCannon = new ArrayList<>();
+        CannoneerHitCount = new HashMap<>();
+        SavedLocation = new HashMap<>();
 
         if (ScoreBossBar != null) {
             ScoreBossBar.removeAll();
@@ -236,6 +240,7 @@ public class GameHandler implements Listener {
         SpaceWarpLocations = new HashMap<>();
         SpaceManipulationPlayers = new ArrayList<>();
         CannoneerHitCount = new HashMap<>();
+        PlayersUsingCannon = new ArrayList<>();
         Cooldowns = new HashMap<>();
         MagicOverloadActive = new ArrayList<>();
 

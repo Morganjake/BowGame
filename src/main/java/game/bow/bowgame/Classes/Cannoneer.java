@@ -25,17 +25,18 @@ import java.util.Objects;
 import static game.bow.bowgame.Boilerplate.SandboxPlayers;
 import static game.bow.bowgame.Classes.ClassHandler.*;
 import static game.bow.bowgame.Classes.ClassHandler.AddUltPoints;
+import static game.bow.bowgame.Game.GameHandler.GameEnded;
 import static game.bow.bowgame.Game.PlayerHandler.BlueTeam;
 import static game.bow.bowgame.Game.PlayerHandler.Players;
 
 public class Cannoneer implements Listener {
 
-    public static final HashMap<Player, Integer> CannonStrength = new HashMap<>();
+    public static HashMap<Player, Integer> CannonStrength = new HashMap<>();
     public static ArrayList<Player> PlayersUsingCannon = new ArrayList<>();
     public static HashMap<Player, Integer> CannoneerHitCount = new HashMap<>();
 
     // Used to save where the player was looking at for the cannon delay
-    public static final HashMap<Player, Location> SavedLocation = new HashMap<>();
+    public static HashMap<Player, Location> SavedLocation = new HashMap<>();
 
     @EventHandler
     public void OnLeftClick(PlayerInteractEvent Event) {
@@ -179,6 +180,12 @@ public class Cannoneer implements Listener {
                     @Override
                     public void run() {
 
+                        if (GameEnded) {
+                            PlayersUsingCannon.remove(Player);
+                            cancel();
+                            return;
+                        }
+
                         if (Player.getInventory().getItemInMainHand().getType() != Material.BOW && !SavedLocation.containsKey(Player)) {
                             PlayersUsingCannon.remove(Player);
                             cancel();
@@ -193,7 +200,6 @@ public class Cannoneer implements Listener {
                         int InnerParticleCount = ParticleCount;
 
                         Location Location;
-
 
                         if (SavedLocation.containsKey(Player)) {
                             Location = SavedLocation.get(Player).clone();
