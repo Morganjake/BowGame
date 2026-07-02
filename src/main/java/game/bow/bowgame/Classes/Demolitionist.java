@@ -101,7 +101,7 @@ public class Demolitionist implements Listener {
                     for (int i = 0; i < 18; i++) {
                         Location ParticleLocation = Enemy.getLocation().add(new Vector(0, 0.2, 0));
                         ParticleLocation.setYaw(i * 20);
-                        ParticleLocation.add(ParticleLocation.getDirection().multiply(0.75));
+                        ParticleLocation.add(ParticleLocation.getDirection().multiply(1.125));
                         Player.getWorld().spawnParticle(Particle.DUST, ParticleLocation, 1, new Particle.DustOptions(Color.RED, 2));
                     }
 
@@ -133,7 +133,7 @@ public class Demolitionist implements Listener {
                     Player.getWorld().playSound(AirStrikeLocation, Sound.ENTITY_GENERIC_EXPLODE, 1, 1);
 
                     for (Player OtherPlayer : Players) {
-                        if (AirStrikeLocation.distance(OtherPlayer.getLocation()) < 1.75) {
+                        if (AirStrikeLocation.distance(OtherPlayer.getLocation()) < 2.25) {
                             OtherPlayer.damage(12, Player);
                         }
                     }

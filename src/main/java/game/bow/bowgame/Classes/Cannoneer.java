@@ -35,7 +35,7 @@ public class Cannoneer implements Listener {
     public static ArrayList<Player> PlayersUsingCannon = new ArrayList<>();
     public static HashMap<Player, Integer> CannoneerHitCount = new HashMap<>();
 
-    // Used to save where the player was looking at for the cannon delay
+    // Used to save where the player was looking at when they shot the cannon for the cannon delay
     public static HashMap<Player, Location> SavedLocation = new HashMap<>();
 
     @EventHandler
