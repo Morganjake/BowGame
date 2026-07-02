@@ -190,7 +190,7 @@ public class PlayerHandler implements Listener {
                 return;
             }
             else if (RedTeam.contains(Player) && RedTeam.contains(Victim)) {
-                Player.sendMessage("§4You can't your teammate!");
+                Player.sendMessage("§4You can't shoot your teammate!");
                 Event.setCancelled(true);
                 return;
             }

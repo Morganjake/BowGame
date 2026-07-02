@@ -15,7 +15,7 @@ public class SuicideDeathMessage {
                 "§4☠ » §c" + Player + " never left their emo phase",
                 "§4☠ » §c" + Player + " was never meant for this world",
                 "§4☠ » §c" + Player + " committed seppuku",
-                "§4☠ » §c" + Player + " hates his team"
+                "§4☠ » §c" + Player + " hates their team"
         ));
 
         Bukkit.broadcastMessage(DeathMessages.get((new Random()).nextInt(DeathMessages.size())));
